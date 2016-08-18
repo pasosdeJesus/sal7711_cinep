@@ -1,0 +1,178 @@
+body { 
+	background-color: #f0f0f0; 
+	color: #333; 
+	height: 100%;
+	margin-bottom: 0px;
+}
+
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body, p, ol, ul, td {
+	font-family: verdana, arial, helvetica, sans-serif;
+	font-size:   13px;
+	line-height: 18px;
+}
+
+pre {
+	background-color: #eee;
+	padding: 10px;
+	font-size: 11px;
+}
+
+a { 
+	color: #000; 
+}
+
+a:visited { 
+	color: #666;
+}
+
+a:hover { 
+	color: #fff; background-color:#000;
+}
+
+div.field, div.actions {
+	margin-bottom: 10px;
+}
+
+#notice {
+	color: green;
+}
+
+.field_with_errors {
+	padding: 2px;
+	background-color: red;
+	display: table;
+}
+
+#error_explanation {
+	width: 450px;
+	border: 2px solid red;
+	padding: 7px;
+	padding-bottom: 0;
+	margin-bottom: 20px;
+	background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+	text-align: left;
+	font-weight: bold;
+	padding: 5px 5px 5px 15px;
+	font-size: 12px;
+	margin: -7px;
+	margin-bottom: 0px;
+	background-color: #c00;
+	color: #fff;
+}
+
+#error_explanation ul li {
+	font-size: 12px;
+	list-style: square;
+}
+
+
+.dropdown-menu {
+	margin: 20px 0 0;
+}
+
+
+.navbar {
+	background-color: white;
+	background-image: linear-gradient(white, white);
+	border: 1px solid #e4e4e4;
+	color: #777777;
+}
+
+.master-container {
+	padding-bottom: 0;
+	margin-top: 75px;
+}
+
+.footer {
+	height: 142px;
+	left: 0;
+	position: relative;
+	bottom: 0;
+	width: 100%;
+
+	background: #239cd3;
+	color: #a0d6ef;
+	text-align: center;
+	line-height: 1.5;
+	padding-top: 1px;
+	margin-top: 20px;
+}
+
+footer a {
+	color: #ffffff;
+}
+
+footer a:vlink {
+	color: #ffffff;
+}
+
+.pie {
+	background: #239cd3;
+	color: #a0d6ef;
+}
+
+.pie p:first-child {
+	margin-top: 40px;
+}
+
+.noautenticado, .local {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.archivo {
+	margin-top: 50px;
+	color: #222222;
+	text-align: center;
+	font-size: 36px;
+	font-family: 'CreteRound-Regular', Helvetica, Arial, sans-serif;
+	font-weight: bold;
+}
+.archivo img {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.alert-success {
+	background-color: white;
+}
+
+h1 {
+	text-align: center;
+}
+
+.ultimo-visto {
+	background-color: #239cd3;
+}
+
+.logo-inst {
+       padding-top: 20px;
+       height: 70px;
+}
+
+.navbar-right {
+       margin-right: 20px;
+}
+
+.logo-cinep {
+       height: 65px;
+       margin-left:  20px;
+}
+
+.descarga-marco {
+       color: rgb(40,120,255);
+       font-weight: normal;
+}
+
+.navbar-brand {
+       margin-left: 10px !important;
+}
+

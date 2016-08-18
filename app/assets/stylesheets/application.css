@@ -14,3 +14,8 @@
  *= require_self
  *= require sal7711_gen/application.css
  */
+
+body {
+	background-color: #f0f0f0;
+}
+
