@@ -1,4 +1,4 @@
-<% content_for :title do %>
+<% content_for :titulo do %>
     <%= Sip.titulo %>
 <% end %>
 
@@ -42,7 +42,7 @@
           'usuarioip_id = ?', current_usuario.id).take
           url = org ? org.url_logoinst : nil  %-->
         <!--% if url %-->
-          <!--li><img class='logo-inst' src="<!--%= url %-->"></span></li-->
+          <!--li><img class='logo-inst' src="< %= #url % >"></span></li-->
         <!--% end %--> <!-- if url --> 
       <!--% end %--> <!-- else !current_usuario.autenticado_por_ip -->
     <% else %> <! -- if current_usuario -->
@@ -55,7 +55,7 @@
   <% end %> <!-- menu_group -->
 <% end %> <!-- content_for :menu -->
 
-<% content_for :footer do %>
+<% content_for :piedepagina do %>
   <div class="pie">
     <p> Contenidos con derechos reservados. Pueden ser utilizado total o 
     parcialmente, siempre y cuando se cite como fuente al 

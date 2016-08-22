@@ -172,6 +172,81 @@ CREATE TABLE ar_internal_metadata (
 
 
 --
+-- Name: ip_organizacion; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE ip_organizacion (
+    id integer NOT NULL,
+    organizacion_id integer NOT NULL,
+    ip inet NOT NULL
+);
+
+
+--
+-- Name: ip_organizacion_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE ip_organizacion_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ip_organizacion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE ip_organizacion_id_seq OWNED BY ip_organizacion.id;
+
+
+--
+-- Name: organizacion; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE organizacion (
+    id integer NOT NULL,
+    nombre character varying(1000),
+    observaciones character varying(5000),
+    fechacreacion date,
+    fechadeshabilitacion date,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    autoregistro boolean DEFAULT false,
+    dominiocorreo character varying(500),
+    pexcluyecorreo character varying(500),
+    diasvigencia integer,
+    fecharenovacion date,
+    usuarioip_id integer,
+    url_logoinst character varying(1000),
+    opciones_url_nombre_cif character varying(1000),
+    opciones_url_puerto_cif integer,
+    opciones_url_nombre_nocif character varying(1000),
+    opciones_url_puerto_nocif integer
+);
+
+
+--
+-- Name: organizacion_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE organizacion_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: organizacion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE organizacion_id_seq OWNED BY organizacion.id;
+
+
+--
 -- Name: sal7711_gen_articulo; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -190,7 +265,8 @@ CREATE TABLE sal7711_gen_articulo (
     adjunto_file_size integer,
     adjunto_updated_at timestamp without time zone,
     anexo_id_antiguo integer,
-    adjunto_descripcion character varying(1500)
+    adjunto_descripcion character varying(1500),
+    onbase_itemnum integer
 );
 
 
@@ -268,7 +344,8 @@ CREATE TABLE sal7711_gen_categoriaprensa (
     fechacreacion date,
     fechadeshabilitacion date,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    supracategoria boolean DEFAULT false
 );
 
 
@@ -794,7 +871,7 @@ CREATE SEQUENCE usuario_id_seq
 --
 
 CREATE TABLE usuario (
-    nusuario character varying(15) NOT NULL,
+    nusuario character varying(255) NOT NULL,
     password character varying(64) DEFAULT ''::character varying NOT NULL,
     nombre character varying(50) COLLATE public.es_co_utf_8,
     descripcion character varying(50),
@@ -819,9 +896,30 @@ CREATE TABLE usuario (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     regionsjr_id integer,
+    confirmation_token character varying,
+    confirmed_at timestamp without time zone,
+    confirmation_sent_at timestamp without time zone,
+    unconfirmed_email character varying,
+    diasvigencia integer,
+    fecharenovacion date,
+    autenticado_por_ip boolean,
     CONSTRAINT usuario_check CHECK (((fechadeshabilitacion IS NULL) OR (fechadeshabilitacion >= fechacreacion))),
     CONSTRAINT usuario_rol_check CHECK ((rol >= 1))
 );
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY ip_organizacion ALTER COLUMN id SET DEFAULT nextval('ip_organizacion_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY organizacion ALTER COLUMN id SET DEFAULT nextval('organizacion_id_seq'::regclass);
 
 
 --
@@ -881,6 +979,22 @@ ALTER TABLE ONLY ar_internal_metadata
 
 ALTER TABLE ONLY sip_etiqueta
     ADD CONSTRAINT etiqueta_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ip_organizacion_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY ip_organizacion
+    ADD CONSTRAINT ip_organizacion_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: organizacion_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY organizacion
+    ADD CONSTRAINT organizacion_pkey PRIMARY KEY (id);
 
 
 --
@@ -1084,6 +1198,13 @@ ALTER TABLE ONLY usuario
 
 
 --
+-- Name: index_usuario_on_confirmation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_usuario_on_confirmation_token ON usuario USING btree (confirmation_token);
+
+
+--
 -- Name: index_usuario_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1118,6 +1239,22 @@ ALTER TABLE ONLY sip_clase
 
 ALTER TABLE ONLY sip_departamento
     ADD CONSTRAINT departamento_id_pais_fkey FOREIGN KEY (id_pais) REFERENCES sip_pais(id);
+
+
+--
+-- Name: fk_rails_2831af4765; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY ip_organizacion
+    ADD CONSTRAINT fk_rails_2831af4765 FOREIGN KEY (organizacion_id) REFERENCES organizacion(id);
+
+
+--
+-- Name: fk_rails_4eb28ebe33; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY organizacion
+    ADD CONSTRAINT fk_rails_4eb28ebe33 FOREIGN KEY (usuarioip_id) REFERENCES usuario(id);
 
 
 --
@@ -1302,6 +1439,6 @@ ALTER TABLE ONLY sip_ubicacion
 
 SET search_path TO "$user",public;
 
-INSERT INTO schema_migrations (version) VALUES ('20150413160156'), ('20150413160157'), ('20150413160158'), ('20150413160159'), ('20150416074423'), ('20150503110048'), ('20150503120915'), ('20150510125926'), ('20150510130031'), ('20150521181918'), ('20150528100944'), ('20150603181900'), ('20150604101858'), ('20150604102321'), ('20150604155923'), ('20150702224217'), ('20150707164448'), ('20150710114451'), ('20150717101243'), ('20150724003736'), ('20150803082520'), ('20150809032138'), ('20151020203421'), ('20151030154458'), ('20160518025044'), ('20160519195544');
+INSERT INTO schema_migrations (version) VALUES ('20150327104439'), ('20150413160156'), ('20150413160157'), ('20150413160158'), ('20150413160159'), ('20150416074423'), ('20150503110048'), ('20150503120915'), ('20150504161548'), ('20150507045700'), ('20150507202524'), ('20150510125926'), ('20150510130031'), ('20150521181918'), ('20150528100944'), ('20150529085519'), ('20150603181900'), ('20150604101858'), ('20150604102321'), ('20150604155923'), ('20150702224217'), ('20150707132824'), ('20150707164448'), ('20150710114451'), ('20150715013755'), ('20150717101243'), ('20150724003736'), ('20150803082520'), ('20150809032138'), ('20151016015543'), ('20151016101736'), ('20151020203421'), ('20151027111828'), ('20151030154458'), ('20151113104833'), ('20151113185225'), ('20160518025044'), ('20160519090811'), ('20160519195544'), ('20160520105206');
 
 
