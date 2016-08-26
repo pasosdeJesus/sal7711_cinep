@@ -1,0 +1,28 @@
+<article>
+  <h1>Formulario de Contacto</h1>
+
+  <div class="span6">
+
+    <%= simple_form_for @contacto, 
+      :html => {class: 'form-horizontal'} do |f|
+    %>
+      <%= f.error_notification %>
+      <%= f.input :nombre, :required => true, :autofocus => true %>
+      <%= f.input :correo, :required => true  %>
+      <%= f.input :razon, :required => true, collection:
+        ['Solicitud de Soporte', 'Registro de Usuario Nuevo', 
+         'Sugerencias, Comentarios, Preguntas']
+       %>
+     <%= f.input :mensaje, as: :text, :required => true  %>
+     <div class= "hidden">
+       <%= f.input :nickname, :hint => 'Leave this field blank!' %>
+     </div>
+
+     <div class="form-actions">
+       <%= f.button :submit, "Enviar" %>
+     </div>
+   <% end %>
+
+ </div>
+</article>
+

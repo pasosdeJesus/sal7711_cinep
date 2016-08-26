@@ -1,0 +1,10 @@
+<tr class='nested-fields'>
+  <td><%= f.text_field :ip, size: "15" %></td>
+  <td>
+    <%= f.input :id, as: :hidden %>
+    <%= link_to_remove_association "Eliminar", f, 
+      :class => 'btn-danger' 
+    %>
+    <div><%= f.error_notification %></div>
+  </td>
+</tr>

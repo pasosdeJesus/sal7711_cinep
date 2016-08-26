@@ -1,0 +1,18 @@
+<table border=1>
+  <thead>
+    <tr><th>IP</th><th></th></tr>
+  </thead>
+  <tbody id="ip_organizacion">
+    <%= f.simple_fields_for :ip_organizacion do |s| %>
+      <%= render 'ip_organizacion_campos', :f => s %>
+    <% end %>
+  </tbody>
+</table>
+<div class="links">
+  <%= link_to_add_association 'Añadir IP', f, 
+    :ip_organizacion, 
+    :"data-association-insertion-node" => "tbody#ip_organizacion", 
+    :"data-association-insertion-method" => "append", 
+    :partial => "ip_organizacion_campos", 
+    :class => "btn-primary" 
+  %>

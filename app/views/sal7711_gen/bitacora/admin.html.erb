@@ -1,0 +1,50 @@
+<div class="page-header">
+  <h1><%=t '.title', :default => "Consultas por usuario" %></h1>
+</div>
+
+<div sytle="text-align: right">
+  <%= form_tag('/bitacora/admin', method: "get", remote: true) do %>
+      Recepción entre:
+    <%= text_field_tag 'fechaini', @fechaini, maxlength: 10, size: 12,
+      "data-behaviour" => "datepicker", "data-contarautomatico" => ""
+    %>
+    -
+    <%= text_field_tag 'fechafin', @fechafin, maxlength: 10, size: 12,
+      "data-behaviour" => "datepicker", "data-contarautomatico" => ""
+    %>
+    <br>
+    Organización:
+    <% o = options_from_collection_for_select(
+         ::Organizacion.habilitados, "id", "nombre"
+      )
+    %>
+    <%= select_tag "organizacion", o,
+      {include_blank: true, "data-contarautomatico" => ""}
+    %>
+    <%= submit_tag("Contar") %>
+  <% end %>
+</div>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Usuarios con consultas: <%= @usuarioscons.count %>.
+    Total consultas:  <%= @totconsultas %>.
+  </div>
+
+  <div class="panel-body">
+    <table class="table table-striped">
+      <thead>
+        <tr><th>Usuario</th><th>Consultas</th>
+      </thead>
+      <tbody>
+        <% @usuarioscons.try(:each) do |u| %>
+          <tr>
+            <td><%= u[0] %></td>
+            <td><%= u[1] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

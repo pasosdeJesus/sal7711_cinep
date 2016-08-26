@@ -1,0 +1,59 @@
+<div class='alert alert-info fade in' data-alert='alert'>
+  <h2>Inscripción</h2>
+  <p>
+  Por el momento sólo pueden inscribirse automáticamente personas
+  con correos de algunas organizaciones con plan corporativo.
+  </p>
+  Si su organización requiere un plan corporativo o necesita un plan
+  individual por favor escriba un correo a 
+  <a href="mailto:sig@cinep.org.co">sig@cinep.org.co</a>.
+</div>
+
+<% if (request.ssl? && resource) || Rails.env.development? %>
+  <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+    <div id="errores">
+      <% if f.object.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-error">
+            El formulario tiene 
+            <%= pluralize(f.object.errors.count, "error") %>.
+          </div>
+          <ul>
+            <% f.object.errors.full_messages.each do |msg| %>
+              <li>* <%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.error_notification %>
+    </div>
+  
+    <div class="form-inputs">
+      <%= f.input :email, 
+        label: 'Correo electrónico',
+        :required => true, :autofocus => true 
+      %>
+      <%= f.input :password, 
+        label: 'Clave',
+        :required => true 
+      %>
+      <%= f.input :password_confirmation, 
+        label: 'Confirmación de Clave',
+        :required => true 
+      %>
+    </div>
+  
+    <div class="form-actions">
+      <%= f.button :submit, "Inscribirse" %>
+    </div>
+  <% end %>
+  <%= render "devise/shared/links" %>
+  
+<% else %>
+  <% urlop = Rails.configuration.action_mailer.default_url_options %>
+  <h3>Favor 
+    <%= link_to 'usar este enlace para registrarse', 
+      new_usuario_registration_url(urlop) 
+    %>
+  </h3>
+<% end %>

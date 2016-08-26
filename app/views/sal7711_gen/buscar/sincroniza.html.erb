@@ -1,0 +1,14 @@
+<h1>Sincronización</h1>
+<% if @cprob != '' %>
+  <p>Se encontraron los siguientes problemas:</p>
+  <hr/>
+  <%= raw(@cprob) %>
+  <hr/>
+<% end %>
+<p>Se examinaron <%= @examinados %> registros <span style="text-decoration: line-through;">de los cuales se copiaron <%= @procesados %> de OnBase a Sal7711</span>.</p>
+<table>
+  <% @sinc.each do |f| %>
+    <tr><td><%= f %></td></tr>
+  <% end %>
+</table>
+

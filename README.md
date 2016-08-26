@@ -21,3 +21,10 @@ y  [sip](https://github.com/pasosdeJesus/sip)
 Por favor vea las instrucciones de sivel2 pues son análogas:
 <https://github.com/pasosdeJesus/sivel2>
 
+Para iniciar requiere definida la varible de entorno
+
+SAL7711_ONBASE_SERV=http://181.143.184.115:2400
+
+Se usa para armar el URL de los correos de confirmación 
+(usado por ejemplo al cambiar correo de un usuario).
+

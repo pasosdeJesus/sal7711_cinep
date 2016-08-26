@@ -30,7 +30,7 @@
             <%= menu_item "Enviar instrucciones de reconfirmación", "/usuarios/reconfirma" %>
           <% end %>
         <% end %>
-        <!--%= menu_item "Salir #{current_usuario.nusuario}", sip.sign_out_path %-->
+        <%= menu_item "Salir #{current_usuario.nusuario}", main_app.sign_out_path %>
       <!--% else % -->
         <!--%= menu_item "Ingresar", Rails.application.routes.url_helpers.
           new_usuario_session_url( urlop ) %--> 

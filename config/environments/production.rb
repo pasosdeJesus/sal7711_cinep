@@ -83,4 +83,20 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+
+  # nombre de servidor cifrado --puede cambiar en caso de ezproxy
+  config.action_mailer.default_url_options = { 
+    protocol: 'https',
+    host: ENV['SAL7711_ONBASE_SERV'],
+    port: ENV['SAL7711_ONBASE_SERV_PUERTO'] || 443
+  }
+
+  # nombre de servidor no cifrado --puede cambiar en caso de ezproxy
+  config.x.serv_nocif = {
+    protocolo: 'http',
+    host: ENV['SAL7711_ONBASE_SERV_NOCIF'] || config.action_mailer.default_url_options[:host],
+    port: ENV['SAL7711_ONBASE_SERV_NOCIF_PUERTO'] || 80
+  }
+
 end
