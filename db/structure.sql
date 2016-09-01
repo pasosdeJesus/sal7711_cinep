@@ -2,12 +2,16 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 9.5.4
+-- Dumped by pg_dump version 9.5.4
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -160,7 +164,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE ar_internal_metadata (
@@ -172,7 +176,7 @@ CREATE TABLE ar_internal_metadata (
 
 
 --
--- Name: ip_organizacion; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: ip_organizacion; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE ip_organizacion (
@@ -202,7 +206,7 @@ ALTER SEQUENCE ip_organizacion_id_seq OWNED BY ip_organizacion.id;
 
 
 --
--- Name: organizacion; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: organizacion; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE organizacion (
@@ -247,7 +251,7 @@ ALTER SEQUENCE organizacion_id_seq OWNED BY organizacion.id;
 
 
 --
--- Name: sal7711_gen_articulo; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sal7711_gen_articulo; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sal7711_gen_articulo (
@@ -271,7 +275,7 @@ CREATE TABLE sal7711_gen_articulo (
 
 
 --
--- Name: sal7711_gen_articulo_categoriaprensa; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sal7711_gen_articulo_categoriaprensa; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sal7711_gen_articulo_categoriaprensa (
@@ -300,7 +304,7 @@ ALTER SEQUENCE sal7711_gen_articulo_id_seq OWNED BY sal7711_gen_articulo.id;
 
 
 --
--- Name: sal7711_gen_bitacora; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sal7711_gen_bitacora; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sal7711_gen_bitacora (
@@ -333,7 +337,7 @@ ALTER SEQUENCE sal7711_gen_bitacora_id_seq OWNED BY sal7711_gen_bitacora.id;
 
 
 --
--- Name: sal7711_gen_categoriaprensa; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sal7711_gen_categoriaprensa; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sal7711_gen_categoriaprensa (
@@ -369,7 +373,7 @@ ALTER SEQUENCE sal7711_gen_categoriaprensa_id_seq OWNED BY sal7711_gen_categoria
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE schema_migrations (
@@ -390,7 +394,7 @@ CREATE SEQUENCE sip_anexo_id_seq
 
 
 --
--- Name: sip_anexo; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_anexo; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_anexo (
@@ -419,7 +423,7 @@ CREATE SEQUENCE sip_clase_id_seq
 
 
 --
--- Name: sip_clase; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_clase; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_clase (
@@ -452,7 +456,7 @@ CREATE SEQUENCE sip_departamento_id_seq
 
 
 --
--- Name: sip_departamento; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_departamento; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_departamento (
@@ -484,7 +488,7 @@ CREATE SEQUENCE sip_etiqueta_id_seq
 
 
 --
--- Name: sip_etiqueta; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_etiqueta; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_etiqueta (
@@ -500,7 +504,7 @@ CREATE TABLE sip_etiqueta (
 
 
 --
--- Name: sip_fuenteprensa; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_fuenteprensa; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_fuenteprensa (
@@ -546,7 +550,7 @@ CREATE SEQUENCE sip_municipio_id_seq
 
 
 --
--- Name: sip_municipio; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_municipio; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_municipio (
@@ -574,7 +578,7 @@ CREATE VIEW sip_mundep_sinorden AS
     (((sip_municipio.nombre)::text || ' / '::text) || (sip_departamento.nombre)::text) AS nombre
    FROM (sip_municipio
      JOIN sip_departamento ON ((sip_municipio.id_departamento = sip_departamento.id)))
-  WHERE (((sip_departamento.id_pais = 170) AND (sip_municipio.fechadeshabilitacion IS NULL)) AND (sip_departamento.fechadeshabilitacion IS NULL))
+  WHERE ((sip_departamento.id_pais = 170) AND (sip_municipio.fechadeshabilitacion IS NULL) AND (sip_departamento.fechadeshabilitacion IS NULL))
 UNION
  SELECT sip_departamento.id_deplocal AS idlocal,
     sip_departamento.nombre
@@ -583,7 +587,7 @@ UNION
 
 
 --
--- Name: sip_mundep; Type: MATERIALIZED VIEW; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_mundep; Type: MATERIALIZED VIEW; Schema: public; Owner: -
 --
 
 CREATE MATERIALIZED VIEW sip_mundep AS
@@ -608,7 +612,7 @@ CREATE SEQUENCE sip_oficina_id_seq
 
 
 --
--- Name: sip_oficina; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_oficina; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_oficina (
@@ -636,7 +640,7 @@ CREATE SEQUENCE sip_pais_id_seq
 
 
 --
--- Name: sip_pais; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_pais; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_pais (
@@ -672,7 +676,7 @@ CREATE SEQUENCE sip_persona_id_seq
 
 
 --
--- Name: sip_persona; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_persona; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_persona (
@@ -692,9 +696,9 @@ CREATE TABLE sip_persona (
     id_departamento integer,
     id_municipio integer,
     id_clase integer,
-    CONSTRAINT persona_check CHECK (((dianac IS NULL) OR ((((dianac >= 1) AND ((((((((mesnac = 1) OR (mesnac = 3)) OR (mesnac = 5)) OR (mesnac = 7)) OR (mesnac = 8)) OR (mesnac = 10)) OR (mesnac = 12)) AND (dianac <= 31))) OR (((((mesnac = 4) OR (mesnac = 6)) OR (mesnac = 9)) OR (mesnac = 11)) AND (dianac <= 30))) OR ((mesnac = 2) AND (dianac <= 29))))),
+    CONSTRAINT persona_check CHECK (((dianac IS NULL) OR (((dianac >= 1) AND (((mesnac = 1) OR (mesnac = 3) OR (mesnac = 5) OR (mesnac = 7) OR (mesnac = 8) OR (mesnac = 10) OR (mesnac = 12)) AND (dianac <= 31))) OR (((mesnac = 4) OR (mesnac = 6) OR (mesnac = 9) OR (mesnac = 11)) AND (dianac <= 30)) OR ((mesnac = 2) AND (dianac <= 29))))),
     CONSTRAINT persona_mesnac_check CHECK (((mesnac IS NULL) OR ((mesnac >= 1) AND (mesnac <= 12)))),
-    CONSTRAINT persona_sexo_check CHECK ((((sexo = 'S'::bpchar) OR (sexo = 'F'::bpchar)) OR (sexo = 'M'::bpchar)))
+    CONSTRAINT persona_sexo_check CHECK (((sexo = 'S'::bpchar) OR (sexo = 'F'::bpchar) OR (sexo = 'M'::bpchar)))
 );
 
 
@@ -711,7 +715,7 @@ CREATE SEQUENCE sip_persona_trelacion_id_seq
 
 
 --
--- Name: sip_persona_trelacion; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_persona_trelacion; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_persona_trelacion (
@@ -726,7 +730,7 @@ CREATE TABLE sip_persona_trelacion (
 
 
 --
--- Name: sip_tclase; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_tclase; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_tclase (
@@ -742,7 +746,7 @@ CREATE TABLE sip_tclase (
 
 
 --
--- Name: sip_tdocumento; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_tdocumento; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_tdocumento (
@@ -778,7 +782,7 @@ ALTER SEQUENCE sip_tdocumento_id_seq OWNED BY sip_tdocumento.id;
 
 
 --
--- Name: sip_trelacion; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_trelacion; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_trelacion (
@@ -807,7 +811,7 @@ CREATE SEQUENCE sip_tsitio_id_seq
 
 
 --
--- Name: sip_tsitio; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_tsitio; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_tsitio (
@@ -835,7 +839,7 @@ CREATE SEQUENCE sip_ubicacion_id_seq
 
 
 --
--- Name: sip_ubicacion; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_ubicacion; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sip_ubicacion (
@@ -867,7 +871,7 @@ CREATE SEQUENCE usuario_id_seq
 
 
 --
--- Name: usuario; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: usuario; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE usuario (
@@ -958,7 +962,7 @@ ALTER TABLE ONLY sip_tdocumento ALTER COLUMN id SET DEFAULT nextval('sip_tdocume
 
 
 --
--- Name: anexo_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: anexo_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_anexo
@@ -966,7 +970,7 @@ ALTER TABLE ONLY sip_anexo
 
 
 --
--- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ar_internal_metadata
@@ -974,7 +978,7 @@ ALTER TABLE ONLY ar_internal_metadata
 
 
 --
--- Name: etiqueta_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: etiqueta_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_etiqueta
@@ -982,7 +986,7 @@ ALTER TABLE ONLY sip_etiqueta
 
 
 --
--- Name: ip_organizacion_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ip_organizacion_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ip_organizacion
@@ -990,7 +994,7 @@ ALTER TABLE ONLY ip_organizacion
 
 
 --
--- Name: organizacion_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: organizacion_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY organizacion
@@ -998,7 +1002,7 @@ ALTER TABLE ONLY organizacion
 
 
 --
--- Name: pais_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: pais_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_pais
@@ -1006,7 +1010,7 @@ ALTER TABLE ONLY sip_pais
 
 
 --
--- Name: persona_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: persona_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_persona
@@ -1014,7 +1018,7 @@ ALTER TABLE ONLY sip_persona
 
 
 --
--- Name: sal7711_gen_articulo_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sal7711_gen_articulo_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sal7711_gen_articulo
@@ -1022,7 +1026,7 @@ ALTER TABLE ONLY sal7711_gen_articulo
 
 
 --
--- Name: sal7711_gen_bitacora_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sal7711_gen_bitacora_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sal7711_gen_bitacora
@@ -1030,7 +1034,7 @@ ALTER TABLE ONLY sal7711_gen_bitacora
 
 
 --
--- Name: sal7711_gen_categoriaprensa_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sal7711_gen_categoriaprensa_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sal7711_gen_categoriaprensa
@@ -1038,7 +1042,7 @@ ALTER TABLE ONLY sal7711_gen_categoriaprensa
 
 
 --
--- Name: sip_clase_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_clase_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_clase
@@ -1046,7 +1050,7 @@ ALTER TABLE ONLY sip_clase
 
 
 --
--- Name: sip_clase_id_municipio_id_clalocal_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_clase_id_municipio_id_clalocal_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_clase
@@ -1054,7 +1058,7 @@ ALTER TABLE ONLY sip_clase
 
 
 --
--- Name: sip_clase_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_clase_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_clase
@@ -1062,7 +1066,7 @@ ALTER TABLE ONLY sip_clase
 
 
 --
--- Name: sip_departamento_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_departamento_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_departamento
@@ -1070,7 +1074,7 @@ ALTER TABLE ONLY sip_departamento
 
 
 --
--- Name: sip_departamento_id_pais_id_deplocal_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_departamento_id_pais_id_deplocal_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_departamento
@@ -1078,7 +1082,7 @@ ALTER TABLE ONLY sip_departamento
 
 
 --
--- Name: sip_departamento_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_departamento_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_departamento
@@ -1086,7 +1090,7 @@ ALTER TABLE ONLY sip_departamento
 
 
 --
--- Name: sip_fuenteprensa_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_fuenteprensa_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_fuenteprensa
@@ -1094,7 +1098,7 @@ ALTER TABLE ONLY sip_fuenteprensa
 
 
 --
--- Name: sip_municipio_id_departamento_id_munlocal_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_municipio_id_departamento_id_munlocal_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_municipio
@@ -1102,7 +1106,7 @@ ALTER TABLE ONLY sip_municipio
 
 
 --
--- Name: sip_municipio_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_municipio_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_municipio
@@ -1110,7 +1114,7 @@ ALTER TABLE ONLY sip_municipio
 
 
 --
--- Name: sip_municipio_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_municipio_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_municipio
@@ -1118,7 +1122,7 @@ ALTER TABLE ONLY sip_municipio
 
 
 --
--- Name: sip_oficina_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_oficina_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_oficina
@@ -1126,7 +1130,7 @@ ALTER TABLE ONLY sip_oficina
 
 
 --
--- Name: sip_persona_trelacion_id_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_persona_trelacion_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_persona_trelacion
@@ -1134,7 +1138,7 @@ ALTER TABLE ONLY sip_persona_trelacion
 
 
 --
--- Name: sip_persona_trelacion_persona1_persona2_id_trelacion_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_persona_trelacion_persona1_persona2_id_trelacion_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_persona_trelacion
@@ -1142,7 +1146,7 @@ ALTER TABLE ONLY sip_persona_trelacion
 
 
 --
--- Name: sip_persona_trelacion_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_persona_trelacion_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_persona_trelacion
@@ -1150,7 +1154,7 @@ ALTER TABLE ONLY sip_persona_trelacion
 
 
 --
--- Name: tclase_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: tclase_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_tclase
@@ -1158,7 +1162,7 @@ ALTER TABLE ONLY sip_tclase
 
 
 --
--- Name: tdocumento_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: tdocumento_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_tdocumento
@@ -1166,7 +1170,7 @@ ALTER TABLE ONLY sip_tdocumento
 
 
 --
--- Name: trelacion_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: trelacion_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_trelacion
@@ -1174,7 +1178,7 @@ ALTER TABLE ONLY sip_trelacion
 
 
 --
--- Name: tsitio_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: tsitio_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_tsitio
@@ -1182,7 +1186,7 @@ ALTER TABLE ONLY sip_tsitio
 
 
 --
--- Name: ubicacion_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ubicacion_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sip_ubicacion
@@ -1190,7 +1194,7 @@ ALTER TABLE ONLY sip_ubicacion
 
 
 --
--- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY usuario
@@ -1198,28 +1202,28 @@ ALTER TABLE ONLY usuario
 
 
 --
--- Name: index_usuario_on_confirmation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_usuario_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_usuario_on_confirmation_token ON usuario USING btree (confirmation_token);
 
 
 --
--- Name: index_usuario_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_usuario_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_usuario_on_email ON usuario USING btree (email);
 
 
 --
--- Name: sip_busca_mundep; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: sip_busca_mundep; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX sip_busca_mundep ON sip_mundep USING gin (mundep);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
@@ -1437,7 +1441,7 @@ ALTER TABLE ONLY sip_ubicacion
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user",public;
+SET search_path TO "$user", public;
 
 INSERT INTO schema_migrations (version) VALUES ('20150327104439'), ('20150413160156'), ('20150413160157'), ('20150413160158'), ('20150413160159'), ('20150416074423'), ('20150503110048'), ('20150503120915'), ('20150504161548'), ('20150507045700'), ('20150507202524'), ('20150510125926'), ('20150510130031'), ('20150521181918'), ('20150528100944'), ('20150529085519'), ('20150603181900'), ('20150604101858'), ('20150604102321'), ('20150604155923'), ('20150702224217'), ('20150707132824'), ('20150707164448'), ('20150710114451'), ('20150715013755'), ('20150717101243'), ('20150724003736'), ('20150803082520'), ('20150809032138'), ('20151016015543'), ('20151016101736'), ('20151020203421'), ('20151027111828'), ('20151030154458'), ('20151113104833'), ('20151113185225'), ('20160518025044'), ('20160519090811'), ('20160519195544'), ('20160520105206');
 
