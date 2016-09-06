@@ -25,16 +25,16 @@
   <%= f.input :idioma %>
   <%= f.input :email %>
   <%= f.input :encrypted_password %>
-  <%= f.input :fecharenovacion,
+  <%= f.input :fecharenovacion_localizada,
     input_html: { "data-behaviour" => "datepicker" }, 
     as: :string
   %>
   <%= f.input :diasvigencia %>
-  <%= f.input :fechacreacion,
+  <%= f.input :fechacreacion_localizada,
     input_html: { "data-behaviour" => "datepicker" }, 
     as: :string
   %>
-	<%= f.input :fechadeshabilitacion,
+	<%= f.input :fechadeshabilitacion_localizada,
     input_html: { "data-behaviour" => "datepicker" }, 
     as: :string
   %>
@@ -45,7 +45,7 @@
 		wrapper_html: { style: "padding-bottom:18px;" },
 		label: 'Testigo para desbloquear'
 	%>
-	<%= f.input :locked_at,
+	<%= f.input :locked_at_localizada,
 		label: 'Hora del Bloqueo',
 		input_html: { "data-behaviour" => "datepicker" }, 
 	  :as => :string

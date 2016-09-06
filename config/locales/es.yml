@@ -1,0 +1,11 @@
+
+es:
+  attributes:
+  activerecord:
+    attributes:
+      "usuario":
+        fecharenovacion_localizada:  Cuando se renovó
+        diasvigencia:  Días de vigencia tras renovación
+        fechacreacion_localizada:  Creación
+        fechadeshabilitacion_localizada:  Deshabilitación
+

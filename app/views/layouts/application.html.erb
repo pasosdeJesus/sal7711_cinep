@@ -4,7 +4,7 @@
 
 <% content_for :marca do %>
   <img class='logo-cinep' src="/images/logo.png"> 
-  <%= Sip.titulo %>
+  <!--%= Sip.titulo %-->
 <% end %>
 
 <% content_for :menu do %>
@@ -13,21 +13,24 @@
       <%= menu_item "Buscar", sal7711_gen.buscar_path %>
       <%= menu_item "Manual de Uso", "/Manual_de_Uso_Archivo_Digital_de_Prensa_CINEP.pdf", target: '_blank' %>
       <%= menu_item "Acerca de", sip.acercade_path %>
-      <%= menu_item "Nuevo Artículo", sal7711_gen.new_articulo_path%>
+      <% if can? :edit, Sal7711Gen::Articulo %>
+        <%= menu_item "Nuevo Artículo", sal7711_gen.new_articulo_path %>
+      <% end %>
     <% end %>
   <% end %>
   <%= menu_group :pull => :right do %>
     <% urlop = Rails.configuration.action_mailer.default_url_options %>
     <% if current_usuario %>
-      <!--% if !current_usuario.autenticado_por_ip %-->
         <%= drop_down "Administrar" do %>
-          <!--%= menu_item "Clave", sip.editar_registro_usuario_path %-->
+          <% if can? :cambiarclave, ::Usuario %>
+            <%= menu_item "Clave", main_app.editar_registro_usuario_path %>
+          <% end %>
           <% if current_usuario.rol == Ability::ROLADMIN %>
-            <!--%= menu_item "Usuarios", sip.usuarios_path %-->
+            <%= menu_item "Usuarios", main_app.usuarios_path %>
             <%= menu_item "Tablas Básicas", sip.tablasbasicas_path %>
             <%= menu_item "Consultas por usuario", "/bitacora/admin" %>
             <%= menu_item "Consultas en tiempo", "/bitacora/tiempo" %>
-            <%= menu_item "Enviar instrucciones de reconfirmación", "/usuarios/reconfirma" %>
+            <!--%= menu_item "Enviar instrucciones de reconfirmación", "/usuarios/reconfirma" %-->
           <% end %>
         <% end %>
         <%= menu_item "Salir #{current_usuario.nusuario}", main_app.sign_out_path %>

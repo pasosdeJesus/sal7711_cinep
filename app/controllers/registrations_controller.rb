@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 require 'devise/registrations_controller'
+require 'mail'
 
 class ::RegistrationsController < Devise::RegistrationsController 
 
@@ -16,7 +17,7 @@ class ::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    d = Mail::Address.new(params[:usuario][:email]).domain
+    d = ::Mail::Address.new(params[:usuario][:email]).domain
     if Organizacion.where(dominiocorreo: d).count != 1 then
       set_flash_message :error, :correo_desconocido
       clean_up_passwords resource

@@ -77,6 +77,7 @@ class Ability  < Sal7711Gen::Ability
     can :contar, Sip::Ubicacion
     can :buscar, Sip::Ubicacion
     can :lista, Sip::Ubicacion
+    can :index, Sip::Municipio
     can :descarga_anexo, Sip::Anexo
     can :nuevo, Sip::Ubicacion
     if usuario.rol then
@@ -93,43 +94,27 @@ class Ability  < Sal7711Gen::Ability
       end
 
       can :read, Sal7711Gen::Articulo
+      can :read, Sal7711Gen::Categoriaprensa
+      can :read, Sip::Ubicacion
+      can :new, Sip::Ubicacion
+      can [:update, :create, :destroy], Sip::Ubicacion
+      revisarvig = true
       case usuario.rol 
-      when Ability::ROLINV, Ability::ROLINVANON
-        if !diasv  || !fechar
-          @@ultimo_error_aut = 
-            "Usuario sin fecha de renovación o tiempo de vigencia"
-          return
-        end
-        fechaf = fechar + diasv
-        hoy = Date.today
-        if hoy < fechar || hoy > fechaf
-          @@ultimo_error_aut = "Sin vigencia"
-          return
-        end
-        can :read, Sal7711Gen::Categoriaprensa
-        can :read, Sip::Ubicacion
-        can :new, Sip::Ubicacion
-        can [:update, :create, :destroy], Sip::Ubicacion
+      when Ability::ROLINVANON
+      when Ability::ROLINV
+        can :cambiarclave, ::Usuario
       when Ability::ROLADMINORG
-        if !diasv  || !fechar
-          @@ultimo_error_aut = 
-            "Usuario sin fecha de renovación o tiempo de vigencia"
-          return
-        end
-        fechaf = fechar + diasv
-        hoy = Date.today
-        if hoy < fechar || hoy > fechaf
-          @@ultimo_error_aut = "Sin vigencia"
-          return
-        end
-        can :read, Sal7711Gen::Categoriaprensa
-        can :read, Sip::Ubicacion
-        can :new, Sip::Ubicacion
-        can [:update, :create, :destroy], Sip::Ubicacion
+        can :cambiarclave, ::Usuario
       when Ability::ROLINDEXADOR
+        revisarvig = false
+        can :cambiarclave, ::Usuario
         can :manage, Sip::Ubicacion
+        can :manage, Sal7711Gen::Articulo
       when Ability::ROLADMIN
-        can :read, Sal7711Gen::Categoriaprensa
+        revisarvig = false
+        can :cambiarclave, ::Usuario
+        can :manage, Sal7711Gen::Categoriaprensa
+        can :manage, Sal7711Gen::Articulo
         can :manage, Sip::Ubicacion
         can :manage, Usuario
         can :manage, :tablasbasicas
@@ -138,6 +123,21 @@ class Ability  < Sal7711Gen::Ability
           can :manage, c
         end
       end
+
+      if revisarvig
+        if !diasv  || !fechar
+          @@ultimo_error_aut = 
+            "Usuario sin fecha de renovación o tiempo de vigencia"
+          return
+        end
+        fechaf = fechar + diasv
+        hoy = Date.today
+        if hoy < fechar || hoy > fechaf
+          @@ultimo_error_aut = "Sin vigencia"
+          return
+        end
+      end # revisarvig
+
     end
   end
 
