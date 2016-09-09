@@ -225,5 +225,14 @@ module Sal7711Gen
       @cprob += verifica_paginas
       @cprob += verifica_categorias
     end
+
+    def prepara_pagina_comp(articulos, params)
+      if params[:buscar] && params[:buscar][:lote] && params[:buscar][:lote] != ''
+        pl = params[:buscar][:lote].to_i
+        articulos = articulos.where('lote_id = ?', pl)
+      end
+      return articulos
+    end
+
   end
 end

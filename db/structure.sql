@@ -206,6 +206,41 @@ ALTER SEQUENCE ip_organizacion_id_seq OWNED BY ip_organizacion.id;
 
 
 --
+-- Name: lote; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE lote (
+    id integer NOT NULL,
+    usuario_id integer NOT NULL,
+    candfecha date NOT NULL,
+    canddepartamento integer,
+    candmunicipio integer,
+    candfuenteprensa integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: lote_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE lote_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: lote_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE lote_id_seq OWNED BY lote.id;
+
+
+--
 -- Name: organizacion; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -258,9 +293,9 @@ CREATE TABLE sal7711_gen_articulo (
     id integer NOT NULL,
     departamento_id integer,
     municipio_id integer,
-    fuenteprensa_id integer NOT NULL,
-    fecha date NOT NULL,
-    pagina character varying(20) NOT NULL,
+    fuenteprensa_id integer,
+    fecha date,
+    pagina character varying(20),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     texto text,
@@ -270,7 +305,8 @@ CREATE TABLE sal7711_gen_articulo (
     adjunto_updated_at timestamp without time zone,
     anexo_id_antiguo integer,
     adjunto_descripcion character varying(1500),
-    onbase_itemnum integer
+    onbase_itemnum integer,
+    lote_id integer
 );
 
 
@@ -923,6 +959,13 @@ ALTER TABLE ONLY ip_organizacion ALTER COLUMN id SET DEFAULT nextval('ip_organiz
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY lote ALTER COLUMN id SET DEFAULT nextval('lote_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY organizacion ALTER COLUMN id SET DEFAULT nextval('organizacion_id_seq'::regclass);
 
 
@@ -991,6 +1034,14 @@ ALTER TABLE ONLY sip_etiqueta
 
 ALTER TABLE ONLY ip_organizacion
     ADD CONSTRAINT ip_organizacion_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: lote_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY lote
+    ADD CONSTRAINT lote_pkey PRIMARY KEY (id);
 
 
 --
@@ -1246,11 +1297,35 @@ ALTER TABLE ONLY sip_departamento
 
 
 --
+-- Name: fk_rails_15fdede59a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY lote
+    ADD CONSTRAINT fk_rails_15fdede59a FOREIGN KEY (canddepartamento) REFERENCES sip_departamento(id);
+
+
+--
+-- Name: fk_rails_2105d54ece; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY lote
+    ADD CONSTRAINT fk_rails_2105d54ece FOREIGN KEY (candfuenteprensa) REFERENCES sip_fuenteprensa(id);
+
+
+--
 -- Name: fk_rails_2831af4765; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ip_organizacion
     ADD CONSTRAINT fk_rails_2831af4765 FOREIGN KEY (organizacion_id) REFERENCES organizacion(id);
+
+
+--
+-- Name: fk_rails_3562d6b9f8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY lote
+    ADD CONSTRAINT fk_rails_3562d6b9f8 FOREIGN KEY (candmunicipio) REFERENCES sip_municipio(id);
 
 
 --
@@ -1270,6 +1345,14 @@ ALTER TABLE ONLY sal7711_gen_bitacora
 
 
 --
+-- Name: fk_rails_5db7c659bb; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY lote
+    ADD CONSTRAINT fk_rails_5db7c659bb FOREIGN KEY (usuario_id) REFERENCES usuario(id);
+
+
+--
 -- Name: fk_rails_65eae7449f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1283,6 +1366,14 @@ ALTER TABLE ONLY sal7711_gen_articulo
 
 ALTER TABLE ONLY sal7711_gen_articulo_categoriaprensa
     ADD CONSTRAINT fk_rails_7d1213c35b FOREIGN KEY (articulo_id) REFERENCES sal7711_gen_articulo(id);
+
+
+--
+-- Name: fk_rails_8106dc3132; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY sal7711_gen_articulo
+    ADD CONSTRAINT fk_rails_8106dc3132 FOREIGN KEY (lote_id) REFERENCES lote(id);
 
 
 --
@@ -1443,6 +1534,6 @@ ALTER TABLE ONLY sip_ubicacion
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20150327104439'), ('20150413160156'), ('20150413160157'), ('20150413160158'), ('20150413160159'), ('20150416074423'), ('20150503110048'), ('20150503120915'), ('20150504161548'), ('20150507045700'), ('20150507202524'), ('20150510125926'), ('20150510130031'), ('20150521181918'), ('20150528100944'), ('20150529085519'), ('20150603181900'), ('20150604101858'), ('20150604102321'), ('20150604155923'), ('20150702224217'), ('20150707132824'), ('20150707164448'), ('20150710114451'), ('20150715013755'), ('20150717101243'), ('20150724003736'), ('20150803082520'), ('20150809032138'), ('20151016015543'), ('20151016101736'), ('20151020203421'), ('20151027111828'), ('20151030154458'), ('20151113104833'), ('20151113185225'), ('20160518025044'), ('20160519090811'), ('20160519195544'), ('20160520105206');
+INSERT INTO schema_migrations (version) VALUES ('20150327104439'), ('20150413160156'), ('20150413160157'), ('20150413160158'), ('20150413160159'), ('20150416074423'), ('20150503110048'), ('20150503120915'), ('20150504161548'), ('20150507045700'), ('20150507202524'), ('20150510125926'), ('20150510130031'), ('20150521181918'), ('20150528100944'), ('20150529085519'), ('20150603181900'), ('20150604101858'), ('20150604102321'), ('20150604155923'), ('20150702224217'), ('20150707132824'), ('20150707164448'), ('20150710114451'), ('20150715013755'), ('20150717101243'), ('20150724003736'), ('20150803082520'), ('20150809032138'), ('20151016015543'), ('20151016101736'), ('20151020203421'), ('20151027111828'), ('20151030154458'), ('20151113104833'), ('20151113185225'), ('20160518025044'), ('20160519090811'), ('20160519195544'), ('20160520105206'), ('20160906031704'), ('20160906071321');
 
 

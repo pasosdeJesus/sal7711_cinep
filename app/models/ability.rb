@@ -110,6 +110,7 @@ class Ability  < Sal7711Gen::Ability
         can :cambiarclave, ::Usuario
         can :manage, Sip::Ubicacion
         can :manage, Sal7711Gen::Articulo
+        can :manage, Lote
       when Ability::ROLADMIN
         revisarvig = false
         can :cambiarclave, ::Usuario
@@ -117,6 +118,8 @@ class Ability  < Sal7711Gen::Ability
         can :manage, Sal7711Gen::Articulo
         can :manage, Sip::Ubicacion
         can :manage, Usuario
+        can :manage, Lote
+      when Ability::ROLADMIN
         can :manage, :tablasbasicas
         @@tablasbasicas.each do |t|
           c = Ability.tb_clase(t)
