@@ -1,0 +1,35 @@
+<article>
+  <h1>Nuevo lote</h1>
+  <%= simple_form_for @lote, 
+    html: {class: 'form-horizontal', multipart: true} do |f| %>
+      <%= f.error_notification %>
+
+      <%= f.input :candfecha_localizada, 
+        input_html: { "data-behaviour" => "datepicker"}, 
+        as: :string %>
+
+      <%= render partial: 'sal7711_gen/articulos/geo_campos', locals: { f: f } %>
+
+      <%= f.association :fuenteprensa,
+        collection: Sip::Fuenteprensa.habilitados,
+        label_method: :nombre, 
+        value_method: :id,
+        include_blank: false %>
+  
+      <div class="control-group">
+        <%= f.label :articulos, class: 'control-label' %>
+        <div class="controls">
+          <%= file_field_tag "imagenes[]", webkitdirectory: true %>
+        </div>
+      </div>
+
+     <div class="form-actions">
+       <%= f.button :submit, "Enviar" %>
+       <%= link_to t('.cancel', default: t("helpers.links.cancel")), 
+         sal7711_gen.articulos_path, class: 'btn'  %>
+     </div>
+   <% end %>
+
+ </div>
+</article>
+

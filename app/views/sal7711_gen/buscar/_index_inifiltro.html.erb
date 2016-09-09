@@ -1,0 +1,12 @@
+
+<% if can? :edit, Sal7711Gen::Articulo %>
+  <%= f.input :lote,
+    collection: ::Lote.all.order(:id),
+    label_method: lambda { |t| t.id.to_s + " - " + t.candfecha_localizada.to_s },
+    value_method: :id,
+    include_blank: true,
+    input_html: { class: 'chosen-select'},
+    required: false %>
+<% end %>
+
+<label class="select optional control-label" for="buscar_fechaini">Rango de fechas</label>
