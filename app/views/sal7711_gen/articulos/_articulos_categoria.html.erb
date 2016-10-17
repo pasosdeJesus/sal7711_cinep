@@ -1,0 +1,19 @@
+<div style="padding-bottom: 18px;" class="input select categoriaprensa_sinorden">
+  <label class="select required control-label" for="categoriaprensa_sinorden">
+    Categoria Prensa Sin Orden</label>
+  <%= 
+    p = options_from_collection_for_select(
+      Sal7711Gen::Categoriaprensa.habilitados, "id", "presenta_nombre"
+    )
+    select_tag "categoriaprensa_sinorden", p, multiple: true,
+      class: 'chosen-select'
+  %>
+</div>
+
+<%= f.association :categoriaprensa, 
+  collection: Sal7711Gen::ArticuloCategoriaprensa.where(articulo_id: @articulo.id).order(:orden),
+  value_method: :categoriaprensa_id,
+  label_method: :categoriaprensa_id
+  #input_html: { class: 'chosen-select' }
+%>
+  
