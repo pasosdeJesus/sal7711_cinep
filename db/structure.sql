@@ -329,7 +329,8 @@ CREATE SEQUENCE sal7711_gen_articulo_categoriaprensa_id_seq
 CREATE TABLE sal7711_gen_articulo_categoriaprensa (
     articulo_id integer NOT NULL,
     categoriaprensa_id integer NOT NULL,
-    id integer DEFAULT nextval('sal7711_gen_articulo_categoriaprensa_id_seq'::regclass) NOT NULL
+    id integer DEFAULT nextval('sal7711_gen_articulo_categoriaprensa_id_seq'::regclass) NOT NULL,
+    orden integer
 );
 
 
@@ -962,6 +963,82 @@ CREATE TABLE usuario (
 
 
 --
+-- Name: vcatporarticulo; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW vcatporarticulo AS
+ SELECT sal7711_gen_articulo.lote_id,
+    sal7711_gen_articulo.id AS articulo_id,
+    count(sal7711_gen_articulo_categoriaprensa.categoriaprensa_id) AS ncat
+   FROM (sal7711_gen_articulo
+     LEFT JOIN sal7711_gen_articulo_categoriaprensa ON ((sal7711_gen_articulo_categoriaprensa.articulo_id = sal7711_gen_articulo.id)))
+  GROUP BY sal7711_gen_articulo.lote_id, sal7711_gen_articulo.id;
+
+
+--
+-- Name: vestadisticalote; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW vestadisticalote AS
+ SELECT DISTINCT sal7711_gen_articulo.lote_id,
+    COALESCE(array_length(ARRAY( SELECT vcatporarticulo.articulo_id
+           FROM vcatporarticulo
+          WHERE ((vcatporarticulo.lote_id = sal7711_gen_articulo.lote_id) AND (vcatporarticulo.ncat = 0))), 1), 0) AS sin,
+    COALESCE(array_length(ARRAY( SELECT vcatporarticulo.articulo_id
+           FROM vcatporarticulo
+          WHERE ((vcatporarticulo.lote_id = sal7711_gen_articulo.lote_id) AND (vcatporarticulo.ncat > 0))), 1), 0) AS con
+   FROM sal7711_gen_articulo;
+
+
+--
+-- Name: vestadolote; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW vestadolote AS
+ SELECT
+        CASE
+            WHEN (vestadisticalote.con = 0) THEN 'EN ESPERA'::text
+            WHEN (vestadisticalote.sin = 0) THEN 'PROCESADO'::text
+            ELSE 'EN PROGRESO'::text
+        END AS estado,
+    vestadisticalote.lote_id,
+    date(lote.created_at) AS fecha
+   FROM (vestadisticalote
+     JOIN lote ON ((vestadisticalote.lote_id = lote.id)))
+  ORDER BY
+        CASE
+            WHEN (vestadisticalote.con = 0) THEN 'EN ESPERA'::text
+            WHEN (vestadisticalote.sin = 0) THEN 'PROCESADO'::text
+            ELSE 'EN PROGRESO'::text
+        END, vestadisticalote.lote_id;
+
+
+--
+-- Name: vestlote; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW vestlote AS
+ SELECT t.lote_id,
+    s.proc,
+    t.tot,
+    (t.tot - s.proc) AS por
+   FROM ( SELECT sal7711_gen_articulo.lote_id,
+            count(sal7711_gen_articulo.id) AS proc
+           FROM sal7711_gen_articulo
+          WHERE (NOT (sal7711_gen_articulo.id IN ( SELECT sal7711_gen_articulo_1.id
+                   FROM (sal7711_gen_articulo_categoriaprensa
+                     JOIN sal7711_gen_articulo sal7711_gen_articulo_1 ON ((sal7711_gen_articulo_categoriaprensa.articulo_id = sal7711_gen_articulo_1.id))))))
+          GROUP BY sal7711_gen_articulo.lote_id
+          ORDER BY sal7711_gen_articulo.lote_id) s,
+    ( SELECT sal7711_gen_articulo.lote_id,
+            count(sal7711_gen_articulo.id) AS tot
+           FROM sal7711_gen_articulo
+          GROUP BY sal7711_gen_articulo.lote_id
+          ORDER BY sal7711_gen_articulo.lote_id) t
+  WHERE (s.lote_id = t.lote_id);
+
+
+--
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1555,6 +1632,6 @@ ALTER TABLE ONLY sip_ubicacion
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20150327104439'), ('20150413160156'), ('20150413160157'), ('20150413160158'), ('20150413160159'), ('20150416074423'), ('20150503110048'), ('20150503120915'), ('20150504161548'), ('20150507045700'), ('20150507202524'), ('20150510125926'), ('20150510130031'), ('20150521181918'), ('20150528100944'), ('20150529085519'), ('20150603181900'), ('20150604101858'), ('20150604102321'), ('20150604155923'), ('20150702224217'), ('20150707132824'), ('20150707164448'), ('20150710114451'), ('20150715013755'), ('20150717101243'), ('20150724003736'), ('20150803082520'), ('20150809032138'), ('20151016015543'), ('20151016101736'), ('20151020203421'), ('20151027111828'), ('20151030154458'), ('20151113104833'), ('20151113185225'), ('20160518025044'), ('20160519090811'), ('20160519195544'), ('20160520105206'), ('20160906031704'), ('20160906071321'), ('20160921102923'), ('20160921112808');
+INSERT INTO schema_migrations (version) VALUES ('20150327104439'), ('20150413160156'), ('20150413160157'), ('20150413160158'), ('20150413160159'), ('20150416074423'), ('20150503110048'), ('20150503120915'), ('20150504161548'), ('20150507045700'), ('20150507202524'), ('20150510125926'), ('20150510130031'), ('20150521181918'), ('20150528100944'), ('20150529085519'), ('20150603181900'), ('20150604101858'), ('20150604102321'), ('20150604155923'), ('20150702224217'), ('20150707132824'), ('20150707164448'), ('20150710114451'), ('20150715013755'), ('20150717101243'), ('20150724003736'), ('20150803082520'), ('20150809032138'), ('20151016015543'), ('20151016101736'), ('20151020203421'), ('20151027111828'), ('20151030154458'), ('20151113104833'), ('20151113185225'), ('20160518025044'), ('20160519090811'), ('20160519195544'), ('20160520105206'), ('20160906031704'), ('20160906071321'), ('20160921102923'), ('20160921112808'), ('20161004120737');
 
 

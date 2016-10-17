@@ -227,6 +227,40 @@ module Sal7711Gen
     end
 
     def prepara_pagina_comp(articulos, params)
+      # R-3.6.2-2 El estado de un lote depende de la cantidad de imágenes 
+      # por procesar (i) y la cantidad de artículo procesados (a). 
+      # Es invariante que i+a>0. 
+      # El estado es 
+      #   "En espera" si a=0. 
+      #   "En progreso" si a>0 y i>0. 
+      #   "Procesado" si i=0.
+      ActiveRecord::Base.connection.execute(
+        'CREATE OR REPLACE VIEW vcatporarticulo AS 
+        SELECT lote_id, sal7711_gen_articulo.id AS articulo_id, 
+        COUNT(sal7711_gen_articulo_categoriaprensa.categoriaprensa_id) AS ncat 
+        FROM sal7711_gen_articulo LEFT JOIN 
+        sal7711_gen_articulo_categoriaprensa 
+        ON articulo_id=sal7711_gen_articulo.id group by 1,2'
+      )
+
+      ActiveRecord::Base.connection.execute(
+        'CREATE OR REPLACE VIEW vestadisticalote AS 
+        SELECT DISTINCT lote_id, COALESCE(ARRAY_LENGTH(ARRAY(
+        SELECT articulo_id FROM vcatporarticulo WHERE 
+        vcatporarticulo.lote_id=sal7711_gen_articulo.lote_id AND ncat=0),1), 0)
+        AS SIN, COALESCE(ARRAY_LENGTH(ARRAY(
+        SELECT articulo_id from vcatporarticulo WHERE 
+        vcatporarticulo.lote_id=sal7711_gen_articulo.lote_id and ncat>0),1), 0)
+        AS con FROM sal7711_gen_articulo;'
+      )
+      ActiveRecord::Base.connection.execute(
+        "CREATE OR REPLACE VIEW vestadolote AS 
+        SELECT CASE WHEN con='0' THEN 'EN ESPERA' 
+        WHEN sin=0 THEN 'PROCESADO' ELSE 'EN PROGRESO' END AS estado, 
+        lote_id, DATE(created_at) AS fecha 
+        FROM vestadisticalote JOIN lote ON vestadisticalote.lote_id=lote.id
+        ORDER BY 1, 2;"
+      )
       if params[:buscar] && params[:buscar][:lote] && params[:buscar][:lote] != ''
         pl = params[:buscar][:lote].to_i
         articulos = articulos.where('lote_id = ?', pl)

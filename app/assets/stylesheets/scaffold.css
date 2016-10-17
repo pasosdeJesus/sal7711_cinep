@@ -179,3 +179,7 @@ h1 {
 .alert {
 	margin-top: 50px;
 }
+
+.articulo_categoriaprensa {
+	display: none;
+}

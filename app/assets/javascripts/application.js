@@ -13,6 +13,7 @@
 //= require sip/motor
 //= require sal7711_gen/motor
 //= require chosen-jquery
+//= require chosen.order.jquery
 //= require_tree .
 
 $(document).on('turbolinks:load ready page:change', function() {
@@ -22,12 +23,25 @@ $(document).on('turbolinks:load ready page:change', function() {
 	sip_prepara_eventos_comunes(root);
 	sal7711_gen_prepara_eventos_comunes(root);
 
-	$('[data-behaviour~=datepicker]').datepicker({
-		format: root.formato_fecha,
-		autoclose: true,
-		todayHighlight: true,
-		language: 'es'	
-	});
+	// Establece categorias de prensa que se muestra en el orden
+	// que se guardó
+	l=$($('#categoriaprensa_sinorden').get(0))
+	if (l != []) {
+		l.setSelectionOrder(
+				$('#articulo_categoriaprensa_ids').val(), 
+				true);
+	}
 
+	// Pone orden a categoria por guardar de acuerdo al orden dado
+	// por el usuario
+	$(document).on('change', '#categoriaprensa_sinorden', function(e) {
+		l=$($('#categoriaprensa_sinorden').get(0)).getSelectionOrder()
+		$('#articulo_categoriaprensa_ids').html('')
+		for(i = 0; i < l.length; i++) {
+			$('#articulo_categoriaprensa_ids').append(
+					'<option val="' + l[i] + '" selected>' +
+					l[i] + '</option>')
+		}
+	})
 });
 

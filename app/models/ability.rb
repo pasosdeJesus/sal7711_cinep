@@ -77,7 +77,10 @@ class Ability  < Sal7711Gen::Ability
     can :contar, Sip::Ubicacion
     can :buscar, Sip::Ubicacion
     can :lista, Sip::Ubicacion
+    can :index, Sip::Pais
+    can :index, Sip::Departamento
     can :index, Sip::Municipio
+    can :index, Sip::Clase
     can :descarga_anexo, Sip::Anexo
     can :nuevo, Sip::Ubicacion
     if usuario.rol then
@@ -119,7 +122,6 @@ class Ability  < Sal7711Gen::Ability
         can :manage, Sip::Ubicacion
         can :manage, Usuario
         can :manage, Lote
-      when Ability::ROLADMIN
         can :manage, :tablasbasicas
         @@tablasbasicas.each do |t|
           c = Ability.tb_clase(t)

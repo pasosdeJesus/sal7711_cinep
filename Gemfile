@@ -17,7 +17,9 @@ gem "colorize"
 # Para generar CSS
 gem "sass"
 gem "sass-rails"
-gem "compass-rails"
+#gem "compass-rails", git: "https://github.com/Compass/compass-rails.git", branch: "master"
+
+
 
 # Cuadros de selección para búsquedas
 gem 'chosen-rails'
@@ -58,7 +60,7 @@ gem "bootstrap-datepicker-rails"
 gem "simple_form"
 
 # Formularios anidados (algunos con ajax)
-#gem "cocoon", git: "https://github.com/vtamara/cocoon.git"
+gem "cocoon", git: "https://github.com/vtamara/cocoon.git"
 
 # Autenticación y roles
 gem "devise"
