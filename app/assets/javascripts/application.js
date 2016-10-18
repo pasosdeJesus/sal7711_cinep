@@ -14,13 +14,14 @@
 //= require sal7711_gen/motor
 //= require chosen-jquery
 //= require chosen.order.jquery
+//= require cocoon
 //= require_tree .
 
-$(document).on('turbolinks:load ready page:change', function() {
+$(document).on('turbolinks:load', function() {
 	var root;
 	root = typeof exports !== "undefined" && exports !== null ? 
 		exports : window;
-	sip_prepara_eventos_comunes(root);
+	sip_prepara_eventos_comunes(root, true);
 	sal7711_gen_prepara_eventos_comunes(root);
 
 	// Establece categorias de prensa que se muestra en el orden
