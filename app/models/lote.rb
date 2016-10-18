@@ -9,9 +9,9 @@ class Lote < ActiveRecord::Base
   
   belongs_to :usuario, foreign_key: "usuario_id", 
     validate: true, class_name: 'Usuario'
-  belongs_to :departamento, foreign_key: "canddepartamento", 
+  belongs_to :departamento, foreign_key: "canddepartamento_id", 
     validate: true, class_name: 'Sip::Departamento'
-  belongs_to :municipio, foreign_key: "candmunicipio", 
+  belongs_to :municipio, foreign_key: "candmunicipio_id", 
     validate: true, class_name: 'Sip::Municipio'
   belongs_to :fuenteprensa, foreign_key: "candfuenteprensa", 
     validate: true, class_name: 'Sip::Fuenteprensa'

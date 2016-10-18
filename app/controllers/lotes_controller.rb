@@ -22,8 +22,8 @@ class LotesController < ApplicationController
             nim += 1
             @a = @lote.articulos.create(adjunto: imagen)
             @a.fecha = @lote.candfecha
-            @a.departamento_id = @lote.canddepartamento
-            @a.municipio_id = @lote.candmunicipio
+            @a.departamento_id = @lote.canddepartamento_id
+            @a.municipio_id = @lote.candmunicipio_id
             @a.fuenteprensa_id = @lote.candfuenteprensa
             @a.adjunto_descripcion = "Imagen #{nim} del lote #{@lote.id}"
             @a.save(validate: false)
@@ -44,8 +44,8 @@ class LotesController < ApplicationController
   def lote_params
     params.require(:lote).permit(
       :candfecha_localizada,
-      :canddepartamento,
-      :candmunicipio,
+      :canddepartamento_id,
+      :candmunicipio_id,
       :candfuenteprensa
     )
   end # lote_params

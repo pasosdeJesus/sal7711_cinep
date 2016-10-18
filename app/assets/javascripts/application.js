@@ -28,9 +28,8 @@ $(document).on('turbolinks:load', function() {
 	// que se guardó
 	l=$($('#categoriaprensa_sinorden').get(0))
 	if (l != []) {
-		l.setSelectionOrder(
-				$('#articulo_categoriaprensa_ids').val(), 
-				true);
+		l.setSelectionOrder($('#articulo_categoriaprensa_ids').val(), 
+			true);
 	}
 
 	// Pone orden a categoria por guardar de acuerdo al orden dado
@@ -40,9 +39,15 @@ $(document).on('turbolinks:load', function() {
 		$('#articulo_categoriaprensa_ids').html('')
 		for(i = 0; i < l.length; i++) {
 			$('#articulo_categoriaprensa_ids').append(
-					'<option val="' + l[i] + '" selected>' +
-					l[i] + '</option>')
+				'<option val="' + l[i] + '" selected>' +
+				l[i] + '</option>')
 		}
 	})
+
+	$(document).on('change', 'select[id$=canddepartamento_id]', 
+			function(e) {
+				llena_municipio($(this), root, true)
+			})
+
 });
 
