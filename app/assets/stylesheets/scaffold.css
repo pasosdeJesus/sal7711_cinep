@@ -183,3 +183,19 @@ h1 {
 .articulo_categoriaprensa {
 	display: none;
 }
+
+
+/* Iconos personalizados para candados con base en
+ * https://codepen.io/jamesbarnett/pen/yILjk
+ */
+input.candadochequeo { display:none; } /* to hide the checkbox itself */
+input.candadochequeo + label:before {
+	font-family: FontAwesome;
+	display: inline-block;
+}
+
+input.candadochequeo + label:before { content: "\f09c"; } /* unchecked icon */
+input.candadochequeo + label:before { letter-spacing: 10px; } /* space between checkbox and label */
+
+input.candadochequeo:checked + label:before { content: "\f023"; } /* checked icon */
+input.candadochequeo:checked + label:before { letter-spacing: 5px; } /* allow space for check mark */

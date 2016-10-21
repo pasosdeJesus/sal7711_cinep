@@ -212,10 +212,10 @@ ALTER SEQUENCE ip_organizacion_id_seq OWNED BY ip_organizacion.id;
 CREATE TABLE lote (
     id integer NOT NULL,
     usuario_id integer NOT NULL,
-    candfecha date NOT NULL,
+    candfecha date,
     canddepartamento_id integer,
     candmunicipio_id integer,
-    candfuenteprensa integer,
+    candfuenteprensa_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -1407,7 +1407,7 @@ ALTER TABLE ONLY lote
 --
 
 ALTER TABLE ONLY lote
-    ADD CONSTRAINT fk_rails_2105d54ece FOREIGN KEY (candfuenteprensa) REFERENCES sip_fuenteprensa(id);
+    ADD CONSTRAINT fk_rails_2105d54ece FOREIGN KEY (candfuenteprensa_id) REFERENCES sip_fuenteprensa(id);
 
 
 --

@@ -13,7 +13,7 @@ class Lote < ActiveRecord::Base
     validate: true, class_name: 'Sip::Departamento'
   belongs_to :municipio, foreign_key: "candmunicipio_id", 
     validate: true, class_name: 'Sip::Municipio'
-  belongs_to :fuenteprensa, foreign_key: "candfuenteprensa", 
+  belongs_to :fuenteprensa, foreign_key: "candfuenteprensa_id", 
     validate: true, class_name: 'Sip::Fuenteprensa'
 
   campofecha_localizado :candfecha

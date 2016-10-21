@@ -1,0 +1,164 @@
+<%= simple_form_for @articulo, 
+  :html => { :class => 'form-horizontal' } do |f| 
+%>
+      <%= render partial: 'sip/hogar/errores', locals: { f: f } %>
+
+  <div class="row">
+    <div id="campos" class="col-sm-offset-0 col-sm-4">
+  
+
+      <div class="row">
+        <div class="col-xs-12">
+          <% if !f.object || !f.object.id || !f.object.adjunto_file_name %>
+            <%= f.input :adjunto, as: :file, label: 'Archivo (.jpg, .png, .tiff)',
+              input_html: { "data-imagenpre": 'imagen-detalle'} %>
+          <% else %>
+            <div class="articulo_adjunto">
+              <label for="articulo_attributes_<%=f.object.id%>_adjunto">Archivo</label>
+              <a id="articulo_adjunto_attributes_<%=f.object.id%>_adjunto" href="<%= buscar_mostraruno_url(f.object.id) %>", style="text-decoration:none"><%= f.object.adjunto_file_name %></a>
+            </div>
+          <% end %>
+        </div>
+        
+        <% if f.object.lote_id %> 
+          <div class="col-xs-11">
+            <%= f.input :fecha_localizada, 
+              :input_html => { "data-behaviour" => "datepicker"}, 
+              :as => :string %>
+          </div>
+          <div class="col-xs-1">
+            <input class="candadochequeo" 
+                   id="articulo_icfecha" 
+                   name="articulo[icfecha]"
+                   type="checkbox" 
+                   <%= @icfecha ? "checked" : "" %> />
+            <label for="articulo_icfecha"></label>
+          </div>
+        <% else %>
+          <div class="col-xs-12">
+            <%= f.input :fecha_localizada, 
+              :input_html => { "data-behaviour" => "datepicker"}, 
+              :as => :string %>
+          </div>
+        <% end %>
+
+
+        <% if f.object.lote_id %> 
+          <div class="col-xs-11">
+            <%= f.association :departamento,
+              collection: Sip::Departamento.habilitados.where(id_pais: 170),
+              label_method: :nombre, 
+              value_method: :id %>
+          </div>
+          <div class="col-xs-1">
+            <input class="candadochequeo" 
+                   id="articulo_icdepartamento" 
+                   name="articulo[icdepartamento]" 
+                   type="checkbox" 
+                   <%= @icdepartamento ? "checked" : "" %> />
+            <label for="articulo_icdepartamento"></label>
+          </div>
+        <% else %>
+          <div class="col-xs-12">
+            <%= f.association :departamento,
+              collection: Sip::Departamento.habilitados.where(id_pais: 170),
+              label_method: :nombre, 
+              value_method: :id %>
+          </div>
+        <% end %>
+
+        <% if f.object.lote_id %> 
+          <div class="col-xs-11">
+            <%= f.association :municipio,
+              collection: Sip::Municipio.habilitados.joins(:departamento).
+              where("sip_departamento.id_pais = '170'"),
+              label_method: :nombre, 
+              value_method: :id
+            %>
+          </div>
+          <div class="col-xs-1">
+            <input class="candadochequeo" 
+                   type="checkbox" 
+                   id="articulo_icmunicipio" 
+                   name="articulo[icmunicipio]" 
+                   <%= @icmunicipio ? "checked" : "" %> />
+            <label for="articulo_icmunicipio"></label>
+          </div>
+        <% else %>
+          <div class="col-xs-12">
+            <%= f.association :municipio,
+              collection: Sip::Municipio.habilitados.joins(:departamento).
+              where("sip_departamento.id_pais = '170'"),
+              label_method: :nombre, 
+              value_method: :id
+            %>
+          </div>
+        <% end %>
+
+        <div class="col-xs-12">
+          <%= render partial: 'articulos_categoria', locals: { f: f } %>
+        </div>
+
+        <% if f.object.lote_id %> 
+          <div class="col-xs-11">
+            <%= f.association :fuenteprensa,
+              collection: Sip::Fuenteprensa.habilitados,
+              label_method: :nombre, 
+              value_method: :id,
+              include_blank: false %>
+          </div>
+          <div class="col-xs-1">
+            <input class="candadochequeo"
+                   type="checkbox"
+                   id="articulo_icfuenteprensa" 
+                   name="articulo[icfuenteprensa]" 
+                   <%= @icfuenteprensa ? "checked" : "" %> />
+            <label for="articulo_icfuenteprensa"></label>
+          </div>
+        <% else %>
+          <div class="col-xs-12">
+            <%= f.association :fuenteprensa,
+              collection: Sip::Fuenteprensa.habilitados,
+              label_method: :nombre, 
+              value_method: :id,
+              include_blank: false %>
+          </div>
+        <% end %>
+
+        <%= render partial: 'articulos_complemento0', locals: { f: f } %>
+
+        <%= render partial: 'articulos_complemento1', locals: { f: f } %>
+  
+        <div class="col-xs-12">
+          <%= f.input :texto %> 
+        </div>
+
+        <div class="col-xs-12 form-actions abajocentrado">
+          <%= f.button :submit, value: 'Actualizar', class: 'btn-primary' %>
+
+          <% if f.object.lote_id %> 
+            <%= f.button :submit, 
+              name: 'progresar', 
+              value: 'Actualizar y progresar', 
+              class: 'btn-primary' %>
+          <% end %>
+
+          <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            sal7711_gen.articulos_path, :class => 'btn' 
+          %>
+        </div> <!--  clas="col-xs-12 form-actions abajocentrado" -->
+
+      </div> <!-- row -->
+
+    </div> <!-- class="col-sm-offset-0 col-sm-7 col-md-8" -->
+  
+    <div id="resultados" class="col-sm-offset-0 col-sm-8">
+      <% if f.object && f.object.id && f.object.adjunto_file_name %>
+        <%= image_tag url_descarga_jpg(f.object.id), width: "100%", id: 'imagen-detalle' %> 
+      <% else %>
+        <img src="#" width="100%", id='imagen-detalle'> 
+      <% end %>
+    </div> <!-- id: resultados -->
+  </div> <!-- row -->
+
+<% end %>

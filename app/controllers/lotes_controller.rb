@@ -24,7 +24,7 @@ class LotesController < ApplicationController
             @a.fecha = @lote.candfecha
             @a.departamento_id = @lote.canddepartamento_id
             @a.municipio_id = @lote.candmunicipio_id
-            @a.fuenteprensa_id = @lote.candfuenteprensa
+            @a.fuenteprensa_id = @lote.candfuenteprensa_id
             @a.adjunto_descripcion = "Imagen #{nim} del lote #{@lote.id}"
             @a.save(validate: false)
           }
@@ -46,7 +46,7 @@ class LotesController < ApplicationController
       :candfecha_localizada,
       :canddepartamento_id,
       :candmunicipio_id,
-      :candfuenteprensa
+      :candfuenteprensa_id
     )
   end # lote_params
 
