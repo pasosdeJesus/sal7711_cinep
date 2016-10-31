@@ -199,3 +199,7 @@ input.candadochequeo + label:before { letter-spacing: 10px; } /* space between c
 
 input.candadochequeo:checked + label:before { content: "\f023"; } /* checked icon */
 input.candadochequeo:checked + label:before { letter-spacing: 5px; } /* allow space for check mark */
+
+input[type=checkbox][disabled] + label:before {
+	color: lightgray
+}

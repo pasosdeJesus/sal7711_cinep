@@ -25,7 +25,15 @@ class LotesController < ApplicationController
             @a.departamento_id = @lote.canddepartamento_id
             @a.municipio_id = @lote.candmunicipio_id
             @a.fuenteprensa_id = @lote.candfuenteprensa_id
-            @a.adjunto_descripcion = "Imagen #{nim} del lote #{@lote.id}"
+            nar = Pathname(@a.adjunto_file_name).sub_ext('').to_s.to_i
+            if nar > 0 && nar < 1000
+                @a.orden = "0" + @a.adjunto_file_name
+                @a.orden = "0" + @a.orden if nar.to_s.to_i < 100
+                @a.orden = "0" + @a.orden if nar.to_s.to_i < 10
+            else
+              @a.orden = @a.adjunto_file_name
+            end
+            @a.adjunto_descripcion = "Imagen #{@a.orden} del lote #{@lote.id}"
             @a.save(validate: false)
           }
         end

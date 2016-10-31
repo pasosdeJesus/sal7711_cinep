@@ -8,4 +8,9 @@ es:
         diasvigencia:  Días de vigencia tras renovación
         fechacreacion_localizada:  Creación
         fechadeshabilitacion_localizada:  Deshabilitación
+      "lote":
+        candfecha_localizada: "Fecha por omisión"
+        departamento: "Departamento por omisión"
+        municipio: "Departamento por omisión"
+        fuenteprensa: "Fuente de prensa por omisión"
 

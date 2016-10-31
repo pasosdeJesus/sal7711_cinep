@@ -31,7 +31,9 @@
                    id="articulo_icfecha" 
                    name="articulo[icfecha]"
                    type="checkbox" 
-                   <%= @icfecha ? "checked" : "" %> />
+                   <%= @icfecha ? "checked" : "" %> 
+                   <%= "disabled='disabled'" if !f.object.departamento_id %>
+            />
             <label for="articulo_icfecha"></label>
           </div>
         <% else %>
@@ -55,7 +57,9 @@
                    id="articulo_icdepartamento" 
                    name="articulo[icdepartamento]" 
                    type="checkbox" 
-                   <%= @icdepartamento ? "checked" : "" %> />
+                   <%= @icdepartamento ? "checked" : "" %> 
+                   <%= "disabled='disabled'" if !f.object.departamento_id %>
+            />
             <label for="articulo_icdepartamento"></label>
           </div>
         <% else %>
@@ -81,7 +85,9 @@
                    type="checkbox" 
                    id="articulo_icmunicipio" 
                    name="articulo[icmunicipio]" 
-                   <%= @icmunicipio ? "checked" : "" %> />
+                   <%= @icmunicipio ? "checked" : "" %> 
+                   <%= "disabled='disabled'" if !f.object.municipio_id %>
+            />
             <label for="articulo_icmunicipio"></label>
           </div>
         <% else %>
@@ -112,7 +118,9 @@
                    type="checkbox"
                    id="articulo_icfuenteprensa" 
                    name="articulo[icfuenteprensa]" 
-                   <%= @icfuenteprensa ? "checked" : "" %> />
+                   <%= @icfuenteprensa ? "checked" : "" %> 
+                   <%= "disabled='disabled'" if !f.object.fuenteprensa_id %>
+                   />
             <label for="articulo_icfuenteprensa"></label>
           </div>
         <% else %>
@@ -134,14 +142,14 @@
         </div>
 
         <div class="col-xs-12 form-actions abajocentrado">
-          <%= f.button :submit, value: 'Actualizar', class: 'btn-primary' %>
-
           <% if f.object.lote_id %> 
             <%= f.button :submit, 
               name: 'progresar', 
               value: 'Actualizar y progresar', 
               class: 'btn-primary' %>
           <% end %>
+
+          <%= f.button :submit, value: 'Actualizar', class: 'btn-primary' %>
 
           <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
             sal7711_gen.articulos_path, :class => 'btn' 

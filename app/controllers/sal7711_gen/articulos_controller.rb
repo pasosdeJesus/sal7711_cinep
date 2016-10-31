@@ -94,18 +94,47 @@ module Sal7711Gen
           actualiza_lote(request.params[:articulo])
           format.html { 
             if @articulo.lote_id && params[:progresar] == 'Actualizar y progresar'
+              # Primero los no editados ordenados por nombre de archivo (posteriores primero, anteriores despues)
+              # A continuación los editados pero sin categorias completas también ordenados por nombre de archivo
              sig = Sal7711Gen::Articulo.connection.select_one(
                "SELECT articulo_id FROM vcatporarticulo 
-                WHERE lote_id='#{@articulo.lote_id.to_i}' 
-                AND articulo_id>'#{@articulo.id.to_i}' 
-                ORDER BY articulo_id LIMIT 1;")  
+                JOIN sal7711_gen_articulo ON 
+                vcatporarticulo.articulo_id=sal7711_gen_articulo.id
+                WHERE vcatporarticulo.lote_id='#{@articulo.lote_id.to_i}' 
+                AND orden > '#{@articulo.orden}' 
+                AND substring(adjunto_descripcion from 1 for 6) = 'Imagen'
+                ORDER BY orden LIMIT 1;")  
              if !sig
                sig = Sal7711Gen::Articulo.connection.select_one(
                  "SELECT articulo_id FROM vcatporarticulo 
-                  WHERE lote_id='#{@articulo.lote_id.to_i}' 
-                  AND articulo_id<'#{@articulo.id.to_i}' 
-                  ORDER BY articulo_id LIMIT 1;")  
+                  JOIN sal7711_gen_articulo ON 
+                  vcatporarticulo.articulo_id=sal7711_gen_articulo.id
+                  WHERE vcatporarticulo.lote_id='#{@articulo.lote_id.to_i}' 
+                  AND orden < '#{@articulo.orden}' 
+                  AND substring(adjunto_descripcion from 1 for 6) = 'Imagen'
+                  ORDER BY orden LIMIT 1;")  
              end
+             if !sig
+               sig = Sal7711Gen::Articulo.connection.select_one(
+                 "SELECT articulo_id FROM vcatporarticulo 
+                  JOIN sal7711_gen_articulo ON 
+                  vcatporarticulo.articulo_id=sal7711_gen_articulo.id
+                  WHERE vcatporarticulo.lote_id='#{@articulo.lote_id.to_i}' 
+                  AND articulo_id>'#{@articulo.id.to_i}' 
+                  AND ncat = 0
+                  ORDER BY orden LIMIT 1;")  
+             end
+             if !sig
+               sig = Sal7711Gen::Articulo.connection.select_one(
+                 "SELECT articulo_id FROM vcatporarticulo 
+                  JOIN sal7711_gen_articulo ON 
+                  vcatporarticulo.articulo_id=sal7711_gen_articulo.id
+                  WHERE vcatporarticulo.lote_id='#{@articulo.lote_id.to_i}' 
+                  AND articulo_id<'#{@articulo.id.to_i}' 
+                  AND ncat = 0
+                  ORDER BY orden LIMIT 1;")  
+             end
+
              if sig
                redirect_to edit_articulo_path(sig["articulo_id"]), 
                  notice: 'Artículo actualizado y progresando en lote.' 

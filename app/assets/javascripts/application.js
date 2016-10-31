@@ -49,5 +49,42 @@ $(document).on('turbolinks:load', function() {
 				llena_municipio($(this), root, true)
 			})
 
+	$(document).on('change', '#articulo_fecha_localizada', 
+			function(e) {
+				if ($(this).val() != "")
+					$("#articulo_icfecha").removeAttr("disabled");
+				else {
+					$("#articulo_icfecha").attr("disabled", true);
+					$("#articulo_icfecha").removeAttr("checked");
+				}
+			})
+	$(document).on('change', '#articulo_departamento_id', 
+			function(e) {
+				if ($(this).val() != "")
+					$("#articulo_icdepartamento").removeAttr("disabled");
+				else {
+					$("#articulo_icdepartamento").removeAttr("checked");
+					$("#articulo_icdepartamento").attr("disabled", true);
+				}
+			})
+	$(document).on('change', '#articulo_municipio_id', 
+			function(e) {
+				if ($(this).val() != "")
+					$("#articulo_icmunicipio").removeAttr("disabled");
+				else {
+					$("#articulo_icmunicipio").removeAttr("checked");
+					$("#articulo_icmunicipio").attr("disabled", true);
+				}
+			})
+	$(document).on('change', '#articulo_fuenteprensa_id', 
+			function(e) {
+				if ($(this).val() != "")
+					$("#articulo_icfuenteprensa").removeAttr("disabled");
+				else {
+					$("#articulo_icfuenteprensa").attr("disabled", true);
+					$("#articulo_icfuenteprensa").removeAttr("checked");
+				}
+			})
+
 });
 
