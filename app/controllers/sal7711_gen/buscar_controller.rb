@@ -36,61 +36,61 @@ module Sal7711Gen
 
     def autentica_especial
       return false
-      puts "OJO ipx, request=", request.inspect;
-      org = ::Organizacion.joins(:ip_organizacion)
-        .where('?<<=ip', request.remote_ip).take
-      if !current_usuario
-        nips = ::IpOrganizacion.where('? <<= ip', request.remote_ip).
-          count('organizacion_id', distinct: true)
-        if nips === 0
-          if (current_usuario && ::Organizacion.
-              where('usuarioip_id=?', current_usuario.id).
-              count('*') > 0)
-            # Si la organización ya no se autentica por IP se termina
-            # sesión de usuario
-            sign_out(current_usuario)
-          end
-          return false
-        elsif nips > 1
-          ::Ability::ultimo_error_aut = 'IP coincide con varias organizaciones'
-          puts "** Error: ", ::Ability::ultimo_error_aut 
-          return false
-        else
-          if !org.usuarioip_id
-            ::Ability.ultimo_error_aut = 'Organización sin Usuario IP'
-            puts "** Error: ", ::Ability::ultimo_error_aut 
-            return false
-          end
-          us = ::Usuario.find(org.usuarioip_id)
-          sign_in(us) #, bypass: true#, store: false
-          #byebug
-          current_usuario.autenticado_por_ip = true
-          current_usuario.save!
-          return true;
-        end
-      end
-      if current_usuario && current_usuario.autenticado_por_ip
-        if org.opciones_url_nombre_cif
-          Rails.configuration.action_mailer.default_url_options[:host] = 
-            org.opciones_url_nombre_cif
-        end
-        if org.opciones_url_puerto_cif
-          Rails.configuration.action_mailer.default_url_options[:port] = 
-            org.opciones_url_puerto_cif
-        end
-        if org.opciones_url_nombre_nocif
-          Rails.configuration.x.serv_nocif[:host] = 
-            org.opciones_url_nombre_nocif
-        end
-        if org.opciones_url_puerto_nocif
-          Rails.configuration.x.serv_nocif[:port] = 
-            org.opciones_url_puerto_nocif
-        end
-        puts "Rails.configuration.action_mailer.default_url_options=",
-          Rails.configuration.action_mailer.default_url_options
-        puts "Rails.configuration.x.serv_nocif=",
-          Rails.configuration.x.serv_nocif
-      end
+#      puts "OJO ipx, request=", request.inspect;
+#      org = ::Organizacion.joins(:ip_organizacion)
+#        .where('?<<=ip', request.remote_ip).take
+#      if !current_usuario
+#        nips = ::IpOrganizacion.where('? <<= ip', request.remote_ip).
+#          count('organizacion_id', distinct: true)
+#        if nips === 0
+#          if (current_usuario && ::Organizacion.
+#              where('usuarioip_id=?', current_usuario.id).
+#              count('*') > 0)
+#            # Si la organización ya no se autentica por IP se termina
+#            # sesión de usuario
+#            sign_out(current_usuario)
+#          end
+#          return false
+#        elsif nips > 1
+#          ::Ability::ultimo_error_aut = 'IP coincide con varias organizaciones'
+#          puts "** Error: ", ::Ability::ultimo_error_aut 
+#          return false
+#        else
+#          if !org.usuarioip_id
+#            ::Ability.ultimo_error_aut = 'Organización sin Usuario IP'
+#            puts "** Error: ", ::Ability::ultimo_error_aut 
+#            return false
+#          end
+#          us = ::Usuario.find(org.usuarioip_id)
+#          sign_in(us) #, bypass: true#, store: false
+#          #byebug
+#          current_usuario.autenticado_por_ip = true
+#          current_usuario.save!
+#          return true;
+#        end
+#      end
+#      if current_usuario && current_usuario.autenticado_por_ip
+#        if org.opciones_url_nombre_cif
+#          Rails.configuration.action_mailer.default_url_options[:host] = 
+#            org.opciones_url_nombre_cif
+#        end
+#        if org.opciones_url_puerto_cif
+#          Rails.configuration.action_mailer.default_url_options[:port] = 
+#            org.opciones_url_puerto_cif
+#        end
+#        if org.opciones_url_nombre_nocif
+#          Rails.configuration.x.serv_nocif[:host] = 
+#            org.opciones_url_nombre_nocif
+#        end
+#        if org.opciones_url_puerto_nocif
+#          Rails.configuration.x.serv_nocif[:port] = 
+#            org.opciones_url_puerto_nocif
+#        end
+#        puts "Rails.configuration.action_mailer.default_url_options=",
+#          Rails.configuration.action_mailer.default_url_options
+#        puts "Rails.configuration.x.serv_nocif=",
+#          Rails.configuration.x.serv_nocif
+#      end
     end
 
 
@@ -198,8 +198,8 @@ module Sal7711Gen
       r.do
       sep = ""
       lcat = ""
-      Sal7711Gen::Categoriaprensa.all.each do |r|
-        lcat += "#{sep}'#{r.codigo}'"
+      Sal7711Gen::Categoriaprensa.all.each do |cat|
+        lcat += "#{sep}'#{cat.codigo}'"
         sep = ", "
       end
 
