@@ -187,15 +187,17 @@ module Sal7711Gen
 
     def verifica_categorias_onbase
       cprob = ''
-      c="SELECT itemdata.itemnum, itemname FROM itemdata 
+      if false
+        c="SELECT itemdata.itemnum, itemname FROM itemdata 
       JOIN keyitem103 ON itemdata.itemnum=keyitem103.itemnum 
       WHERE itemname LIKE 'Prensa Cinep%' 
       AND itemdata.itemnum NOT IN (SELECT itemnum FROM keyxitem112);"
-      r = @client.execute(c)
-      r.try(:each) do |fila|
+        r = @client.execute(c)
+        r.try(:each) do |fila|
           cprob += "<br>Falta primera categoria en artículo #{fila['itemnum']}: #{fila['itemname']}"
+        end
+        r.do
       end
-      r.do
       sep = ""
       lcat = ""
       Sal7711Gen::Categoriaprensa.all.each do |cat|
@@ -328,21 +330,21 @@ module Sal7711Gen
           keytable113.keyvaluechar AS cat2,
           keytable114.keyvaluechar AS cat3
           FROM itemdata 
-          JOIN keyitem103 ON keyitem103.itemnum=itemdata.itemnum  
+          JOIN keyitem103 AS tfecha ON tfecha.itemnum=itemdata.itemnum  
           JOIN keyxitem101 ON keyxitem101.itemnum = itemdata.itemnum
-          JOIN keytable101 ON keyxitem101.keywordnum = keytable101.keywordnum 
+          JOIN keytable101 AS tfuenteprensa ON keyxitem101.keywordnum = tfuenteprensa.keywordnum 
           JOIN keyxitem104 ON keyxitem104.itemnum = itemdata.itemnum
-          JOIN keytable104 ON keyxitem104.keywordnum = keytable104.keywordnum 
+          JOIN keytable104 AS tpagina ON keyxitem104.keywordnum = tpagina.keywordnum 
           JOIN keyxitem112 ON keyxitem112.itemnum = itemdata.itemnum
-          JOIN keytable112 ON keyxitem112.keywordnum = keytable112.keywordnum 
+          JOIN keytable112 AS tcat1 ON keyxitem112.keywordnum = tcat1.keywordnum 
           LEFT JOIN keyxitem108 ON keyxitem108.itemnum = itemdata.itemnum
-          LEFT JOIN keytable108 ON keyxitem108.keywordnum = keytable108.keywordnum 
+          LEFT JOIN keytable108 AS tdepartamento ON keyxitem108.keywordnum = tdepartamento.keywordnum 
           LEFT JOIN keyxitem110 ON keyxitem110.itemnum = itemdata.itemnum
-          LEFT JOIN keytable110 ON keyxitem110.keywordnum = keytable110.keywordnum 
+          LEFT JOIN keytable110 AS tmunicipio ON keyxitem110.keywordnum = tmunicipio.keywordnum 
           LEFT JOIN keyxitem113 ON keyxitem113.itemnum = itemdata.itemnum
-          LEFT JOIN keytable113 ON keyxitem113.keywordnum = keytable113.keywordnum 
+          LEFT JOIN keytable113 AS tcat2 ON keyxitem113.keywordnum = tcat2.keywordnum 
           LEFT JOIN keyxitem114 ON keyxitem114.itemnum = itemdata.itemnum
-          LEFT JOIN keytable114 ON keyxitem114.keywordnum = keytable114.keywordnum 
+          LEFT JOIN keytable114 AS tcat3 ON keyxitem114.keywordnum = tcat3.keywordnum 
           WHERE itemdata.itemnum < #{maxitemnum}
           AND itemname LIKE 'Prensa Cinep%' 
           AND keyitem103.keyvaluedate >= '1960-01-01'
