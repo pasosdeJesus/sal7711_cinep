@@ -9,6 +9,8 @@ gem "rails-i18n"
 # Postgresql
 gem "pg"
 
+gem 'tiny_tds', '~> 0.7'
+
 gem 'puma'
 
 # Colores en consola
@@ -103,7 +105,7 @@ group :development do
   #gem "minitest-reporters"
  
   # Depurar
-  gem 'byebug'
+  #gem 'byebug'
 
   # Consola irb en páginas con excepciones o usando <%= console %> en vistas
   gem 'web-console'
