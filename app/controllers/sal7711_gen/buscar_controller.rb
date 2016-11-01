@@ -301,7 +301,29 @@ module Sal7711Gen
       return cprob
     end 
 
-    def sincroniza
+    def descarga_onbase(id, prefijoruta)
+      authorize! :read, Sal7711Gen::Articulo
+      conecta
+      c="SELECT filepath, itemdata.itemname 
+        FROM itemdata INNER JOIN itemdatapage 
+          ON itemdata.itemnum=itemdatapage.itemnum 
+        WHERE itemdata.itemnum='#{id.to_s}'";
+        rutar = @client.execute(c)
+        fila = rutar.first
+        titulo = fila["itemname"].strip
+        ruta = fila["filepath"].strip
+        rutaconv = ruta.gsub("\\", "/")
+        rlocal = prefijoruta + File.basename(rutaconv)
+        puts "ruta=#{ruta}, rlocal=#{rlocal}"
+        if (!File.exists? rlocal)
+          cmd="smbget -o #{rlocal} -p '#{ENV['CLAVE_DOMINIO']}' -w #{ENV['DOMINIO']} -u #{ENV['USUARIO_DOMINIO']} -v smb://#{ENV['IP_HBASE']}/#{ENV['CARPETA']}/#{rutaconv}"
+          puts cmd
+          r=`#{cmd}`
+        end
+        return [titulo, rlocal]
+    end
+
+    def sincroniza_onbase
       @examinados = 0
       @procesados = 0
       @sinc = []
@@ -310,17 +332,48 @@ module Sal7711Gen
       if !@client.active?
         conecta_onbase
       end
-      @cprob += verifica_fechas_onbase
-      @cprob += verifica_departamentos_onbase
-      @cprob += verifica_municipios_onbase
-      @cprob += verifica_fuenteprensa_onbase
-      @cprob += verifica_paginas
-      @cprob += verifica_categorias
-      return
+      if false
+        @cprob += verifica_fechas_onbase
+        @cprob += verifica_departamentos_onbase
+        @cprob += verifica_municipios_onbase
+        @cprob += verifica_fuenteprensa_onbase
+        @cprob += verifica_paginas_onbase
+        @cprob += verifica_categorias_onbase
+      end
+      #return
       #return if @cprob != ''
       minitemnum = Sal7711Gen::Articulo.maximum(:onbase_itemnum) || 0
       maxitemnum = 870
+      fbuenos = "FROM itemdata 
+          JOIN keyitem103 ON keyitem103.itemnum=itemdata.itemnum   
+          JOIN keyxitem101 ON keyxitem101.itemnum = itemdata.itemnum
+          JOIN keytable101 ON keyxitem101.keywordnum = keytable101.keywordnum 
+          JOIN keyxitem104 ON keyxitem104.itemnum = itemdata.itemnum
+          JOIN keytable104  ON keyxitem104.keywordnum = keytable104.keywordnum 
+          JOIN keyxitem112 ON keyxitem112.itemnum = itemdata.itemnum
+          JOIN keytable112  ON keyxitem112.keywordnum = keytable112.keywordnum 
+          LEFT JOIN keyxitem108 ON keyxitem108.itemnum = itemdata.itemnum
+          LEFT JOIN keytable108  ON 
+            keyxitem108.keywordnum = keytable108.keywordnum 
+          LEFT JOIN keyxitem110 ON keyxitem110.itemnum = itemdata.itemnum
+          LEFT JOIN keytable110  ON 
+            keyxitem110.keywordnum = keytable110.keywordnum 
+          LEFT JOIN keyxitem113 ON keyxitem113.itemnum = itemdata.itemnum
+          LEFT JOIN keytable113  ON 
+            keyxitem113.keywordnum = keytable113.keywordnum 
+          LEFT JOIN keyxitem114 ON keyxitem114.itemnum = itemdata.itemnum
+          LEFT JOIN keytable114  ON 
+            keyxitem114.keywordnum = keytable114.keywordnum 
+          WHERE keyitem103.keyvaluedate >= '1960-01-01'
+          AND keyitem103.keyvaluedate <= '#{Time.now.strftime("%Y-%m-%d")}'
+          AND itemname LIKE 'Prensa Cinep%' "
+
+#      c="SELECT DISTINCT itemdata.batchnum AS numlote
+#          #{fbuenos}
+#          ORDER BY numlote"
+ 
       c="SELECT itemdata.itemnum AS itemnum, itemdata.itemname AS itemname,
+          itemdata.batchnum AS batchnum,
           keyitem103.keyvaluedate AS fecha,
           keytable101.keyvaluechar AS fuenteprensa,
           keytable104.keyvaluechar AS pagina,
@@ -329,86 +382,107 @@ module Sal7711Gen
           keytable112.keyvaluechar AS cat1,
           keytable113.keyvaluechar AS cat2,
           keytable114.keyvaluechar AS cat3
-          FROM itemdata 
-          JOIN keyitem103 AS tfecha ON tfecha.itemnum=itemdata.itemnum  
-          JOIN keyxitem101 ON keyxitem101.itemnum = itemdata.itemnum
-          JOIN keytable101 AS tfuenteprensa ON keyxitem101.keywordnum = tfuenteprensa.keywordnum 
-          JOIN keyxitem104 ON keyxitem104.itemnum = itemdata.itemnum
-          JOIN keytable104 AS tpagina ON keyxitem104.keywordnum = tpagina.keywordnum 
-          JOIN keyxitem112 ON keyxitem112.itemnum = itemdata.itemnum
-          JOIN keytable112 AS tcat1 ON keyxitem112.keywordnum = tcat1.keywordnum 
-          LEFT JOIN keyxitem108 ON keyxitem108.itemnum = itemdata.itemnum
-          LEFT JOIN keytable108 AS tdepartamento ON keyxitem108.keywordnum = tdepartamento.keywordnum 
-          LEFT JOIN keyxitem110 ON keyxitem110.itemnum = itemdata.itemnum
-          LEFT JOIN keytable110 AS tmunicipio ON keyxitem110.keywordnum = tmunicipio.keywordnum 
-          LEFT JOIN keyxitem113 ON keyxitem113.itemnum = itemdata.itemnum
-          LEFT JOIN keytable113 AS tcat2 ON keyxitem113.keywordnum = tcat2.keywordnum 
-          LEFT JOIN keyxitem114 ON keyxitem114.itemnum = itemdata.itemnum
-          LEFT JOIN keytable114 AS tcat3 ON keyxitem114.keywordnum = tcat3.keywordnum 
-          WHERE itemdata.itemnum < #{maxitemnum}
-          AND itemname LIKE 'Prensa Cinep%' 
-          AND keyitem103.keyvaluedate >= '1960-01-01'
-          AND keyitem103.keyvaluedate <= '#{Time.now.strftime("%Y/%m/%d")}'
+          #{fbuenos}
+          AND itemdata.itemnum < #{maxitemnum}
           ORDER BY itemnum"
       puts "OJO q=#{c}"
       result = @client.execute(c)
-      puts "result.count=" + result.count.to_s
-#      result.try(:each) do |fila|
-#        itemnum = fila['itemnum']
-#        if Sal7711Gen::Articulo.where(onbase_itemnum: itemnum).count == 0
-#          itemname = it['itemname']
-#          puts "itemname #{itemname}"
-#          nart = Sal7711Gen::Articulo.new
-#          nart.onbase_itemnum = itemnum
-#          nart.adjunto_descripcion = itemname
-#          nart.fecha = fila['fecha']
-#          # Departamento
-#          #byebug
-#          dep = fila["departamento"]
-#          if dep && dep.strip != ''
-#            nart.departamento = Sip::Departamento.where("SUBSTRING(nombre FROM 1 FOR 45) = '#{dep.strip}'").first
-#              # Municipio
-#              mun=fila["municipio"]
-#              nart.municipio = Sip::Municipio.where(
-#                  id_departamento: nart.departamento_id).
-#                  where("SUBSTRING(nombre FROM 1 FOR 45) = '#{mun.strip}'").first
-#              end
-#            end
-#          end
-#          
-#
-#          # Fuente
-#          c2 = "SELECT keyvaluechar FROM keyxitem101, keytable101 WHERE
-#          keyxitem101.keywordnum = keytable101.keywordnum AND
-#          keyxitem101.itemnum = '#{itemnum}'"
-#          r2 = @client.execute(c2)
-#          if r2.count > 0
-#            v2 = r2.first["keyvaluechar"]
-#            r2.do
-#            if v2 && v2.strip != ''
-#              nart.fuenteprensa = Sip::Fuenteprensa.where("SUBSTRING(nombre FROM 1 FOR 45) = '#{v2.strip}'").first
-#            end
-#          else
-#            @cprob += "<br>Elemento #{itemnum} no tiene Fuente"
-#            r2.do
-#          end
-#
-#          # Pagina
-#          c2 = "SELECT keyvaluechar FROM keyxitem104, keytable104 WHERE
-#          keyxitem104.keywordnum = keytable104.keywordnum AND
-#          keyxitem104.itemnum = '#{itemnum}'"
-#          r2 = @client.execute(c2)
-#          if r2.count > 0
-#            v2 = r2.first["keyvaluechar"]
-#            r2.do
-#            if v2 && v2.strip != ''
-#              nart.pagina = v2.strip
-#            end
-#          else
-#            @cprob += "<br>Elemento #{itemnum} no tiene Página"
-#            r2.do
-#          end
-#          # Categorias, falta prio y antes cambiar tabla articulo_categoria para que tenga id
+      num = 0
+      result.try(:each) do |fila|
+        num += 1
+        itemnum = fila['itemnum']
+        if Sal7711Gen::Articulo.where(onbase_itemnum: itemnum).count == 0
+          itemname = fila['itemname']
+          puts "itemname #{itemname}"
+          nart = Sal7711Gen::Articulo.new
+          nart.onbase_itemnum = itemnum
+          nart.adjunto_descripcion = itemname
+          nart.fecha = fila['fecha']
+          # Lote
+          nlote = fila['batchnum'] 
+          if nlote 
+            if !Lote.exists?(nlote.to_i)
+              l = Lote.new
+              l.id = nlote.to_i
+              l.usuario = current_usuario
+              l.nombre = nart.fecha
+              l.save!
+            end
+            nart.lote_id = nlote
+          end
+
+          # Departamento
+          #          #byebug
+          dep = fila["departamento"]
+          if dep && dep.strip != ''
+            nart.departamento = Sip::Departamento.where("SUBSTRING(nombre FROM 1 FOR 45) = '#{dep.strip}'").first
+            # Municipio
+            mun=fila["municipio"]
+            if mun && mun.strip != ''
+              nart.municipio = Sip::Municipio.where(
+                id_departamento: nart.departamento_id).
+                where("SUBSTRING(nombre FROM 1 FOR 45) = '#{mun.strip}'").first
+            end
+          end
+        end
+
+        # Fuente de prensa
+        f = fila['fuenteprensa']
+        if !f || f.strip == ''
+          @cprob += "<br>Elemento #{itemnum} no tiene fuente (saltando)"
+          continue
+        end
+        nart.fuenteprensa = Sip::Fuenteprensa.where("SUBSTRING(nombre FROM 1 FOR 45) = '#{f.strip}'").first
+        if nart.fuenteprensa.nil?
+          @cprob += "<br>Elemento #{itemnum} tiene fuente errada #{f} (saltando)"
+          continue
+        end
+
+        # Pagina
+        byebug
+        p = fila['pagina']
+        if !p || p.strip == ''
+          @cprob += "<br>Elemento #{itemnum} no tiene página (saltando)"
+          continue
+        end
+        nart.pagina = p
+
+        nart.created_at = nart.fecha
+        nart.updated_at = Time.now
+
+        prefijoruta = File.join(
+          Sip.ruta_anexos, 
+          nart.created_at.year.to_s, 
+          nart.created_at.month.to_s.rjust(2, '0'),
+          nart.created_at.day.to_s.rjust(2, '0'),
+          "/"
+        )
+        byebug
+        titulo, rlocal = descarga_onbase(itemnum, prefijoruta.to_s)
+        
+
+        
+
+        nart.adjunto_file_name = "t"
+        nart.adjunto_content_type = "t"
+        nart.adjunto_file_size = "t"
+
+
+        nart.save
+    
+
+        # Categorias
+        c1 = fila['cat1']
+        if !c1 || c1.strip == ''
+          @cprob += "<br>Elemento #{itemnum} no tiene categoria 1 (saltando)"
+          continue
+        end
+        # OJO falta agregar categorias tras guardar articulo
+
+      end
+
+
+
 #          # Archivo descargar, reubicar y procesar
 #          @sinc << itemname
 #          @procesados += 1
