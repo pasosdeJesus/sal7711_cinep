@@ -4,7 +4,8 @@ class LotesController < ApplicationController
 
   def new
     authorize! :edit, Lote
-    @lote = Lote.new(candfecha: Date.today, usuario: current_usuario)
+    @lote = Lote.new(candfecha: Date.today, nombre: Date.today.to_s,
+                     usuario: current_usuario)
   end
 
   def create
@@ -52,6 +53,7 @@ class LotesController < ApplicationController
   def lote_params
     params.require(:lote).permit(
       :candfecha_localizada,
+      :nombre,
       :canddepartamento_id,
       :candmunicipio_id,
       :candfuenteprensa_id
