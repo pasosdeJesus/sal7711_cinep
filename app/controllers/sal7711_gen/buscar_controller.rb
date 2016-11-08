@@ -1,5 +1,7 @@
 # encoding: UTF-8
 require_dependency "sal7711_gen/concerns/controllers/buscar_controller"
+#require_dependency "paperclip/contet_type_detector.rb"
+
 
 module Sal7711Gen
   class BuscarController < ApplicationController
@@ -95,7 +97,8 @@ module Sal7711Gen
 
 
     def conecta_onbase
-      if !@client || @client.dead? || !@client.active?
+      #if !@client || @client.dead? || !@client.active?
+      if !@client || !@client.active?
         @client = TinyTds::Client.new(@@hbase)
         @client.execute("USE OnBase").do;
       end
@@ -301,50 +304,34 @@ module Sal7711Gen
       return cprob
     end 
 
-    def descarga_onbase(id, prefijoruta)
+    def descarga_onbase(rutaremota, prefijoruta)
       authorize! :read, Sal7711Gen::Articulo
-      conecta
-      c="SELECT filepath, itemdata.itemname 
-        FROM itemdata INNER JOIN itemdatapage 
-          ON itemdata.itemnum=itemdatapage.itemnum 
-        WHERE itemdata.itemnum='#{id.to_s}'";
-        rutar = @client.execute(c)
-        fila = rutar.first
-        titulo = fila["itemname"].strip
-        ruta = fila["filepath"].strip
-        rutaconv = ruta.gsub("\\", "/")
-        rlocal = prefijoruta + File.basename(rutaconv)
-        puts "ruta=#{ruta}, rlocal=#{rlocal}"
-        if (!File.exists? rlocal)
-          cmd="smbget -o #{rlocal} -p '#{ENV['CLAVE_DOMINIO']}' -w #{ENV['DOMINIO']} -u #{ENV['USUARIO_DOMINIO']} -v smb://#{ENV['IP_HBASE']}/#{ENV['CARPETA']}/#{rutaconv}"
-          puts cmd
-          r=`#{cmd}`
-        end
-        return [titulo, rlocal]
+      #conecta_onbase
+      rutaconv = rutaremota.gsub("\\", "/")
+      rlocal = prefijoruta + File.basename(rutaconv)
+      puts "rutaremota=#{rutaremota}, rlocal=#{rlocal}"
+      if (!File.exists? rlocal)
+        cmd="smbget -o #{rlocal} -p '#{ENV['CLAVE_DOMINIO']}' -w #{ENV['DOMINIO']} -u #{ENV['USUARIO_DOMINIO']} -v smb://#{ENV['IP_HBASE']}/#{ENV['CARPETA']}/#{rutaconv}"
+        cmdl = cmd.gsub(ENV['CLAVE_DOMINIO'], '*****')
+        logger.info "Ejecutando #{cmdl}"
+        r=`#{cmd}`
+        logger.info "Resultado: ---- #{r} ----"
+      end
+      return rlocal
     end
 
-    def sincroniza_onbase
-      @examinados = 0
-      @procesados = 0
-      @sinc = []
-      @cprob = ''
+
+
+    def procesa_grupo(minitemnum, maxitemnum)
       conecta_onbase
-      if !@client.active?
-        conecta_onbase
+      if !@client.closed?
+        @client.close
       end
-      if false
-        @cprob += verifica_fechas_onbase
-        @cprob += verifica_departamentos_onbase
-        @cprob += verifica_municipios_onbase
-        @cprob += verifica_fuenteprensa_onbase
-        @cprob += verifica_paginas_onbase
-        @cprob += verifica_categorias_onbase
-      end
-      #return
-      #return if @cprob != ''
-      minitemnum = Sal7711Gen::Articulo.maximum(:onbase_itemnum) || 0
-      maxitemnum = 870
+      @client = TinyTds::Client.new(@@hbase)
+      @client.execute("USE OnBase").do;
+
       fbuenos = "FROM itemdata 
+          JOIN itemdatapage ON itemdata.itemnum=itemdatapage.itemnum 
           JOIN keyitem103 ON keyitem103.itemnum=itemdata.itemnum   
           JOIN keyxitem101 ON keyxitem101.itemnum = itemdata.itemnum
           JOIN keytable101 ON keyxitem101.keywordnum = keytable101.keywordnum 
@@ -368,12 +355,9 @@ module Sal7711Gen
           AND keyitem103.keyvaluedate <= '#{Time.now.strftime("%Y-%m-%d")}'
           AND itemname LIKE 'Prensa Cinep%' "
 
-#      c="SELECT DISTINCT itemdata.batchnum AS numlote
-#          #{fbuenos}
-#          ORDER BY numlote"
- 
       c="SELECT itemdata.itemnum AS itemnum, itemdata.itemname AS itemname,
           itemdata.batchnum AS batchnum,
+          itemdatapage.filepath AS filepath,
           keyitem103.keyvaluedate AS fecha,
           keytable101.keyvaluechar AS fuenteprensa,
           keytable104.keyvaluechar AS pagina,
@@ -381,20 +365,34 @@ module Sal7711Gen
           keytable110.keyvaluechar AS municipio,
           keytable112.keyvaluechar AS cat1,
           keytable113.keyvaluechar AS cat2,
-          keytable114.keyvaluechar AS cat3
-          #{fbuenos}
+          keytable114.keyvaluechar AS cat3 #{fbuenos}
           AND itemdata.itemnum < #{maxitemnum}
-          ORDER BY itemnum"
+          AND itemdata.itemnum >= #{minitemnum}
+          ORDER BY itemnum "
       puts "OJO q=#{c}"
+      numreg = 0
+      # Resultado a colchon en memoria
+      colchon = []
       result = @client.execute(c)
-      num = 0
       result.try(:each) do |fila|
-        num += 1
+        colchon << fila
+      end
+      result.cancel
+      @client.close
+
+      # Se procesa colchon
+      colchon.each do |fila|
+        numreg += 1
+        puts "numreg=#{numreg}"
         itemnum = fila['itemnum']
         if Sal7711Gen::Articulo.where(onbase_itemnum: itemnum).count == 0
           itemname = fila['itemname']
           puts "itemname #{itemname}"
           nart = Sal7711Gen::Articulo.new
+          if !nart
+            @cprob += "<br>No pudo crearse articulo"
+            next
+          end
           nart.onbase_itemnum = itemnum
           nart.adjunto_descripcion = itemname
           nart.fecha = fila['fecha']
@@ -424,72 +422,125 @@ module Sal7711Gen
                 where("SUBSTRING(nombre FROM 1 FOR 45) = '#{mun.strip}'").first
             end
           end
+
+          # Fuente de prensa
+          f = fila['fuenteprensa']
+          if !f || f.strip == ''
+            @cprob += "<br>Elemento #{itemnum} no tiene fuente (saltando)"
+            next
+          end
+          nart.fuenteprensa = Sip::Fuenteprensa.where("SUBSTRING(nombre FROM 1 FOR 45) = '#{f.strip}'").first
+          if nart.fuenteprensa.nil?
+            @cprob += "<br>Elemento #{itemnum} tiene fuente errada #{f} (saltando)"
+            next
+          end
+
+          # Pagina
+          p = fila['pagina']
+          if !p || p.strip == ''
+            @cprob += "<br>Elemento #{itemnum} no tiene página (saltando)"
+            next
+          end
+          nart.pagina = p
+
+          # Adjunto
+          nart.created_at = nart.fecha
+          nart.updated_at = Time.now
+
+          nart.adjunto_file_name = "J"
+          nart.adjunto_content_type = "J"
+          nart.adjunto_file_size = 0
+          nart.adjunto_updated_at = Time.now
+          nart.save
+
+          prefijoruta = Rails.root.join(
+            'public', Rails.application.config.x.url_colchon)
+          rlocal = descarga_onbase(fila['filepath'].rstrip,
+                                   prefijoruta.to_s + "/")
+
+          if !File.exists?(rlocal)
+            @cprob += "<br>No pudo descargarse archivo #{rlocal}"
+            next
+          end
+          File.open(rlocal, "r") do |f|
+            nart.adjunto = f
+            nart.save
+          end
+
+          # Categorias
+          (1..3).each do |ncat|
+            ccat = fila['cat' + ncat.to_s]
+            if !ccat || ccat.strip == ''
+              if ncat == 1
+                @cprob += "<br>Elemento #{itemnum} no tiene categoria 1"
+              end
+            else
+              ccat.strip!
+              cat = Sal7711Gen::Categoriaprensa.where(codigo: ccat).first
+              if !cat
+                @cprob += "<br>Elemento #{itemnum} tiene categoria #{ncat} " +
+                  "errada: #{ccat} (ignorando)"
+              else
+                cp = Sal7711Gen::ArticuloCategoriaprensa.new(
+                  articulo_id: nart.id, categoriaprensa_id: cat.id, orden: ncat)
+                cp.save
+              end
+            end
+          end
+
+          nart.adjunto_descripcion = 
+            Sal7711Gen::ArticulosController.gen_descripcion_bd(nart)
+          nart.save
+
+          @sinc << itemname
+          @procesados += 1
         end
-
-        # Fuente de prensa
-        f = fila['fuenteprensa']
-        if !f || f.strip == ''
-          @cprob += "<br>Elemento #{itemnum} no tiene fuente (saltando)"
-          continue
-        end
-        nart.fuenteprensa = Sip::Fuenteprensa.where("SUBSTRING(nombre FROM 1 FOR 45) = '#{f.strip}'").first
-        if nart.fuenteprensa.nil?
-          @cprob += "<br>Elemento #{itemnum} tiene fuente errada #{f} (saltando)"
-          continue
-        end
-
-        # Pagina
-        byebug
-        p = fila['pagina']
-        if !p || p.strip == ''
-          @cprob += "<br>Elemento #{itemnum} no tiene página (saltando)"
-          continue
-        end
-        nart.pagina = p
-
-        nart.created_at = nart.fecha
-        nart.updated_at = Time.now
-
-        prefijoruta = File.join(
-          Sip.ruta_anexos, 
-          nart.created_at.year.to_s, 
-          nart.created_at.month.to_s.rjust(2, '0'),
-          nart.created_at.day.to_s.rjust(2, '0'),
-          "/"
-        )
-        byebug
-        titulo, rlocal = descarga_onbase(itemnum, prefijoruta.to_s)
-        
-
-        
-
-        nart.adjunto_file_name = "t"
-        nart.adjunto_content_type = "t"
-        nart.adjunto_file_size = "t"
-
-
-        nart.save
-    
-
-        # Categorias
-        c1 = fila['cat1']
-        if !c1 || c1.strip == ''
-          @cprob += "<br>Elemento #{itemnum} no tiene categoria 1 (saltando)"
-          continue
-        end
-        # OJO falta agregar categorias tras guardar articulo
-
+        @examinados += 1
       end
+      #conecta_onbase
+    end
 
+    def sincroniza_onbase
+      @examinados = 0
+      @procesados = 0
+      @sinc = []
+      @cprob = ''
+      conecta_onbase
+      if !@client.active?
+        conecta_onbase
+      end
+      if false
+        @cprob += verifica_fechas_onbase
+        @cprob += verifica_departamentos_onbase
+        @cprob += verifica_municipios_onbase
+        @cprob += verifica_fuenteprensa_onbase
+        @cprob += verifica_paginas_onbase
+        @cprob += verifica_categorias_onbase
+      end
+      #return
+      #return if @cprob != ''
+#      minitemnum = Sal7711Gen::Articulo.maximum(:onbase_itemnum) || 0
+#      maxitemnum = 1870
 
+      # No me ha funcioando
+      # r = @client.execute('SELECT MAX(itemnum) FROM itemdata;')
+      #maxmax = r.first['max']
+      maxmax=700000
+      
+      pasada = 0
+      deltaitemnum = 130
+      minitemnum = 650000 # Todos los anteriores a este han sido procesados
+      maxitemnum = minitemnum + deltaitemnum
+      # Al intentar toda la consulta se presentaron errores Read Failed
+      # Tuvimos que procesar en lotes 
+      loop do
+        pasada += 1
+        procesa_grupo(minitemnum, maxitemnum)
+        break if maxitemnum > maxmax
+        minitemnum += deltaitemnum
+        maxitemnum += deltaitemnum
+      end # loop
 
-#          # Archivo descargar, reubicar y procesar
-#          @sinc << itemname
-#          @procesados += 1
-#        end
-#        @examinados += 1
-#      end
-#      #byebug
     end
 
     def prepara_pagina_comp(articulos, params)

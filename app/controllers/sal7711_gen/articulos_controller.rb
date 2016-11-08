@@ -65,7 +65,8 @@ module Sal7711Gen
         end
         orden += 1
       end
-      @articulo.adjunto_descripcion = gen_descripcion_bd(@articulo)
+      @articulo.adjunto_descripcion = 
+        Sal7711Gen::ArticuloController.gen_descripcion_bd(@articulo)
       @articulo.save
     end
 

@@ -1,14 +1,1 @@
-
-<% if can? :edit, Sal7711Gen::Articulo %>
-  <%= f.input :lote,
-    collection:  ActiveRecord::Base.connection.exec_query(
-      'SELECT estado, lote_id, fecha FROM vestadolote'),
-      label_method: lambda { |t| 
-        t["estado"].to_s + " - " + t["lote_id"].to_s + " - " + t["fecha"].to_s },
-      value_method: lambda { |t| t["lote_id"] }, 
-      include_blank: true, 
-      input_html: { class: 'chosen-select'},
-      required: false %>
-<% end %>
-
 <label class="select optional control-label" for="buscar_fechaini">Rango de fechas</label>

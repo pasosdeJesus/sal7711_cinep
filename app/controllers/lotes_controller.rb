@@ -1,10 +1,14 @@
 # encoding: UTF-8
 
+
 class LotesController < ApplicationController
+
+  include Sip::FormatoFechaHelper
 
   def new
     authorize! :edit, Lote
-    @lote = Lote.new(candfecha: Date.today, nombre: Date.today.to_s,
+    @lote = Lote.new(candfecha: Date.today, 
+                     nombre: fecha_estandar_local(Date.today.to_s),
                      usuario: current_usuario)
   end
 

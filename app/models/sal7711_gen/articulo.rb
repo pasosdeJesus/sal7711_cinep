@@ -9,6 +9,12 @@ module Sal7711Gen
     belongs_to :lote, foreign_key: "lote_id",
       validate: true, class_name: "::Lote"
 
+    has_many :articulo_categoriaprensa, 
+      foreign_key: "articulo_id", 
+      validate: true,
+      dependent: :destroy,
+      class_name: 'Sal7711Gen::ArticuloCategoriaprensa'
+
     @categoriaprensa_sinorden = []
 
     def categoriaprensa_sinorden 
