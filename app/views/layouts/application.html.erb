@@ -14,9 +14,10 @@
       <%= menu_item "Manual de Uso", "/Manual_de_Uso_Archivo_Digital_de_Prensa_CINEP.pdf", target: '_blank' %>
       <%= menu_item "Acerca de", sip.acercade_path %>
       <% if can? :edit, Sal7711Gen::Articulo %>
-        <%= drop_down "Añadir" do %>
-          <%= menu_item "Artículo", sal7711_gen.new_articulo_path %>
+        <%= drop_down "Lote" do %>
+          <%= menu_item "Buscar", main_app.lotes_path %>
           <%= menu_item "Lote", main_app.new_lote_path %>
+          <%= menu_item "Añadir un artículo", sal7711_gen.new_articulo_path %>
         <% end %>
       <% end %>
     <% end %>
