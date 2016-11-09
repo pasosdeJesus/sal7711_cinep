@@ -33,7 +33,7 @@ module Sal7711Gen
     }
 
     def orden_articulos
-      "adjunto_descripcion"
+      "fecha, adjunto_descripcion"
     end
 
     def autentica_especial
@@ -322,7 +322,7 @@ module Sal7711Gen
 
 
 
-    def procesa_grupo(minitemnum, maxitemnum)
+    def procesa_grupo(minitemnum, maxitemnum, grupo=[])
       conecta_onbase
       if !@client.closed?
         @client.close
@@ -330,6 +330,19 @@ module Sal7711Gen
       @client = TinyTds::Client.new(@@hbase)
       @client.execute("USE OnBase").do;
 
+      if grupo.length > 0
+        cadestan = "AND itemdata.itemnum IN (" + grupo.join(', ') + ")"
+      else
+        consestan = "SELECT onbase_itemnum FROM sal7711_gen_articulo 
+          WHERE onbase_itemnum < #{maxitemnum}
+          AND onbase_itemnum >= #{minitemnum} ORDER BY 1"
+          estan = ActiveRecord::Base.connection.select_all consestan
+          cadestan = estan.to_a.map {|v| v['onbase_itemnum']}.join(', ')
+
+          if cadestan.length > 0
+            cadestan = "AND itemdata.itemnum NOT IN (" + cadestan + ")"
+          end
+      end
       fbuenos = "FROM itemdata 
           JOIN itemdatapage ON itemdata.itemnum=itemdatapage.itemnum 
           JOIN keyitem103 ON keyitem103.itemnum=itemdata.itemnum   
@@ -368,6 +381,7 @@ module Sal7711Gen
           keytable114.keyvaluechar AS cat3 #{fbuenos}
           AND itemdata.itemnum < #{maxitemnum}
           AND itemdata.itemnum >= #{minitemnum}
+          #{cadestan}
           ORDER BY itemnum "
       puts "OJO q=#{c}"
       numreg = 0
@@ -525,17 +539,22 @@ module Sal7711Gen
       # No me ha funcioando
       # r = @client.execute('SELECT MAX(itemnum) FROM itemdata;')
       #maxmax = r.first['max']
-      maxmax=700000
+      maxmax=500000
       
       pasada = 0
-      deltaitemnum = 130
-      minitemnum = 650000 # Todos los anteriores a este han sido procesados
+      deltaitemnum = 1000
+      minitemnum = 1 # Todos los anteriores a este han sido procesados
       maxitemnum = minitemnum + deltaitemnum
       # Al intentar toda la consulta se presentaron errores Read Failed
       # Tuvimos que procesar en lotes 
       loop do
         pasada += 1
-        procesa_grupo(minitemnum, maxitemnum)
+        ids = ActiveRecord::Base.connection.execute(
+          "SELECT * FROM generate_series(#{minitemnum},#{maxitemnum}) num 
+          WHERE num NOT IN (SELECT id FROM sal7711_gen_articulo ORDER BY 1) 
+          ORDER BY 1;")
+        #byebug
+        procesa_grupo(minitemnum, maxitemnum, ids.to_a.map {|a| a['num']})
         break if maxitemnum > maxmax
         minitemnum += deltaitemnum
         maxitemnum += deltaitemnum
@@ -578,12 +597,39 @@ module Sal7711Gen
         FROM vestadisticalote JOIN lote ON vestadisticalote.lote_id=lote.id
         ORDER BY 1, 2;"
       )
-      if params[:buscar] && params[:buscar][:lote] && params[:buscar][:lote] != ''
+      if params[:buscar] && params[:buscar][:lote] && 
+        params[:buscar][:lote] != ''
         pl = params[:buscar][:lote].to_i
         articulos = articulos.where('lote_id = ?', pl)
+      elsif params.to_unsafe_h[:buscar].nil? ||
+        params.to_unsafe_h[:buscar].count == 0
+        #byebug
+        articulos = articulos.where('1=2')
       end
       return articulos
     end
 
+
+    # Resultado de aplicar filtro
+    def index
+      autentica_especial
+      authorize! :read, Sal7711Gen::Articulo
+      #byebug
+      prepara_meses
+      @muestraid = params[:muestraid].to_i
+      prepara_pagina
+      if params.to_h.count > 2
+        # 2 params que siempre estan son controller y action si hay
+        # más sería una consulta iniciada por usuario
+        Sal7711Gen::Bitacora.a( request.remote_ip, current_usuario, 
+                               'index', params)
+      end
+      respond_to do |format|
+        format.html { }
+        format.json { head :no_content }
+        format.js   { render 'resultados' }
+      end
+    end
+        
   end
 end
