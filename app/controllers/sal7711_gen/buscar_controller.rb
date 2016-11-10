@@ -111,7 +111,14 @@ module Sal7711Gen
         byebug
       end
     end
-  
+ 
+   @regprob = [] 
+    def incregprob(itemnum)
+          @regprob[itemnum] = 
+            @regprob[itemnum].nil? ? 1 : 
+            @regprob[itemnum] + 1 
+    end
+
     def verifica_fechas_onbase
       cprob = ''
       
@@ -131,6 +138,7 @@ module Sal7711Gen
       r = @client.execute(c)
       r.try(:each) do |fila|
           cprob += "<br>Fecha muy antigua en artículo #{fila['itemnum']}: #{fila['itemname']}"
+          incregprob(fila['itemnum'].to_i)
       end
       r.do
       c="SELECT itemdata.itemnum, itemdata.itemname FROM itemdata 
@@ -139,6 +147,7 @@ module Sal7711Gen
       r = @client.execute(c)
       r.try(:each) do |fila|
           cprob += "<br>Fecha en el futuro en artículo #{fila['itemnum']}: #{fila['itemname']}"
+          incregprob(fila['itemnum'].to_i)
       end
       r.do
 
@@ -154,6 +163,7 @@ module Sal7711Gen
       r = @client.execute(c)
       r.try(:each) do |fila|
           cprob += "<br>Falta fuente en artículo #{fila['itemnum']}: #{fila['itemname']}"
+          incregprob(fila['itemnum'].to_i)
       end
       r.do
 
@@ -182,6 +192,7 @@ module Sal7711Gen
       r = @client.execute(c)
       r.try(:each) do |fila|
           cprob += "<br>Falta página en artículo #{fila['itemnum']}: #{fila['itemname']}"
+          incregprob(fila['itemnum'].to_i)
       end
       r.do
 
@@ -198,6 +209,7 @@ module Sal7711Gen
         r = @client.execute(c)
         r.try(:each) do |fila|
           cprob += "<br>Falta primera categoria en artículo #{fila['itemnum']}: #{fila['itemname']}"
+          incregprob(fila['itemnum'].to_i)
         end
         r.do
       end
@@ -223,6 +235,7 @@ module Sal7711Gen
         if fila['keyvaluechar'] && fila['keyvaluechar'].strip != ''
           nc = fila["keyvaluechar"].strip
           cprob += "<br>Categoria 1 #{nc} errada, en artículo #{fila['itemnum']}: #{fila['itemname']}"
+          incregprob(fila['itemnum'].to_i)
         end
       end
 
@@ -238,6 +251,7 @@ module Sal7711Gen
         if fila['keyvaluechar'] && fila['keyvaluechar'].strip != ''
           nc = fila["keyvaluechar"].strip
           cprob += "<br>Categoria 2 #{nc} errada, en artículo #{fila['itemnum']}: #{fila['itemname']}"
+          incregprob(fila['itemnum'].to_i)
         end
       end
 
@@ -253,6 +267,7 @@ module Sal7711Gen
         if fila['keyvaluechar'] && fila['keyvaluechar'].strip != ''
           nc = fila["keyvaluechar"].strip
           cprob += "<br>Categoria 3 #{nc} errada, en artículo #{fila['itemnum']}: #{fila['itemname']}"
+          incregprob(fila['itemnum'].to_i)
         end
       end
 
@@ -322,26 +337,33 @@ module Sal7711Gen
 
 
 
-    def procesa_grupo(minitemnum, maxitemnum, grupo=[])
+    # grupof Son los qeu faltan de [minitemnum, maxitemnum)
+    # grupoe son los que ya estan de [minitemnum, maxitemnum)
+    def procesa_grupo(minitemnum, maxitemnum, grupof=[], grupoe=[])
       conecta_onbase
       if !@client.closed?
         @client.close
       end
       @client = TinyTds::Client.new(@@hbase)
       @client.execute("USE OnBase").do;
-
-      if grupo.length > 0
-        cadestan = "AND itemdata.itemnum IN (" + grupo.join(', ') + ")"
-      else
-        consestan = "SELECT onbase_itemnum FROM sal7711_gen_articulo 
-          WHERE onbase_itemnum < #{maxitemnum}
-          AND onbase_itemnum >= #{minitemnum} ORDER BY 1"
-          estan = ActiveRecord::Base.connection.select_all consestan
-          cadestan = estan.to_a.map {|v| v['onbase_itemnum']}.join(', ')
-
-          if cadestan.length > 0
-            cadestan = "AND itemdata.itemnum NOT IN (" + cadestan + ")"
-          end
+     
+      # Ya estan todos
+      if grupof.length == 0 && grupoe.length > 0
+        puts "No faltan"
+        return
+      end
+      if grupof.length > 0
+        cadestan = "AND itemdata.itemnum IN (" + grupof.join(', ') + ")"
+#      else
+#        consestan = "SELECT onbase_itemnum FROM sal7711_gen_articulo 
+#          WHERE onbase_itemnum < #{maxitemnum}
+#          AND onbase_itemnum >= #{minitemnum} ORDER BY 1"
+#          estan = ActiveRecord::Base.connection.select_all consestan
+#          cadestan = estan.to_a.map {|v| v['onbase_itemnum']}.join(', ')
+#
+#          if cadestan.length > 0
+#            cadestan = "AND itemdata.itemnum NOT IN (" + cadestan + ")"
+#          end
       end
       fbuenos = "FROM itemdata 
           JOIN itemdatapage ON itemdata.itemnum=itemdatapage.itemnum 
@@ -350,8 +372,8 @@ module Sal7711Gen
           JOIN keytable101 ON keyxitem101.keywordnum = keytable101.keywordnum 
           JOIN keyxitem104 ON keyxitem104.itemnum = itemdata.itemnum
           JOIN keytable104  ON keyxitem104.keywordnum = keytable104.keywordnum 
-          JOIN keyxitem112 ON keyxitem112.itemnum = itemdata.itemnum
-          JOIN keytable112  ON keyxitem112.keywordnum = keytable112.keywordnum 
+          LEFT JOIN keyxitem112 ON keyxitem112.itemnum = itemdata.itemnum
+          LEFT JOIN keytable112  ON keyxitem112.keywordnum = keytable112.keywordnum 
           LEFT JOIN keyxitem108 ON keyxitem108.itemnum = itemdata.itemnum
           LEFT JOIN keytable108  ON 
             keyxitem108.keywordnum = keytable108.keywordnum 
@@ -394,12 +416,17 @@ module Sal7711Gen
       result.cancel
       @client.close
 
+      if colchon.length == 0
+        puts "De los que faltan en base local no hay registros completos en remota"
+        return
+      end
+      puts "Procesando colchon"
       # Se procesa colchon
       colchon.each do |fila|
         numreg += 1
-        puts "numreg=#{numreg}"
         itemnum = fila['itemnum']
-        if Sal7711Gen::Articulo.where(onbase_itemnum: itemnum).count == 0
+        puts "numreg=#{numreg}, itemnum=#{itemnum}"
+        if grupoe.index(itemnum).nil?
           itemname = fila['itemname']
           puts "itemname #{itemname}"
           nart = Sal7711Gen::Articulo.new
@@ -441,11 +468,13 @@ module Sal7711Gen
           f = fila['fuenteprensa']
           if !f || f.strip == ''
             @cprob += "<br>Elemento #{itemnum} no tiene fuente (saltando)"
+            incregprob(itemnum)
             next
           end
           nart.fuenteprensa = Sip::Fuenteprensa.where("SUBSTRING(nombre FROM 1 FOR 45) = '#{f.strip}'").first
           if nart.fuenteprensa.nil?
             @cprob += "<br>Elemento #{itemnum} tiene fuente errada #{f} (saltando)"
+            incregprob(itemnum)
             next
           end
 
@@ -453,6 +482,7 @@ module Sal7711Gen
           p = fila['pagina']
           if !p || p.strip == ''
             @cprob += "<br>Elemento #{itemnum} no tiene página (saltando)"
+            incregprob(itemnum)
             next
           end
           nart.pagina = p
@@ -476,8 +506,8 @@ module Sal7711Gen
             @cprob += "<br>No pudo descargarse archivo #{rlocal}"
             next
           end
-          File.open(rlocal, "r") do |f|
-            nart.adjunto = f
+          File.open(rlocal, "r") do |arc|
+            nart.adjunto = arc
             nart.save
           end
 
@@ -487,6 +517,7 @@ module Sal7711Gen
             if !ccat || ccat.strip == ''
               if ncat == 1
                 @cprob += "<br>Elemento #{itemnum} no tiene categoria 1"
+                incregprob(itemnum)
               end
             else
               ccat.strip!
@@ -494,6 +525,7 @@ module Sal7711Gen
               if !cat
                 @cprob += "<br>Elemento #{itemnum} tiene categoria #{ncat} " +
                   "errada: #{ccat} (ignorando)"
+                incregprob(itemnum)
               else
                 cp = Sal7711Gen::ArticuloCategoriaprensa.new(
                   articulo_id: nart.id, categoriaprensa_id: cat.id, orden: ncat)
@@ -523,7 +555,8 @@ module Sal7711Gen
       if !@client.active?
         conecta_onbase
       end
-      if false
+      @regprob = []
+      if params.to_unsafe_h["nover"].nil?
         @cprob += verifica_fechas_onbase
         @cprob += verifica_departamentos_onbase
         @cprob += verifica_municipios_onbase
@@ -531,6 +564,8 @@ module Sal7711Gen
         @cprob += verifica_paginas_onbase
         @cprob += verifica_categorias_onbase
       end
+      @numregprob = @regprob.reject(&:nil?).count
+
       #return
       #return if @cprob != ''
 #      minitemnum = Sal7711Gen::Articulo.maximum(:onbase_itemnum) || 0
@@ -539,22 +574,36 @@ module Sal7711Gen
       # No me ha funcioando
       # r = @client.execute('SELECT MAX(itemnum) FROM itemdata;')
       #maxmax = r.first['max']
-      maxmax=500000
+      maxmax=700000
       
       pasada = 0
       deltaitemnum = 1000
       minitemnum = 1 # Todos los anteriores a este han sido procesados
       maxitemnum = minitemnum + deltaitemnum
+      
       # Al intentar toda la consulta se presentaron errores Read Failed
       # Tuvimos que procesar en lotes 
+      @numexiste = 0
       loop do
         pasada += 1
-        ids = ActiveRecord::Base.connection.execute(
-          "SELECT * FROM generate_series(#{minitemnum},#{maxitemnum}) num 
-          WHERE num NOT IN (SELECT id FROM sal7711_gen_articulo ORDER BY 1) 
-          ORDER BY 1;")
+        cidse = ActiveRecord::Base.connection.execute(
+          "SELECT DISTINCT onbase_itemnum FROM sal7711_gen_articulo WHERE
+           onbase_itemnum >= #{minitemnum} AND
+           onbase_itemnum < #{maxitemnum}
+           ORDER BY 1");
+        idse = cidse.to_a.map {|a| a['onbase_itemnum']}
+        @numexiste += idse.length
+        i = 0
+        idsf = []
+        for n in minitemnum..maxitemnum-1
+          if i < idse.length && idse[i] == n then
+            i += 1
+          else
+            idsf << n
+          end
+        end
         #byebug
-        procesa_grupo(minitemnum, maxitemnum, ids.to_a.map {|a| a['num']})
+        procesa_grupo(minitemnum, maxitemnum, idsf, idse)
         break if maxitemnum > maxmax
         minitemnum += deltaitemnum
         maxitemnum += deltaitemnum
