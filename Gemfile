@@ -131,7 +131,7 @@ group :test do
   gem "capybara"
   
   # Envia resultados de pruebas desde travis a codeclimate
-  gem "codeclimate-test-reporter", require: nil
+  #gem "codeclimate-test-reporter", require: nil
 end
 
 

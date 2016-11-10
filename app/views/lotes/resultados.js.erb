@@ -1,0 +1,8 @@
+$("#resultados").html("<%= escape_javascript(render('sal7711_gen/buscar/resultados_busqueda')) %>");
+<%
+    if @muestraid then 
+%>
+      $('a.muestra-imagen[href="/buscar/<%=  @muestraid %>"]').click();
+<%
+    end
+%>

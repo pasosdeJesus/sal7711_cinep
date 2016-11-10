@@ -1,0 +1,44 @@
+<div id="filtro" class="col-sm-offset-0 col-sm-5 col-md-4">
+  <%= simple_form_for :lotes, 
+    { url: lotes_path, method: "get", remote: true } do |f|
+  %>
+
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= Sal7711Gen::Articulo.human_attribute_name(:filtro) %></div>
+    <div class="panel-body">
+
+
+      <% if can? :edit, Sal7711Gen::Articulo %>
+        <%= f.input :lote,
+          collection:  ActiveRecord::Base.connection.exec_query(
+            'SELECT estado, lote_id, fecha FROM vestadolote'),
+            label_method: lambda { |t| 
+              t["estado"].to_s + " - " + t["lote_id"].to_s + " - " + t["fecha"].to_s },
+            value_method: lambda { |t| t["lote_id"] }, 
+            include_blank: true, 
+            input_html: { class: 'chosen-select'},
+            required: false 
+          %>
+      <% end %>
+
+      <%= f.button :button, {class: 'btn btn-primary'} do %>
+        <%= fa_icon 'fa search', text: 'Buscar' %> 
+      <% end %>
+      <%= f.button :button, type: :reset, id: :limpiarfiltro do %>
+        <%= fa_icon 'fa undo', text: 'Limpiar' %> 
+      <% end %>
+      <br>
+    </div>
+  </div>
+  <% end %>
+</div>
+
+<div id="resultados" class="col-sm-offset-0 col-sm-7 col-md-8">
+  <% if @entradas %>
+    <%= render 'sal7711_gen/buscar/resultados_busqueda' %>
+  <% end %>
+</div> <!-- id: resultados -->
+
+<%= render 'sal7711_gen/buscar/modal_articulo' %>
+
+
