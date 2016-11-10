@@ -44,7 +44,7 @@ Rails.application.routes.draw do
 
 #  resource 'contacto', only: [:new, :create]
 
-  resources 'lotes', only: [:new, :create], 
+  resources 'lotes', only: [:new, :create, :index], 
     path_names: { new: 'nuevo', edit: 'edita' }
 
   root to: 'sal7711_gen/hogar#index'
