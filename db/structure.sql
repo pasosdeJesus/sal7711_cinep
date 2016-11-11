@@ -965,31 +965,17 @@ CREATE TABLE usuario (
 
 
 --
--- Name: vcatporarticulo; Type: VIEW; Schema: public; Owner: -
+-- Name: vcatporarticulo; Type: MATERIALIZED VIEW; Schema: public; Owner: -
 --
 
-CREATE VIEW vcatporarticulo AS
+CREATE MATERIALIZED VIEW vcatporarticulo AS
  SELECT sal7711_gen_articulo.lote_id,
     sal7711_gen_articulo.id AS articulo_id,
-    count(sal7711_gen_articulo_categoriaprensa.categoriaprensa_id) AS ncat
-   FROM (sal7711_gen_articulo
-     LEFT JOIN sal7711_gen_articulo_categoriaprensa ON ((sal7711_gen_articulo_categoriaprensa.articulo_id = sal7711_gen_articulo.id)))
-  GROUP BY sal7711_gen_articulo.lote_id, sal7711_gen_articulo.id;
-
-
---
--- Name: vestadisticalote; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW vestadisticalote AS
- SELECT DISTINCT sal7711_gen_articulo.lote_id,
-    COALESCE(array_length(ARRAY( SELECT vcatporarticulo.articulo_id
-           FROM vcatporarticulo
-          WHERE ((vcatporarticulo.lote_id = sal7711_gen_articulo.lote_id) AND (vcatporarticulo.ncat = 0))), 1), 0) AS sin,
-    COALESCE(array_length(ARRAY( SELECT vcatporarticulo.articulo_id
-           FROM vcatporarticulo
-          WHERE ((vcatporarticulo.lote_id = sal7711_gen_articulo.lote_id) AND (vcatporarticulo.ncat > 0))), 1), 0) AS con
-   FROM sal7711_gen_articulo;
+    (EXISTS ( SELECT sal7711_gen_articulo_categoriaprensa.categoriaprensa_id
+           FROM sal7711_gen_articulo_categoriaprensa
+          WHERE (sal7711_gen_articulo_categoriaprensa.articulo_id = sal7711_gen_articulo.id))) AS ncat
+   FROM sal7711_gen_articulo
+  WITH NO DATA;
 
 
 --
@@ -999,45 +985,41 @@ CREATE VIEW vestadisticalote AS
 CREATE VIEW vestadolote AS
  SELECT
         CASE
-            WHEN (vestadisticalote.con = 0) THEN 'EN ESPERA'::text
-            WHEN (vestadisticalote.sin = 0) THEN 'PROCESADO'::text
+            WHEN (NOT (lote.id IN ( SELECT DISTINCT lote_1.id AS lote_id
+               FROM (lote lote_1
+                 JOIN sal7711_gen_articulo a ON ((lote_1.id = a.lote_id)))
+              WHERE (NOT (EXISTS ( SELECT cp.articulo_id,
+                        cp.categoriaprensa_id,
+                        cp.id,
+                        cp.orden
+                       FROM sal7711_gen_articulo_categoriaprensa cp
+                      WHERE (a.id = cp.articulo_id))))))) THEN 'PROCESADO'::text
+            WHEN (NOT (lote.id IN ( SELECT lote_1.id
+               FROM ((lote lote_1
+                 JOIN sal7711_gen_articulo a ON ((a.lote_id = lote_1.id)))
+                 JOIN sal7711_gen_articulo_categoriaprensa cp ON ((cp.articulo_id = a.id)))))) THEN 'EN ESPERA'::text
             ELSE 'EN PROGRESO'::text
         END AS estado,
-    vestadisticalote.lote_id,
-    date(lote.created_at) AS fecha
-   FROM (vestadisticalote
-     JOIN lote ON ((vestadisticalote.lote_id = lote.id)))
+    lote.id AS lote_id,
+    lote.nombre
+   FROM lote
   ORDER BY
         CASE
-            WHEN (vestadisticalote.con = 0) THEN 'EN ESPERA'::text
-            WHEN (vestadisticalote.sin = 0) THEN 'PROCESADO'::text
+            WHEN (NOT (lote.id IN ( SELECT DISTINCT lote_1.id AS lote_id
+               FROM (lote lote_1
+                 JOIN sal7711_gen_articulo a ON ((lote_1.id = a.lote_id)))
+              WHERE (NOT (EXISTS ( SELECT cp.articulo_id,
+                        cp.categoriaprensa_id,
+                        cp.id,
+                        cp.orden
+                       FROM sal7711_gen_articulo_categoriaprensa cp
+                      WHERE (a.id = cp.articulo_id))))))) THEN 'PROCESADO'::text
+            WHEN (NOT (lote.id IN ( SELECT lote_1.id
+               FROM ((lote lote_1
+                 JOIN sal7711_gen_articulo a ON ((a.lote_id = lote_1.id)))
+                 JOIN sal7711_gen_articulo_categoriaprensa cp ON ((cp.articulo_id = a.id)))))) THEN 'EN ESPERA'::text
             ELSE 'EN PROGRESO'::text
-        END, vestadisticalote.lote_id;
-
-
---
--- Name: vestlote; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW vestlote AS
- SELECT t.lote_id,
-    s.proc,
-    t.tot,
-    (t.tot - s.proc) AS por
-   FROM ( SELECT sal7711_gen_articulo.lote_id,
-            count(sal7711_gen_articulo.id) AS proc
-           FROM sal7711_gen_articulo
-          WHERE (NOT (sal7711_gen_articulo.id IN ( SELECT sal7711_gen_articulo_1.id
-                   FROM (sal7711_gen_articulo_categoriaprensa
-                     JOIN sal7711_gen_articulo sal7711_gen_articulo_1 ON ((sal7711_gen_articulo_categoriaprensa.articulo_id = sal7711_gen_articulo_1.id))))))
-          GROUP BY sal7711_gen_articulo.lote_id
-          ORDER BY sal7711_gen_articulo.lote_id) s,
-    ( SELECT sal7711_gen_articulo.lote_id,
-            count(sal7711_gen_articulo.id) AS tot
-           FROM sal7711_gen_articulo
-          GROUP BY sal7711_gen_articulo.lote_id
-          ORDER BY sal7711_gen_articulo.lote_id) t
-  WHERE (s.lote_id = t.lote_id);
+        END, lote.id, lote.nombre;
 
 
 --
@@ -1413,6 +1395,13 @@ CREATE INDEX sip_busca_mundep ON sip_mundep USING gin (mundep);
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: vcatporarticulo_lote_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX vcatporarticulo_lote_id_idx ON vcatporarticulo USING btree (lote_id);
 
 
 --
