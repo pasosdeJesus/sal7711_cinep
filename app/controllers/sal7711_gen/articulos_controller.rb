@@ -66,7 +66,7 @@ module Sal7711Gen
         orden += 1
       end
       @articulo.adjunto_descripcion = 
-        Sal7711Gen::ArticuloController.gen_descripcion_bd(@articulo)
+        Sal7711Gen::ArticulosController.gen_descripcion_bd(@articulo)
       @articulo.save
     end
 
@@ -98,54 +98,50 @@ module Sal7711Gen
               # Primero los no editados ordenados por nombre de archivo (posteriores primero, anteriores despues)
               # A continuación los editados pero sin categorias completas también ordenados por nombre de archivo
              sig = Sal7711Gen::Articulo.connection.select_one(
-               "SELECT articulo_id FROM vcatporarticulo 
-                JOIN sal7711_gen_articulo ON 
-                vcatporarticulo.articulo_id=sal7711_gen_articulo.id
-                WHERE vcatporarticulo.lote_id='#{@articulo.lote_id.to_i}' 
-                AND orden > '#{@articulo.orden}' 
-                AND substring(adjunto_descripcion from 1 for 6) = 'Imagen'
+               "SELECT id FROM sal7711_gen_articulo 
+                WHERE lote_id='#{@articulo.lote_id.to_i}' 
+                  AND orden > '#{@articulo.orden}' 
+                  AND substring(adjunto_descripcion from 1 for 6) = 'Imagen'
                 ORDER BY orden LIMIT 1;")  
              if !sig
                sig = Sal7711Gen::Articulo.connection.select_one(
-                 "SELECT articulo_id FROM vcatporarticulo 
-                  JOIN sal7711_gen_articulo ON 
-                  vcatporarticulo.articulo_id=sal7711_gen_articulo.id
-                  WHERE vcatporarticulo.lote_id='#{@articulo.lote_id.to_i}' 
+               "SELECT id FROM sal7711_gen_articulo 
+                WHERE lote_id='#{@articulo.lote_id.to_i}' 
                   AND orden < '#{@articulo.orden}' 
                   AND substring(adjunto_descripcion from 1 for 6) = 'Imagen'
                   ORDER BY orden LIMIT 1;")  
              end
              if !sig
                sig = Sal7711Gen::Articulo.connection.select_one(
-                 "SELECT articulo_id FROM vcatporarticulo 
-                  JOIN sal7711_gen_articulo ON 
-                  vcatporarticulo.articulo_id=sal7711_gen_articulo.id
-                  WHERE vcatporarticulo.lote_id='#{@articulo.lote_id.to_i}' 
-                  AND articulo_id>'#{@articulo.id.to_i}' 
-                  AND ncat = 0
+                "SELECT id FROM sal7711_gen_articulo 
+                  WHERE lote_id='#{@articulo.lote_id.to_i}' 
+                    AND id>'#{@articulo.id.to_i}' 
+                    AND NOT EXISTS(SELECT * FROM sal7711_gen_articulo_categoriaprensa WHERE articulo_id=sal7711_gen_articulo.id)
                   ORDER BY orden LIMIT 1;")  
              end
              if !sig
                sig = Sal7711Gen::Articulo.connection.select_one(
-                 "SELECT articulo_id FROM vcatporarticulo 
-                  JOIN sal7711_gen_articulo ON 
-                  vcatporarticulo.articulo_id=sal7711_gen_articulo.id
-                  WHERE vcatporarticulo.lote_id='#{@articulo.lote_id.to_i}' 
-                  AND articulo_id<'#{@articulo.id.to_i}' 
-                  AND ncat = 0
+                "SELECT id FROM sal7711_gen_articulo 
+                  WHERE lote_id='#{@articulo.lote_id.to_i}' 
+                  AND id<'#{@articulo.id.to_i}' 
+                  AND NOT EXISTS(SELECT * FROM sal7711_gen_articulo_categoriaprensa WHERE articulo_id=sal7711_gen_articulo.id)
                   ORDER BY orden LIMIT 1;")  
              end
 
              if sig
-               redirect_to edit_articulo_path(sig["articulo_id"]), 
+               redirect_to edit_articulo_path(sig["id"]), 
                  notice: 'Artículo actualizado y progresando en lote.' 
              else
-               redirect_to @articulo,
-                 notice: 'Artículo actualizado. Lote procesado.' 
+               redirect_to(main_app.lotes_path + 
+                           "?lotes_lote=#{@articulo.lote_id.to_i}", 
+                 notice: 'Artículo actualizado. Lote procesado.' )
              end
-            else
-              redirect_to @articulo, notice: 'Artículo actualizado.' 
-            end
+           else
+             li = @articulo.lote_id ? 
+               "?lotes_lote=#{@articulo.lote_id.to_i}" : ''
+             redirect_to(main_app.lotes_path + li,
+               notice: 'Artículo actualizado.' )
+           end
           }
           format.json { render :show, status: :ok, location: @articulo }
         else
