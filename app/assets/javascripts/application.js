@@ -90,6 +90,11 @@ $(document).on('turbolinks:load', function() {
 	$(document).on('change', '#lote_candfecha_localizada', function(e) {
 		$("#lote_nombre").val($(this).val());
 	})
+	$(document).on('change', '#lotes_lote', function(e) {
+		root = window;
+		enviarautomatico_formulario(root, $(this).closest('form'));
+	})
+
 
 });
 

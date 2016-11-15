@@ -65,6 +65,6 @@ Rails.application.configure do
     port: ENV['SAL7711_ONBASE_SERV_NOCIF_PUERTO'] || 80
   }
 
-  config.web_console.whitelisted_ips = '186.28.14.207'
+  config.web_console.whitelisted_ips = '186.30.42.2'
 
 end

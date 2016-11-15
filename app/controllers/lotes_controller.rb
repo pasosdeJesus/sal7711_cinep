@@ -61,37 +61,26 @@ class LotesController < ApplicationController
 
   # Prepara una página de resultados
   def prepara_pagina
+    if !ActiveRecord::Base.connection.data_source_exists? 'vestadolote'
+      ActiveRecord::Base.connection.execute(
+        "CREATE OR REPLACE VIEW vestadolote AS 
+         SELECT CASE WHEN id NOT IN (select distinct lote.id as lote_id from lote join sal7711_gen_articulo as a on lote.id=a.lote_id where 
+          not exists(select * from sal7711_gen_articulo_categoriaprensa as cp where  a.id=cp.articulo_id)) THEN 'PROCESADO' 
+          WHEN id NOT IN (select lote.id FROM lote JOIN sal7711_gen_articulo as a ON a.lote_id=lote.id 
+          JOIN sal7711_gen_articulo_categoriaprensa as cp ON cp.articulo_id=a.id) THEN 'EN ESPERA' 
+          ELSE 'EN PROGRESO' END AS estado, 
+        lote.id AS lote_id, nombre
+        FROM lote ORDER BY 1,2,3;")
+    end
+    @lotes_lote = nil
     @articulos = Sal7711Gen::Articulo.all
-    ActiveRecord::Base.connection.execute(
-      'CREATE OR REPLACE VIEW vcatporarticulo AS 
-        SELECT lote_id, sal7711_gen_articulo.id AS articulo_id, 
-        COUNT(sal7711_gen_articulo_categoriaprensa.categoriaprensa_id) AS ncat 
-        FROM sal7711_gen_articulo LEFT JOIN 
-        sal7711_gen_articulo_categoriaprensa 
-        ON articulo_id=sal7711_gen_articulo.id group by 1,2'
-    )
-    ActiveRecord::Base.connection.execute(
-      'CREATE OR REPLACE VIEW vestadisticalote AS 
-        SELECT DISTINCT lote_id, COALESCE(ARRAY_LENGTH(ARRAY(
-        SELECT articulo_id FROM vcatporarticulo WHERE 
-        vcatporarticulo.lote_id=sal7711_gen_articulo.lote_id AND ncat=0),1), 0)
-        AS SIN, COALESCE(ARRAY_LENGTH(ARRAY(
-        SELECT articulo_id from vcatporarticulo WHERE 
-        vcatporarticulo.lote_id=sal7711_gen_articulo.lote_id and ncat>0),1), 0)
-        AS con FROM sal7711_gen_articulo;'
-    )
-    ActiveRecord::Base.connection.execute(
-      "CREATE OR REPLACE VIEW vestadolote AS 
-        SELECT CASE WHEN con='0' THEN 'EN ESPERA' 
-        WHEN sin=0 THEN 'PROCESADO' ELSE 'EN PROGRESO' END AS estado, 
-        lote_id, DATE(created_at) AS fecha 
-        FROM vestadisticalote JOIN lote ON vestadisticalote.lote_id=lote.id
-        ORDER BY 1, 2;"
-    )
     if params[:lotes] && params[:lotes][:lote] && 
       params[:lotes][:lote] != ''
-      pl = params[:lotes][:lote].to_i
-      @articulos = @articulos.where('lote_id = ?', pl)
+      @lotes_lote = params[:lotes][:lote].to_i
+      @articulos = @articulos.where('lote_id = ?', @lotes_lote)
+    elsif params[:lotes_lote] && params[:lotes_lote] != ''
+      @lotes_lote = params[:lotes_lote].to_i
+      @articulos = @articulos.where('lote_id = ?', @lotes_lote)
     end
     
     @numregistros = @articulos.count
@@ -152,15 +141,7 @@ class LotesController < ApplicationController
 
   def index
     authorize! :manage, Sal7711Gen::Articulo
-    #byebug
     prepara_pagina 
-    @muestraid = params[:muestraid].to_i
-    #if params.to_h.count > 2
-      # 2 params que siempre estan son controller y action si hay
-      # más sería una consulta iniciada por usuario
-    #   Sal7711Gen::Bitacora.a( request.remote_ip, current_usuario, 
-    #                          'index', params)
-    # end
     respond_to do |format|
       format.html { }
       format.json { head :no_content }
