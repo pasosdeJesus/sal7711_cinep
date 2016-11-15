@@ -23,27 +23,35 @@ class Ability  < Sal7711Gen::Ability
   BASICAS_PROPIAS =  [
     ['', 'organizacion']
   ]
-  @@tablasbasicas = Sip::Ability::BASICAS_PROPIAS + 
-    Sal7711Gen::Ability::BASICAS_PROPIAS + 
-    BASICAS_PROPIAS  - [
-      ['Sip', 'clase'],
-      ['Sip', 'etiqueta'],
-      ['Sip', 'oficina'],
-      ['Sip', 'tclase'],
-      ['Sip', 'tdocumento'],
-      ['Sip', 'trelacion'],
-      ['Sip', 'tsitio']
-    ] 
+  def tablasbasicas 
+    Sip::Ability::BASICAS_PROPIAS + 
+      Sal7711Gen::Ability::BASICAS_PROPIAS + 
+      BASICAS_PROPIAS  - [
+        ['Sip', 'clase'],
+        ['Sip', 'etiqueta'],
+        ['Sip', 'oficina'],
+        ['Sip', 'tclase'],
+        ['Sip', 'tdocumento'],
+        ['Sip', 'trelacion'],
+        ['Sip', 'tsitio']
+      ] 
+  end
 
-  @@basicas_id_noauto = Sip::Ability::BASICAS_ID_NOAUTO +
-    Sal7711Gen::Ability::BASICAS_ID_NOAUTO 
+  def basicas_id_noauto 
+    Sip::Ability::BASICAS_ID_NOAUTO +
+      Sal7711Gen::Ability::BASICAS_ID_NOAUTO 
+  end
 
-  @@nobasicas_indice_seq_con_id = Sip::Ability::NOBASICAS_INDSEQID +
-    Sal7711Gen::Ability::NOBASICAS_INDSEQID 
+  def nobasicas_indice_seq_con_id
+    Sip::Ability::NOBASICAS_INDSEQID +
+      Sal7711Gen::Ability::NOBASICAS_INDSEQID 
+  end
 
-  @@tablasbasicas_prio = Sip::Ability::BASICAS_PRIO +
-    Sal7711Gen::Ability::BASICAS_PRIO 
-
+  def tablasbasicas_prio 
+    Sip::Ability::BASICAS_PRIO +
+      Sal7711Gen::Ability::BASICAS_PRIO 
+  end
+  
   @@ultimo_error_aut = "";
 
   def self.ultimo_error_aut
@@ -54,8 +62,8 @@ class Ability  < Sal7711Gen::Ability
     @@ultimo_error_aut = v
   end
 
-  # Se definen habilidades con cancancan
-  def initialize(usuario)
+  # Autorizacion con CAnCanCan
+  def initialize(usuario = nil)
     # El primer argumento para can es la acción a la que se da permiso, 
     # el segundo es el recurso sobre el que puede realizar la acción, 
     # el tercero opcional es un diccionario de condiciones para filtrar 
@@ -123,7 +131,7 @@ class Ability  < Sal7711Gen::Ability
         can :manage, Usuario
         can :manage, Lote
         can :manage, :tablasbasicas
-        @@tablasbasicas.each do |t|
+        tablasbasicas.each do |t|
           c = Ability.tb_clase(t)
           can :manage, c
         end
