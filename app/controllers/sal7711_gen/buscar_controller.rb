@@ -629,11 +629,10 @@ module Sal7711Gen
     def index
       autentica_especial
       authorize! :read, Sal7711Gen::Articulo
-      #byebug
       prepara_meses
       @muestraid = params[:muestraid].to_i
       prepara_pagina
-      if params.to_h.count > 2
+      if params.to_unsafe_h.count > 2
         # 2 params que siempre estan son controller y action si hay
         # más sería una consulta iniciada por usuario
         Sal7711Gen::Bitacora.a( request.remote_ip, current_usuario, 
