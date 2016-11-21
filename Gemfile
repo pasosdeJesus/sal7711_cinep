@@ -9,6 +9,8 @@ gem "rails-i18n"
 # Postgresql
 gem "pg"
 
+gem 'mail_form'
+
 gem 'tiny_tds', '~> 0.7'
 
 gem 'puma'
