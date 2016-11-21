@@ -105,7 +105,7 @@ group :development do
   #gem "minitest-reporters"
  
   # Depurar
-  #gem 'byebug'
+  gem 'byebug'
 
   # Consola irb en páginas con excepciones o usando <%= console %> en vistas
   gem 'web-console'

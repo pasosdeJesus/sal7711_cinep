@@ -1,0 +1,11 @@
+<h1>Verificación</h1>
+
+<p>Hay <%= @numexistente %> registros.</p>
+<% if @cprob != '' %>
+  <p>Se encontraron los siguientes problemas en <%= @numregprob %> registros:</p>
+  <hr/>
+  <%= raw(@cprob) %>
+  <hr/>
+<% else %>
+  <p>No se encontraron problemas</p>
+<% end %>

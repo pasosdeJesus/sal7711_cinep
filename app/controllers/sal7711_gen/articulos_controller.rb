@@ -154,6 +154,85 @@ module Sal7711Gen
     end
 
 
+    def incregprob(itemnum)
+          @regprob[itemnum] = 
+            @regprob[itemnum].nil? ? 1 : 
+            @regprob[itemnum] + 1 
+    end
+
+    def verifica_arch_base(ruta)
+      Dir.foreach(ruta) do |a|
+        if a == '.' || a == '..'
+          next
+        end
+        if File.stat(a).ftype == 'directory'
+          verifica_arch_base(ruta.join(a))
+        else
+          puts ruta.join(a).to_s
+        end
+      end
+    end
+
+    def verifica
+      authorize! :edit, Sal7711Gen::Articulo
+
+      verifica_arch_base(File.join(Sip.ruta_anexos))
+      return
+      @cprob = ''
+      @numexistente = 0
+      @regprob = []
+      open('/tmp/rbverifica.sh', 'w') { |f|
+           f.puts '#!/bin/sh'
+      }
+      ActiveRecord::Base.uncached do
+        Sal7711Gen::Articulo.all.find_each do |a|
+          open('/tmp/rbverifica.sh', 'a') { |f|
+            f.puts "identify #{a.ruta_articulo} > /dev/null 2>&1"
+            f.puts "if (test \"$?\" != \"0\") then {"
+            f.puts "  echo \"Problema en artículo #{a.ruta_articulo} borrar registro #{a.id} del lote #{a.lote_id}\""
+            f.puts "} fi;"
+          }
+          #        if (!File.exists? a.ruta_articulo) 
+          #          prob = "<br>Artículo #{a.id} referencia archivo que no existe #{a.ruta_articulo}"
+          #          logger.debug prob
+          #          @cprob +=  prob
+          #          incregprob(a.id)
+          #        elsif !system("identify #{a.ruta_articulo} >/dev/null 2>&1") 
+          #          prob = "<br>Artículo #{a.id} referencia imagen posiblemente dañada #{a.ruta_articulo}"
+          #          logger.debug prob
+          #          @cprob += prob
+          #          incregprob(a.id)
+          #        end
+          @numexistente += 1
+          if ((@numexistente % 1000) == 0)
+            logger.debug "numexistente=#{@numexistente}"
+          end
+        end
+      end #uncached
+        
+      @numregprob = @regprob.reject(&:nil?).count 
+
+    end
+
+
+    # DELETE /articulos/1
+    # DELETE /articulos/1.json
+    def destroy
+      authorize! :edit, Sal7711Gen::Articulo
+      lotereg = @articulo.lote_id.nil? ? '' : 
+        "?lotes_lote=#{@articulo.lote_id.to_s}"
+      @articulo.destroy
+      respond_to do |format|
+        format.html { 
+          redirect_back fallback_location: File.join(
+            Rails.configuration.relative_url_root, 'lotes', lotereg),
+            notice: 'Artículo eliminado.' 
+        }
+        format.json { head :no_content }
+      end
+    end
+
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def articulo_params
       params.require(:articulo).permit(
