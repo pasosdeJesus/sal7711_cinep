@@ -3,37 +3,37 @@
 <h2>Conteos</h2>
 <table>
   <tr>
-    <td>Archivos en sistema de archivos </td><td></td><td><%= @numarcsa %></td>
+    <td>Archivos en sistema de archivos </td><td>&nbsp;</td><td><%= @numarcsa %></td>
   </tr>
   <tr>
-    <td>Archivos referenciados en base de datos</td><td></td><td> <%= @arcbd.length %></td>
+    <td>Archivos referenciados en base de datos</td><td>&nbsp;</td><td> <%= @arcbd.length %></td>
   </tr>
   <tr>
-    <td>Archivos comunes en sistema de archivos y base de datos</td><td></td><td><%= @numexistente %></td>
+    <td>Archivos comunes en sistema de archivos y base de datos</td><td>&nbsp;</td><td><%= @numexistente %></td>
   </tr>
   <tr>
-    <td>Archivos programados para ser eliminados en SA</td><td></td><td><%= @numelimsa %></td>
+    <td>Archivos programados para ser eliminados en SA</td><td>&nbsp;</td><td><%= @numelimsa %></td>
   </tr>
   <tr>
-    <td>Registros programados para ser eliminados en BD</td><td></td><td><%= @numelimbd %></td>
+    <td>Registros programados para ser eliminados en BD</td><td>&nbsp;</td><td><%= @numelimbd %></td>
   </tr>
 </table>
 <h2>Recomendaciones</h2>
 
 <ol>
   <li>
-    Verifique integridad de los archivos comunes en sistema de archivos y base de datos ejecutando 
-    <pre>sh <%= @arcord %></pre>
+    Verifique integridad de los archivos comunes en sistema de archivos y base de datos ejecutando desde una terminal en el servidor:
+    <pre>$ sh <%= @arcord %></pre>
   </li>
   <li>
-    Elimine archivos del sistema de archivos no referenciados en base de datos con: 
-    <pre>sh <%= @saelim %></pre>
+    Elimine archivos del sistema de archivos no referenciados en base de datos (puede ser simultaneo con paso 1) con: 
+    <pre>$ sh <%= @saelim %></pre>
   </li>
   <li>
-    Si está sincronizando desde OnBase elimine registros que referencian archivos no existentes (y los que no sean integros si realiza el paso 1) con 
+    Si está sincronizando desde OnBase, una vez termine paso 1, elimine registros que referencian archivos no existentes (y los que no sean integros si realiza el paso 1) con 
     <pre>
-      rails dbconsole
-      \i <%= @bdelim %>
+      $ rails dbconsole
+      =# \i <%= @bdelim %>
     </pre>
   </li>
   <li>
@@ -42,6 +42,7 @@
 </ol>
 
 <% if @cprob != '' %>
+  <h2>Problemas</h2>
   <p>Se encontraron <%= @numprob %> problemas:</p>
   <hr/>
   <%= raw(@cprob) %>
