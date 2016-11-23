@@ -54,7 +54,7 @@ class LotesController < ApplicationController
   end # create
 
   def orden_articulos
-    'fecha, adjunto_descripcion'
+    'orden, onbase_itemnum, id, fecha, adjunto_descripcion'
   end
 
   @@porpag = 20
@@ -141,7 +141,9 @@ class LotesController < ApplicationController
 
   def index
     authorize! :manage, Sal7711Gen::Articulo
-    prepara_pagina 
+    if params.to_unsafe_h.count > 2
+      prepara_pagina 
+    end
     respond_to do |format|
       format.html { }
       format.json { head :no_content }

@@ -1,0 +1,49 @@
+<h1>Verificación de archivos</h1>
+
+<h2>Conteos</h2>
+<table>
+  <tr>
+    <td>Archivos en sistema de archivos </td><td></td><td><%= @numarcsa %></td>
+  </tr>
+  <tr>
+    <td>Archivos referenciados en base de datos</td><td></td><td> <%= @arcbd.length %></td>
+  </tr>
+  <tr>
+    <td>Archivos comunes en sistema de archivos y base de datos</td><td></td><td><%= @numexistente %></td>
+  </tr>
+  <tr>
+    <td>Archivos programados para ser eliminados en SA</td><td></td><td><%= @numelimsa %></td>
+  </tr>
+  <tr>
+    <td>Registros programados para ser eliminados en BD</td><td></td><td><%= @numelimbd %></td>
+  </tr>
+</table>
+<h2>Recomendaciones</h2>
+
+<ol>
+  <li>
+    Verifique integridad de los archivos comunes en sistema de archivos y base de datos ejecutando 
+    <pre>sh <%= @arcord %></pre>
+  </li>
+  <li>
+    Elimine archivos del sistema de archivos no referenciados en base de datos con: 
+    <pre>sh <%= @saelim %></pre>
+  </li>
+  <li>
+    Si está sincronizando desde OnBase elimine registros que referencian archivos no existentes (y los que no sean integros si realiza el paso 1) con 
+    <pre>
+      rails dbconsole
+      \i <%= @bdelim %>
+    </pre>
+  </li>
+  <li>
+    Si está sincronizando desde OnBase, sincronice como último paso.
+  </li>
+</ol>
+
+<% if @cprob != '' %>
+  <p>Se encontraron <%= @numprob %> problemas:</p>
+  <hr/>
+  <%= raw(@cprob) %>
+  <hr/>
+<% end %>

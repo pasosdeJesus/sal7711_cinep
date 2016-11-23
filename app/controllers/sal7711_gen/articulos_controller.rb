@@ -153,65 +153,205 @@ module Sal7711Gen
       end
     end
 
-
-    def incregprob(itemnum)
-          @regprob[itemnum] = 
-            @regprob[itemnum].nil? ? 1 : 
-            @regprob[itemnum] + 1 
+    # Programa eliminaciòn de archivo ruta con comentario com
+    def porelim_sa(f, ruta, com)
+      f.puts "rm -f #{File.join(Sip.ruta_anexos, ruta)} # #{com}"
+      @numelimsa += 1
+      if (@numelimsa % 1000) == 1
+        f.puts "echo \"#{@numelimsa}\""
+      end
+      #@cprob += com
     end
 
-    def verifica_arch_base(ruta)
-      Dir.foreach(ruta) do |a|
-        if a == '.' || a == '..'
+    # Genera SQL para eliminar artículo con id dada
+    def gen_sql_elim(id)
+      return "DELETE FROM sal7711_gen_articulo_categoriaprensa " +
+        " WHERE articulo_id='#{id.to_i}'; " +
+        "DELETE FROM sal7711_gen_articulo WHERE id='#{id.to_i}';"
+    end
+
+    # Programa eliminación de registro id en BD con comentario com
+    def porelim_bd(f, id, com)
+      f.puts gen_sql_elim(id) + "-- #{com}"
+      #@cprob += com
+      @numelimbd += 1
+      if (@numelimbd % 1000) == 1
+        f.puts "-- #{@numelimbd}"
+      end
+    end
+
+    # Genera listado de rutas a archivos en sistema de archivos,
+    # esperando que estén en directorios de la forma año/mes/dia
+    # Genera en @arcsa
+    def gen_rutas_sa(ruta)
+      Dir.entries(ruta).sort.each do |arc|
+        if arc == '.' || arc == '..'
           next
         end
-        if File.stat(a).ftype == 'directory'
-          verifica_arch_base(ruta.join(a))
+        nr = File.join(ruta, arc)
+        if File.stat(nr).ftype == 'directory'
+                gen_rutas_sa(nr)
         else
-          puts ruta.join(a).to_s
+          f = nr.split(File::SEPARATOR)[-4..-2]
+          if f[0].to_i < 1970 || 
+            f[1].to_i <=0 || f[1].to_i > 12 || 
+            f[2].to_i <=0 || f[2].to_i > 31
+            porelim_sa(nr, 
+                    "Archivo #{nr} no incluye fecha correcta, " +
+                    "programando eliminacion")
+            next
+          end
+          @arcsa[@numarcsa] = File.join(f[0], f[1], f[2], arc)
+          @numarcsa += 1
+          if @numarcsa % 1000 == 1 
+            logger.debug "OJO gen_rutas_sa @numarcsa = #{@numarcsa}"
+          end
         end
       end
     end
 
-    def verifica
-      authorize! :edit, Sal7711Gen::Articulo
-
-      verifica_arch_base(File.join(Sip.ruta_anexos))
-      return
-      @cprob = ''
-      @numexistente = 0
-      @regprob = []
-      open('/tmp/rbverifica.sh', 'w') { |f|
-           f.puts '#!/bin/sh'
-      }
-      ActiveRecord::Base.uncached do
-        Sal7711Gen::Articulo.all.find_each do |a|
-          open('/tmp/rbverifica.sh', 'a') { |f|
-            f.puts "identify #{a.ruta_articulo} > /dev/null 2>&1"
-            f.puts "if (test \"$?\" != \"0\") then {"
-            f.puts "  echo \"Problema en artículo #{a.ruta_articulo} borrar registro #{a.id} del lote #{a.lote_id}\""
-            f.puts "} fi;"
-          }
-          #        if (!File.exists? a.ruta_articulo) 
-          #          prob = "<br>Artículo #{a.id} referencia archivo que no existe #{a.ruta_articulo}"
-          #          logger.debug prob
-          #          @cprob +=  prob
-          #          incregprob(a.id)
-          #        elsif !system("identify #{a.ruta_articulo} >/dev/null 2>&1") 
-          #          prob = "<br>Artículo #{a.id} referencia imagen posiblemente dañada #{a.ruta_articulo}"
-          #          logger.debug prob
-          #          @cprob += prob
-          #          incregprob(a.id)
-          #        end
-          @numexistente += 1
-          if ((@numexistente % 1000) == 0)
-            logger.debug "numexistente=#{@numexistente}"
-          end
+    # Genera listado de rutas a archivos referenciados en BD
+    # Genera en @arcbd
+    def gen_rutas_bd
+      arts = Sal7711Gen::Articulo.all
+      logger.debug "#{arts.count} archivos referenciados en base de datos"
+      arcbd = Array.new(arts.count)
+      i2 = 0
+      arts.find_each(batch_size: 100000) do |art|
+        rr = File.join(art.created_at.strftime("%Y/%m/%d"), 
+                       art.id.to_s + '_' + art.adjunto_file_name)
+        arcbd[i2] = [art.id, rr]
+        i2 += 1
+        if ((i2 % 1000) == 1)
+          logger.debug "OJO gen_rutas_bd i2=#{i2}"
         end
-      end #uncached
-        
-      @numregprob = @regprob.reject(&:nil?).count 
+      end
 
+      arcbd.sort! { |x, y| x[1] <=> y[1] }
+      return arcbd
+    end
+
+    def verifica_arch_base(ruta)
+      Dir.foreach(ruta) do |arc|
+        if arc == '.' || arc == '..'
+          next
+        end
+        nr = File.join(ruta, arc)
+        if File.stat(nr).ftype == 'directory'
+                verifica_arch_base(nr)
+        else
+          f = nr.split(File::SEPARATOR)[-4..-2]
+          if f[0].to_i < 1970 || 
+            f[1].to_i <=0 || f[1].to_i > 12 || 
+            f[2].to_i <=0 || f[2].to_i > 31
+            porelim_sa(nr, 
+                    "Archivo #{nr} no incluye fecha correcta, " +
+                    "programando eliminacion")
+            next
+          end
+          p = arc.split("_")
+          if p[0].to_i <= 0
+            porelim_sa(nr, "Archivo #{nr} no incluye id.,"+
+                    "programando eliminacion")
+            next
+          end
+          art = Sal7711Gen::Articulo.where(id: p[0].to_i).take
+          if (art.nil?) 
+            
+            porelim_sa(nr, "Archivo #{nr} referencia artículo con " +
+                    "id #{p[0].to_i} pero no existe, " +
+                    "programando eliminación")
+            next
+          end
+          if art.created_at.year != f[0].to_i ||
+            art.created_at.month != f[1].to_i ||
+            art.created_at.day != f[2].to_i 
+            porelim_sa(nr, "Archivo #{nr} está en una ruta con " +
+                    "fecha diferente a la del artículo con id " +
+                    "#{p[0].to_i} que es " +
+                    "#{art.created_at.strftime('%Y-%m-%d')}, " +
+                    "programando eliminación" )
+            next
+          end
+          p.delete_at(0)
+          oarc = p.join("_")
+          if art.adjunto_file_name != oarc
+            porelim_sa(nr, "Archivo #{nr} no es referenciado por " +
+                    "el artículo con id #{p[0].to_i} " +
+                    "(referenciado #{art.adjunto_file_name}), " +
+                    "programando eliminación")
+            next
+          end
+
+        end
+      end
+    end
+
+    # Calcula diferencia entre archivos en sistema de archivos
+    # y los referenciados en base de datos para generar:
+    # a) Archivo de ordenes para borrar excedente de sist. arch
+    # b) Archivo SQL para borrar excedente de bd
+    # c) Archivo de ordenes para revisar integridad de archivos
+    #    existentes y referenciados y que agrega eliminacion
+    #    de los que no sean imagenes integras
+    def verifica_archivos
+      authorize! :edit, Sal7711Gen::Articulo
+      ActiveRecord::Base.uncached do
+        @cprob = '' # Colchon de errores
+        @numelimsa = 0 # Número de problemas en SA
+        @numelimbd = 0 # Número de problemas en BD
+        @numexistente = 0 # Número de comunes en SA y BD
+        @saelim='/tmp/rbverifica-elimina-sa.sh'
+        @bdelim='/tmp/rbverifica-elimina-bd.sql'
+        @arcord='/tmp/rbverifica.sh'
+        @arcbd = gen_rutas_bd
+        puts "#{@arcbd.length} archivos referenciados en base de datos"
+        @numarcsa = 0
+        @arcsa = Array.new(@arcbd.length)
+        gen_rutas_sa(File.join(Sip.ruta_anexos))
+        puts "#{@numarcsa} archivos en sistema de archivos"
+        @arcsa.sort!
+       i1 = 0
+        i2 = 0
+        open(@saelim, 'w') { |fsa|
+          fsa.puts "#!/bin/sh"
+          fsa.puts "# Elimina archivos que no estén bien referenciados en base de datos de Archivo de prensa"
+          open(@bdelim, 'w') { |fbd|
+            fbd.puts "-- Elimina registros de base de datos que referencia archivos que no existen en el sistema de archivos"
+            open(@arcord, 'w') { |fvi|
+              fvi.puts "#!/bin/sh"
+              fvi.puts "# Verifica integridad de imagenes en sistemas de archivos y referenciadas en base de datos, programa eliminacion de errados de base de datos añadiendo a #{@bdelim}"
+              while i1 < @arcsa.length || i2 < @arcbd.length
+                if i2 >= @arcbd.length || 
+                  (i1 < @arcsa.length && @arcsa[i1] < @arcbd[i2][1])
+                  porelim_sa(fsa, @arcsa[i1], "No referenciado en BD")
+                  i1 += 1
+                elsif i1 >= @arcsa.length ||
+                  (i2 < @arcbd.length && @arcsa[i1] > @arcbd[i2][1])
+                  porelim_bd(fbd, @arcbd[i2][0], "Archivo referenciado (#{@arcbd[i2][1]}) no esta en SA")
+                  i2 += 1
+                else # i1<@arcsa.length && i2<@arcbd.length && @arcsa[i1]==@arcbd[i2][1] 
+                  fvi.puts "file #{File.join(Sip.ruta_anexos, @arcsa[i1])} | grep -e \"TIFF image\" -e \"PC bitmap data\" >> /tmp/salida 2>&1"
+                  fvi.puts "if (test \"$?\" != \"0\") then {"
+                  fvi.puts "  echo \"Problema en artículo #{File.join(Sip.ruta_anexos, @arcsa[i1])} borrar registro #{@arcbd[i2][0]}\" | tee -a /tmp/salida"
+                  fvi.puts "  echo \"#{gen_sql_elim(@arcbd[i2][0])} -- Existe archivo #{File.join(Sip.ruta_anexos, @arcsa[i1])} pero no es imagen integra\"verificaarchivos  >> #{@bdelim}"
+                  fvi.puts "} fi;"
+                  i1 += 1
+                  i2 += 1
+                  @numexistente += 1
+                  if (@numexistente % 1000) == 0
+                    fvi.puts "echo \"#{@numexistente}\""
+                  end
+                end
+                if ((i1 + i2 % 1000) == 0 || (i1 + i2 % 1000) == 1)
+                  logger.debug "i1=#{i1}, i2=#{i2}, numexistente=#{@numexistente}"
+                end
+              end
+
+            }
+          }
+        }
+      end #uncached
     end
 
 
@@ -224,9 +364,10 @@ module Sal7711Gen
       @articulo.destroy
       respond_to do |format|
         format.html { 
-          redirect_back fallback_location: File.join(
-            Rails.configuration.relative_url_root, 'lotes', lotereg),
-            notice: 'Artículo eliminado.' 
+          ruta = File.join(Rails.configuration.relative_url_root, 
+                           'lotes' + lotereg)
+          #byebug
+          redirect_to ruta.to_s, notice: 'Artículo eliminado.' 
         }
         format.json { head :no_content }
       end

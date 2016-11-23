@@ -631,10 +631,10 @@ module Sal7711Gen
       authorize! :read, Sal7711Gen::Articulo
       prepara_meses
       @muestraid = params[:muestraid].to_i
-      prepara_pagina
       if params.to_unsafe_h.count > 2
         # 2 params que siempre estan son controller y action si hay
         # más sería una consulta iniciada por usuario
+        prepara_pagina
         Sal7711Gen::Bitacora.a( request.remote_ip, current_usuario, 
                                'index', params)
       end
