@@ -37,7 +37,9 @@ Rails.application.routes.draw do
   get 'bitacora/admin' => 'sal7711_gen/bitacora#admin', as: 'bitacora_admin'
   get 'bitacora/tiempo' => 'sal7711_gen/bitacora#tiempo', 
           as: 'bitacora_tiempo'
-  get 'sincroniza' => 'sal7711_gen/buscar#sincroniza', as: 'buscar_sincroniza'
+  get 'sincroniza' => 'sal7711_gen/buscar#sincroniza_onbase', as: 'buscar_sincroniza'
+  get 'verificaarchivos' => 'sal7711_gen/articulos#verifica_archivos', 
+    as: 'verificaarchivos'
   
   get 'lotes/nuevo' => 'lotes#new', as: 'new_lote'
   post  'lotes/nuevo' => 'lotes#create', as: 'create_lote'
@@ -53,7 +55,8 @@ Rails.application.routes.draw do
   mount Sip::Engine, at: "/", as: 'sip'
 
   namespace :admin do
-    Ability.tablasbasicas.each do |t|
+    ab = ::Ability.new
+    ab.tablasbasicas.each do |t|
       #puts "OJO config/routes.rb, t=" + t.to_s
       if (t[0] == "") 
         c = t[1].pluralize
