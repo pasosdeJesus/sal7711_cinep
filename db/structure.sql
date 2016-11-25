@@ -994,29 +994,6 @@ CREATE VIEW vestadisticalote AS
 
 
 --
--- Name: vestadolote; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW vestadolote AS
- SELECT
-        CASE
-            WHEN (vestadisticalote.con = 0) THEN 'EN ESPERA'::text
-            WHEN (vestadisticalote.sin = 0) THEN 'PROCESADO'::text
-            ELSE 'EN PROGRESO'::text
-        END AS estado,
-    vestadisticalote.lote_id,
-    date(lote.created_at) AS fecha
-   FROM (vestadisticalote
-     JOIN lote ON ((vestadisticalote.lote_id = lote.id)))
-  ORDER BY
-        CASE
-            WHEN (vestadisticalote.con = 0) THEN 'EN ESPERA'::text
-            WHEN (vestadisticalote.sin = 0) THEN 'PROCESADO'::text
-            ELSE 'EN PROGRESO'::text
-        END, vestadisticalote.lote_id;
-
-
---
 -- Name: vestlote; Type: VIEW; Schema: public; Owner: -
 --
 

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 9dd0b49c3c07d62e9650ccd3e69e7149f66f3b05
+  revision: 3da715312ffcaf258bc2119e2bcfd0b5ec778d0c
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 891aeadcfccf1eb3069c3493cc5fa48fde33d490
+  revision: 795d491dbf70f50cc35c3a9be4e6d39aa904fa30
   specs:
     sip (2.0.b1)
       bootstrap-datepicker-rails
@@ -107,7 +107,7 @@ GEM
     coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.10.0)
+    coffee-script-source (1.11.1)
     colorize (0.8.1)
     commonjs (0.2.7)
     concurrent-ruby (1.0.2)
@@ -283,7 +283,7 @@ GEM
       tzinfo
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2016.9)
+    tzinfo-data (1.2016.10)
       tzinfo (>= 1.0.0)
     uglifier (3.0.3)
       execjs (>= 0.3.0, < 3)
