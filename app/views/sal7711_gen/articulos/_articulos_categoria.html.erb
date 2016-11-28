@@ -1,3 +1,9 @@
+<% if f.object.lote_id %> 
+  <div class="col-xs-11">
+<% else %>
+  <div class="col-xs-12">
+<% end %>
+
 <div style="padding-bottom: 18px;" class="input select categoriaprensa_sinorden">
   <label class="select required control-label" for="categoriaprensa_sinorden">
     Categoria Prensa</label>
@@ -16,4 +22,11 @@
   label_method: :categoriaprensa_id
   #input_html: { class: 'chosen-select' }
 %>
-  
+
+</div>
+<% if f.object.lote_id %> 
+  <div class="col-xs-1">
+  </div>
+<% end %>
+
+

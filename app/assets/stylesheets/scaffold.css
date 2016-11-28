@@ -203,3 +203,12 @@ input.candadochequeo:checked + label:before { letter-spacing: 5px; } /* allow sp
 input[type=checkbox][disabled] + label:before {
 	color: lightgray
 }
+
+.labelcandado {
+	margin-top: 30px;
+}
+
+.input {
+	border: 0px;
+}
+

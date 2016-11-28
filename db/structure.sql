@@ -219,7 +219,8 @@ CREATE TABLE lote (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     nombre character varying(511),
-    estado character varying(127) DEFAULT 'EN ESPERA'::character varying
+    estado character varying(127) DEFAULT 'EN ESPERA'::character varying,
+    candcategoriaprensa_id integer
 );
 
 
@@ -994,6 +995,50 @@ CREATE VIEW vestadisticalote AS
 
 
 --
+-- Name: vestadolote; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW vestadolote AS
+ SELECT
+        CASE
+            WHEN (NOT (lote.id IN ( SELECT DISTINCT lote_1.id AS lote_id
+               FROM (lote lote_1
+                 JOIN sal7711_gen_articulo a ON ((lote_1.id = a.lote_id)))
+              WHERE (NOT (EXISTS ( SELECT cp.articulo_id,
+                        cp.categoriaprensa_id,
+                        cp.id,
+                        cp.orden
+                       FROM sal7711_gen_articulo_categoriaprensa cp
+                      WHERE (a.id = cp.articulo_id))))))) THEN 'PROCESADO'::text
+            WHEN (NOT (lote.id IN ( SELECT lote_1.id
+               FROM ((lote lote_1
+                 JOIN sal7711_gen_articulo a ON ((a.lote_id = lote_1.id)))
+                 JOIN sal7711_gen_articulo_categoriaprensa cp ON ((cp.articulo_id = a.id)))))) THEN 'EN ESPERA'::text
+            ELSE 'EN PROGRESO'::text
+        END AS estado,
+    lote.id AS lote_id,
+    lote.nombre
+   FROM lote
+  ORDER BY
+        CASE
+            WHEN (NOT (lote.id IN ( SELECT DISTINCT lote_1.id AS lote_id
+               FROM (lote lote_1
+                 JOIN sal7711_gen_articulo a ON ((lote_1.id = a.lote_id)))
+              WHERE (NOT (EXISTS ( SELECT cp.articulo_id,
+                        cp.categoriaprensa_id,
+                        cp.id,
+                        cp.orden
+                       FROM sal7711_gen_articulo_categoriaprensa cp
+                      WHERE (a.id = cp.articulo_id))))))) THEN 'PROCESADO'::text
+            WHEN (NOT (lote.id IN ( SELECT lote_1.id
+               FROM ((lote lote_1
+                 JOIN sal7711_gen_articulo a ON ((a.lote_id = lote_1.id)))
+                 JOIN sal7711_gen_articulo_categoriaprensa cp ON ((cp.articulo_id = a.id)))))) THEN 'EN ESPERA'::text
+            ELSE 'EN PROGRESO'::text
+        END, lote.id, lote.nombre;
+
+
+--
 -- Name: vestlote; Type: VIEW; Schema: public; Owner: -
 --
 
@@ -1633,6 +1678,6 @@ ALTER TABLE ONLY sip_ubicacion
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20150327104439'), ('20150413160156'), ('20150413160157'), ('20150413160158'), ('20150413160159'), ('20150416074423'), ('20150503110048'), ('20150503120915'), ('20150504161548'), ('20150507045700'), ('20150507202524'), ('20150510125926'), ('20150510130031'), ('20150521181918'), ('20150528100944'), ('20150529085519'), ('20150603181900'), ('20150604101858'), ('20150604102321'), ('20150604155923'), ('20150702224217'), ('20150707132824'), ('20150707164448'), ('20150710114451'), ('20150715013755'), ('20150717101243'), ('20150724003736'), ('20150803082520'), ('20150809032138'), ('20151016015543'), ('20151016101736'), ('20151020203421'), ('20151027111828'), ('20151030154458'), ('20151113104833'), ('20151113185225'), ('20160518025044'), ('20160519090811'), ('20160519195544'), ('20160520105206'), ('20160906031704'), ('20160906071321'), ('20160921102923'), ('20160921112808'), ('20161004120737'), ('20161018150029'), ('20161024190937'), ('20161031230647'), ('20161108102349'), ('20161108215416'), ('20161110133820');
+INSERT INTO schema_migrations (version) VALUES ('20150327104439'), ('20150413160156'), ('20150413160157'), ('20150413160158'), ('20150413160159'), ('20150416074423'), ('20150503110048'), ('20150503120915'), ('20150504161548'), ('20150507045700'), ('20150507202524'), ('20150510125926'), ('20150510130031'), ('20150521181918'), ('20150528100944'), ('20150529085519'), ('20150603181900'), ('20150604101858'), ('20150604102321'), ('20150604155923'), ('20150702224217'), ('20150707132824'), ('20150707164448'), ('20150710114451'), ('20150715013755'), ('20150717101243'), ('20150724003736'), ('20150803082520'), ('20150809032138'), ('20151016015543'), ('20151016101736'), ('20151020203421'), ('20151027111828'), ('20151030154458'), ('20151113104833'), ('20151113185225'), ('20160518025044'), ('20160519090811'), ('20160519195544'), ('20160520105206'), ('20160906031704'), ('20160906071321'), ('20160921102923'), ('20160921112808'), ('20161004120737'), ('20161018150029'), ('20161024190937'), ('20161031230647'), ('20161108102349'), ('20161108215416'), ('20161110133820'), ('20161128160817');
 
 

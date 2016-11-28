@@ -32,6 +32,10 @@ $(document).on('turbolinks:load', function() {
 			true);
 	}
 
+	if ($('#articulo_departamento_id').length == 1)  {
+		$('#articulo_departamento_id')[0].focus();
+	}
+
 	// Pone orden a categoria por guardar de acuerdo al orden dado
 	// por el usuario
 	$(document).on('change', '#categoriaprensa_sinorden', function(e) {
@@ -55,6 +59,7 @@ $(document).on('turbolinks:load', function() {
 			$("#articulo_icfecha").attr("disabled", true);
 			$("#articulo_icfecha").removeAttr("checked");
 		}
+		$('#articulo_departamento_id')[0].focus();
 	})
 
 	$(document).on('change', '#articulo_departamento_id', function(e) {

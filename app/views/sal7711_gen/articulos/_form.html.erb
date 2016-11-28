@@ -34,7 +34,7 @@
                    <%= @icfecha ? "checked" : "" %> 
                    <%= "disabled='disabled'" if !f.object.departamento_id %>
             />
-            <label for="articulo_icfecha"></label>
+            <label class="labelcandado" for="articulo_icfecha"></label>
           </div>
         <% else %>
           <div class="col-xs-12">
@@ -60,7 +60,7 @@
                    <%= @icdepartamento ? "checked" : "" %> 
                    <%= "disabled='disabled'" if !f.object.departamento_id %>
             />
-            <label for="articulo_icdepartamento"></label>
+            <label class="labelcandado" for="articulo_icdepartamento"></label>
           </div>
         <% else %>
           <div class="col-xs-12">
@@ -88,7 +88,7 @@
                    <%= @icmunicipio ? "checked" : "" %> 
                    <%= "disabled='disabled'" if !f.object.municipio_id %>
             />
-            <label for="articulo_icmunicipio"></label>
+            <label class="labelcandado" for="articulo_icmunicipio"></label>
           </div>
         <% else %>
           <div class="col-xs-12">
@@ -101,9 +101,7 @@
           </div>
         <% end %>
 
-        <div class="col-xs-12">
-          <%= render partial: 'articulos_categoria', locals: { f: f } %>
-        </div>
+        <%= render partial: 'articulos_categoria', locals: { f: f } %>
 
         <% if f.object.lote_id %> 
           <div class="col-xs-11">
@@ -121,7 +119,7 @@
                    <%= @icfuenteprensa ? "checked" : "" %> 
                    <%= "disabled='disabled'" if !f.object.fuenteprensa_id %>
                    />
-            <label for="articulo_icfuenteprensa"></label>
+            <label class="labelcandado" for="articulo_icfuenteprensa"></label>
           </div>
         <% else %>
           <div class="col-xs-12">
@@ -137,9 +135,17 @@
 
         <%= render partial: 'articulos_complemento1', locals: { f: f } %>
   
-        <div class="col-xs-12">
-          <%= f.input :texto %> 
-        </div>
+        <% if f.object.lote_id %> 
+          <div class="col-xs-11">
+            <%= f.input :texto %> 
+          </div>
+          <div class="col-xs-1">
+          </div>
+        <% else %>
+          <div class="col-xs-12">
+            <%= f.input :texto %> 
+          </div>
+        <% end %>
 
         <div class="col-xs-12 form-actions abajocentrado">
           <% if f.object.lote_id %> 

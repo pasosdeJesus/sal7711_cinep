@@ -40,10 +40,15 @@ class LotesController < ApplicationController
             end
             @a.adjunto_descripcion = "Imagen #{@a.orden} del lote #{@lote.id}"
             @a.save(validate: false)
+            if @lote.candcategoriaprensa_id
+              byebug
+              c = Sal7711Gen::ArticuloCategoriaprensa.new(categoriaprensa_id: @lote.candcategoriaprensa_id, articulo_id: @a.id)
+              c.save(validate: false)
+            end
           }
         end
         format.html { redirect_to sal7711_gen.articulos_path, 
-                      notice: 'Lote creado.' }
+                      notice: "Lote #{@lote.id} creado." }
         format.json { render json: @lote, status: :created }
       else
         format.html { render action: "new" }
@@ -141,9 +146,9 @@ class LotesController < ApplicationController
 
   def index
     authorize! :manage, Sal7711Gen::Articulo
-    if params.to_unsafe_h.count > 2
+     #if params.to_unsafe_h.count > 2
       prepara_pagina 
-    end
+    #end
     respond_to do |format|
       format.html { }
       format.json { head :no_content }
@@ -158,6 +163,7 @@ class LotesController < ApplicationController
       :nombre,
       :canddepartamento_id,
       :candmunicipio_id,
+      :candcategoriaprensa_id,
       :candfuenteprensa_id
     )
   end # lote_params
