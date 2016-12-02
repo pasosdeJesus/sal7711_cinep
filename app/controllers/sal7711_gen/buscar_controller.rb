@@ -634,7 +634,9 @@ module Sal7711Gen
         end
       end
       articulos = articulos.joins(
-        :articulo_categoriaprensa).joins(:categoriaprensa).where(
+        :articulo_categoriaprensa).joins(
+          'INNER JOIN sal7711_gen_categoriaprensa ON 
+           sal7711_gen_categoriaprensa.id = sal7711_gen_articulo_categoriaprensa.categoriaprensa_id').where(
           "codigo #{op} ?", cod)
       return articulos
     end
