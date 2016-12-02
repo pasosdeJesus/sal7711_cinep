@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: aad87a282ad6997b1a6c120b4734dc2ea0ca85b2
+  revision: 73bc7ec80e11df5d4bcf56d1b050c47bbf56fb76
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -84,7 +84,7 @@ GEM
     callsite (0.0.11)
     camertron-eprun (1.1.1)
     cancancan (1.15.0)
-    capybara (2.10.1)
+    capybara (2.10.2)
       addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -134,7 +134,7 @@ GEM
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
-    jquery-ui-rails (6.0.0)
+    jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
     json (1.8.3)
     kgio (2.10.0)
@@ -166,7 +166,7 @@ GEM
     mimemagic (0.3.2)
     mini_portile (0.6.2)
     mini_portile2 (2.1.0)
-    minitest (5.9.1)
+    minitest (5.10.1)
     multi_json (1.12.1)
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
@@ -277,7 +277,7 @@ GEM
       execjs (>= 2.2.2, >= 2.2)
       less-rails (>= 2.5.0)
       railties (>= 3.1)
-    twitter_cldr (4.1.0)
+    twitter_cldr (4.2.0)
       camertron-eprun
       cldr-plurals-runtime-rb (~> 1.0)
       tzinfo
@@ -285,7 +285,7 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2016.10)
       tzinfo (>= 1.0.0)
-    uglifier (3.0.3)
+    uglifier (3.0.4)
       execjs (>= 0.3.0, < 3)
     unicorn (5.2.0)
       kgio (~> 2.6)

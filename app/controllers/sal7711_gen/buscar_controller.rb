@@ -612,18 +612,32 @@ module Sal7711Gen
     end
 
     def prepara_pagina_comp(articulos, params)
-      if params[:buscar] && params[:buscar][:lote] && 
-        params[:buscar][:lote] != ''
-        pl = params[:buscar][:lote].to_i
-        articulos = articulos.where('lote_id = ?', pl)
-      elsif params.to_unsafe_h[:buscar].nil? ||
-        params.to_unsafe_h[:buscar].count == 0
-        #byebug
-        articulos = articulos.where('1=2')
-      end
       return articulos
     end
-
+ 
+    # Forma de buscar categorias
+    def prepara_pagina_categoria(articulos, ccat)
+      if ccat.ends_with? "*"
+        op = ' LIKE '
+        cod = "#{ccat.split('*')[0]}%"
+      else 
+        cat = Sal7711Gen::Categoriaprensa.where('codigo=?', ccat).take;
+        if cat && cat.supracategoria
+          op = ' LIKE '
+          cod = "#{cat.codigo}%"
+        elsif cat
+          op = ' = '
+          cod = cat.codigo.to_s
+        else
+         op = ' LIKE '
+         cod = "#{ccat}%"
+        end
+      end
+      articulos = articulos.joins(
+        :articulo_categoriaprensa).joins(:categoriaprensa).where(
+          "codigo #{op} ?", cod)
+      return articulos
+    end
 
     # Resultado de aplicar filtro
     def index
