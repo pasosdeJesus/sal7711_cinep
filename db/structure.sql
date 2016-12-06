@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.4.6
+-- Dumped from database version 9.5.4
 -- Dumped by pg_dump version 9.5.4
 
 SET statement_timeout = 0;
@@ -219,6 +219,7 @@ CREATE TABLE lote (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     nombre character varying(511),
+    estado character varying(127) DEFAULT 'EN ESPERA'::character varying,
     candcategoriaprensa_id integer
 );
 
@@ -631,7 +632,7 @@ CREATE VIEW sip_mundep_sinorden AS
     (((sip_municipio.nombre)::text || ' / '::text) || (sip_departamento.nombre)::text) AS nombre
    FROM (sip_municipio
      JOIN sip_departamento ON ((sip_municipio.id_departamento = sip_departamento.id)))
-  WHERE (((sip_departamento.id_pais = 170) AND (sip_municipio.fechadeshabilitacion IS NULL)) AND (sip_departamento.fechadeshabilitacion IS NULL))
+  WHERE ((sip_departamento.id_pais = 170) AND (sip_municipio.fechadeshabilitacion IS NULL) AND (sip_departamento.fechadeshabilitacion IS NULL))
 UNION
  SELECT sip_departamento.id_deplocal AS idlocal,
     sip_departamento.nombre
@@ -749,9 +750,9 @@ CREATE TABLE sip_persona (
     id_departamento integer,
     id_municipio integer,
     id_clase integer,
-    CONSTRAINT persona_check CHECK (((dianac IS NULL) OR ((((dianac >= 1) AND ((((((((mesnac = 1) OR (mesnac = 3)) OR (mesnac = 5)) OR (mesnac = 7)) OR (mesnac = 8)) OR (mesnac = 10)) OR (mesnac = 12)) AND (dianac <= 31))) OR (((((mesnac = 4) OR (mesnac = 6)) OR (mesnac = 9)) OR (mesnac = 11)) AND (dianac <= 30))) OR ((mesnac = 2) AND (dianac <= 29))))),
+    CONSTRAINT persona_check CHECK (((dianac IS NULL) OR (((dianac >= 1) AND (((mesnac = 1) OR (mesnac = 3) OR (mesnac = 5) OR (mesnac = 7) OR (mesnac = 8) OR (mesnac = 10) OR (mesnac = 12)) AND (dianac <= 31))) OR (((mesnac = 4) OR (mesnac = 6) OR (mesnac = 9) OR (mesnac = 11)) AND (dianac <= 30)) OR ((mesnac = 2) AND (dianac <= 29))))),
     CONSTRAINT persona_mesnac_check CHECK (((mesnac IS NULL) OR ((mesnac >= 1) AND (mesnac <= 12)))),
-    CONSTRAINT persona_sexo_check CHECK ((((sexo = 'S'::bpchar) OR (sexo = 'F'::bpchar)) OR (sexo = 'M'::bpchar)))
+    CONSTRAINT persona_sexo_check CHECK (((sexo = 'S'::bpchar) OR (sexo = 'F'::bpchar) OR (sexo = 'M'::bpchar)))
 );
 
 
@@ -966,17 +967,31 @@ CREATE TABLE usuario (
 
 
 --
--- Name: vcatporarticulo; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+-- Name: vcatporarticulo; Type: VIEW; Schema: public; Owner: -
 --
 
-CREATE MATERIALIZED VIEW vcatporarticulo AS
+CREATE VIEW vcatporarticulo AS
  SELECT sal7711_gen_articulo.lote_id,
     sal7711_gen_articulo.id AS articulo_id,
-    (EXISTS ( SELECT sal7711_gen_articulo_categoriaprensa.categoriaprensa_id
-           FROM sal7711_gen_articulo_categoriaprensa
-          WHERE (sal7711_gen_articulo_categoriaprensa.articulo_id = sal7711_gen_articulo.id))) AS ncat
-   FROM sal7711_gen_articulo
-  WITH NO DATA;
+    count(sal7711_gen_articulo_categoriaprensa.categoriaprensa_id) AS ncat
+   FROM (sal7711_gen_articulo
+     LEFT JOIN sal7711_gen_articulo_categoriaprensa ON ((sal7711_gen_articulo_categoriaprensa.articulo_id = sal7711_gen_articulo.id)))
+  GROUP BY sal7711_gen_articulo.lote_id, sal7711_gen_articulo.id;
+
+
+--
+-- Name: vestadisticalote; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW vestadisticalote AS
+ SELECT DISTINCT sal7711_gen_articulo.lote_id,
+    COALESCE(array_length(ARRAY( SELECT vcatporarticulo.articulo_id
+           FROM vcatporarticulo
+          WHERE ((vcatporarticulo.lote_id = sal7711_gen_articulo.lote_id) AND (vcatporarticulo.ncat = 0))), 1), 0) AS sin,
+    COALESCE(array_length(ARRAY( SELECT vcatporarticulo.articulo_id
+           FROM vcatporarticulo
+          WHERE ((vcatporarticulo.lote_id = sal7711_gen_articulo.lote_id) AND (vcatporarticulo.ncat > 0))), 1), 0) AS con
+   FROM sal7711_gen_articulo;
 
 
 --
@@ -1021,6 +1036,31 @@ CREATE VIEW vestadolote AS
                  JOIN sal7711_gen_articulo_categoriaprensa cp ON ((cp.articulo_id = a.id)))))) THEN 'EN ESPERA'::text
             ELSE 'EN PROGRESO'::text
         END, lote.id, lote.nombre;
+
+
+--
+-- Name: vestlote; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW vestlote AS
+ SELECT t.lote_id,
+    s.proc,
+    t.tot,
+    (t.tot - s.proc) AS por
+   FROM ( SELECT sal7711_gen_articulo.lote_id,
+            count(sal7711_gen_articulo.id) AS proc
+           FROM sal7711_gen_articulo
+          WHERE (NOT (sal7711_gen_articulo.id IN ( SELECT sal7711_gen_articulo_1.id
+                   FROM (sal7711_gen_articulo_categoriaprensa
+                     JOIN sal7711_gen_articulo sal7711_gen_articulo_1 ON ((sal7711_gen_articulo_categoriaprensa.articulo_id = sal7711_gen_articulo_1.id))))))
+          GROUP BY sal7711_gen_articulo.lote_id
+          ORDER BY sal7711_gen_articulo.lote_id) s,
+    ( SELECT sal7711_gen_articulo.lote_id,
+            count(sal7711_gen_articulo.id) AS tot
+           FROM sal7711_gen_articulo
+          GROUP BY sal7711_gen_articulo.lote_id
+          ORDER BY sal7711_gen_articulo.lote_id) t
+  WHERE (s.lote_id = t.lote_id);
 
 
 --
@@ -1350,20 +1390,6 @@ CREATE UNIQUE INDEX index_usuario_on_email ON usuario USING btree (email);
 
 
 --
--- Name: lote_id_ind; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX lote_id_ind ON sal7711_gen_articulo USING btree (lote_id);
-
-
---
--- Name: lote_id_ind_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX lote_id_ind_id ON sal7711_gen_articulo USING btree (lote_id, id);
-
-
---
 -- Name: s7_artcat_a; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1396,13 +1422,6 @@ CREATE INDEX sip_busca_mundep ON sip_mundep USING gin (mundep);
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
-
-
---
--- Name: vcatporarticulo_lote_id_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX vcatporarticulo_lote_id_idx ON vcatporarticulo USING btree (lote_id);
 
 
 --
@@ -1657,7 +1676,7 @@ ALTER TABLE ONLY sip_ubicacion
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user",public;
+SET search_path TO "$user", public;
 
 INSERT INTO schema_migrations (version) VALUES ('20150327104439'), ('20150413160156'), ('20150413160157'), ('20150413160158'), ('20150413160159'), ('20150416074423'), ('20150503110048'), ('20150503120915'), ('20150504161548'), ('20150507045700'), ('20150507202524'), ('20150510125926'), ('20150510130031'), ('20150521181918'), ('20150528100944'), ('20150529085519'), ('20150603181900'), ('20150604101858'), ('20150604102321'), ('20150604155923'), ('20150702224217'), ('20150707132824'), ('20150707164448'), ('20150710114451'), ('20150715013755'), ('20150717101243'), ('20150724003736'), ('20150803082520'), ('20150809032138'), ('20151016015543'), ('20151016101736'), ('20151020203421'), ('20151027111828'), ('20151030154458'), ('20151113104833'), ('20151113185225'), ('20160518025044'), ('20160519090811'), ('20160519195544'), ('20160520105206'), ('20160906031704'), ('20160906071321'), ('20160921102923'), ('20160921112808'), ('20161004120737'), ('20161018150029'), ('20161024190937'), ('20161031230647'), ('20161108102349'), ('20161108215416'), ('20161110133820'), ('20161128160817'), ('20161206124846');
 
