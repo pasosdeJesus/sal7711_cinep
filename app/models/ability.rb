@@ -23,6 +23,12 @@ class Ability  < Sal7711Gen::Ability
   BASICAS_PROPIAS =  [
     ['', 'organizacion']
   ]
+
+  NOBASICAS_INDSEQID = [
+    ['', 'lote']
+  ]
+
+
   def tablasbasicas 
     Sip::Ability::BASICAS_PROPIAS + 
       Sal7711Gen::Ability::BASICAS_PROPIAS + 
@@ -44,7 +50,8 @@ class Ability  < Sal7711Gen::Ability
 
   def nobasicas_indice_seq_con_id
     Sip::Ability::NOBASICAS_INDSEQID +
-      Sal7711Gen::Ability::NOBASICAS_INDSEQID 
+      Sal7711Gen::Ability::NOBASICAS_INDSEQID +
+      NOBASICAS_INDSEQID 
   end
 
   def tablasbasicas_prio 

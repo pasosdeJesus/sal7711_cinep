@@ -192,6 +192,7 @@ input.candadochequeo { display:none; } /* to hide the checkbox itself */
 input.candadochequeo + label:before {
 	font-family: FontAwesome;
 	display: inline-block;
+	font-size: 20px;
 }
 
 input.candadochequeo + label:before { content: "\f09c"; } /* unchecked icon */
