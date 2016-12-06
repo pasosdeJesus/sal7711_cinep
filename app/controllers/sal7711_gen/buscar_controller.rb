@@ -386,6 +386,8 @@ module Sal7711Gen
           LEFT JOIN keyxitem114 ON keyxitem114.itemnum = itemdata.itemnum
           LEFT JOIN keytable114  ON 
             keyxitem114.keywordnum = keytable114.keywordnum 
+          LEFT JOIN archivedqueue ON
+           itemdata.batchnum = archivedqueue.batchnum 
           WHERE keyitem103.keyvaluedate >= '1960-01-01'
           AND keyitem103.keyvaluedate <= '#{Time.now.strftime("%Y-%m-%d")}'
           AND itemname LIKE 'Prensa Cinep%' "
@@ -400,7 +402,9 @@ module Sal7711Gen
           keytable110.keyvaluechar AS municipio,
           keytable112.keyvaluechar AS cat1,
           keytable113.keyvaluechar AS cat2,
-          keytable114.keyvaluechar AS cat3 #{fbuenos}
+          keytable114.keyvaluechar AS cat3,
+          archivedqueue.batchname AS batchname
+          #{fbuenos}
           AND itemdata.itemnum < #{maxitemnum}
           AND itemdata.itemnum >= #{minitemnum}
           #{cadestan}
@@ -444,7 +448,7 @@ module Sal7711Gen
               l = Lote.new
               l.id = nlote.to_i
               l.usuario = current_usuario
-              l.nombre = nart.fecha
+              l.nombre = fila['batchname']
               l.save!
             end
             nart.lote_id = nlote
