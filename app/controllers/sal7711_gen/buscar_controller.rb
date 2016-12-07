@@ -582,7 +582,7 @@ module Sal7711Gen
       
       pasada = 0
       deltaitemnum = 1000
-      minitemnum = 1 # Todos los anteriores a este han sido procesados
+      minitemnum = 600000 # Todos los anteriores a este han sido procesados
       maxitemnum = minitemnum + deltaitemnum
       
       # Al intentar toda la consulta se presentaron errores Read Failed
