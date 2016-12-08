@@ -152,10 +152,15 @@
             <%= f.button :submit, 
               name: 'progresar', 
               value: 'Actualizar y progresar', 
-              class: 'btn-primary' %>
+              class: 'btn-primary',
+              "data-disable-with": 'Actualizar y progresar' %>
           <% end %>
 
-          <%= f.button :submit, value: 'Actualizar', class: 'btn-primary' %>
+          <%= f.button :submit, 
+            name: 'actualizar', 
+            value: 'Actualizar', 
+            class: 'btn-primary',
+            "data-disable-with": 'Actualizar' %>
 
           <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
             sal7711_gen.articulos_path, :class => 'btn' 
