@@ -17,7 +17,7 @@ class LotesController < ApplicationController
     # Referencia: http://www.railscook.com/recipes/multiple-files-upload-with-nested-resource-using-paperclip-in-rails/
     #byebug
     @lote = Lote.new(lote_params)
-    @lote.usuario = current_usuario
+    @lote.usuario_id = current_usuario.id
     respond_to do |format|
       if @lote.save
         if params[:imagenes]
@@ -41,13 +41,13 @@ class LotesController < ApplicationController
             @a.adjunto_descripcion = "Imagen #{@a.orden} del lote #{@lote.id}"
             @a.save(validate: false)
             if @lote.candcategoriaprensa_id
-              byebug
-              c = Sal7711Gen::ArticuloCategoriaprensa.new(categoriaprensa_id: @lote.candcategoriaprensa_id, articulo_id: @a.id)
+              c = Sal7711Gen::ArticuloCategoriaprensa.new(
+                categoriaprensa_id: @lote.candcategoriaprensa_id, articulo_id: @a.id)
               c.save(validate: false)
             end
           }
         end
-        format.html { redirect_to sal7711_gen.articulos_path, 
+        format.html { redirect_to main_app.lotes_path, 
                       notice: "Lote #{@lote.id} creado." }
         format.json { render json: @lote, status: :created }
       else
