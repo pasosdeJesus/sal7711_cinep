@@ -447,7 +447,8 @@ module Sal7711Gen
             if !Lote.exists?(nlote.to_i)
               l = Lote.new
               l.id = nlote.to_i
-              l.usuario = current_usuario
+              l.usuario_id = current_usuario.id
+              logger.info "OJO current_usuario.id=#{current_usuario.id}"
               l.nombre = fila['batchname']
               l.save!
             end
@@ -572,19 +573,19 @@ module Sal7711Gen
 
       #return
       #return if @cprob != ''
-#      minitemnum = Sal7711Gen::Articulo.maximum(:onbase_itemnum) || 0
-#      maxitemnum = 1870
+      #      minitemnum = Sal7711Gen::Articulo.maximum(:onbase_itemnum) || 0
+      #      maxitemnum = 1870
 
       # No me ha funcioando
       # r = @client.execute('SELECT MAX(itemnum) FROM itemdata;')
       #maxmax = r.first['max']
       maxmax=700000
-      
+
       pasada = 0
       deltaitemnum = 1000
-      minitemnum = 600000 # Todos los anteriores a este han sido procesados
+      minitemnum = ENV['MINITEMNUM'] ? ENV['MINITEMNUM'] : 1 
       maxitemnum = minitemnum + deltaitemnum
-      
+
       # Al intentar toda la consulta se presentaron errores Read Failed
       # Tuvimos que procesar en lotes 
       @numexiste = 0
@@ -595,23 +596,25 @@ module Sal7711Gen
            onbase_itemnum >= #{minitemnum} AND
            onbase_itemnum < #{maxitemnum}
            ORDER BY 1");
-        idse = cidse.to_a.map {|a| a['onbase_itemnum']}
-        @numexiste += idse.length
-        i = 0
-        idsf = []
-        for n in minitemnum..maxitemnum-1
-          if i < idse.length && idse[i] == n then
-            i += 1
-          else
-            idsf << n
-          end
-        end
-        #byebug
-        procesa_grupo(minitemnum, maxitemnum, idsf, idse)
-        break if maxitemnum > maxmax
-        minitemnum += deltaitemnum
-        maxitemnum += deltaitemnum
+           idse = cidse.to_a.map {|a| a['onbase_itemnum']}
+           @numexiste += idse.length
+           i = 0
+           idsf = []
+           for n in minitemnum..maxitemnum-1
+             if i < idse.length && idse[i] == n then
+               i += 1
+             else
+               idsf << n
+             end
+           end
+           #byebug
+           procesa_grupo(minitemnum, maxitemnum, idsf, idse)
+           break if maxitemnum > maxmax
+           minitemnum += deltaitemnum
+           maxitemnum += deltaitemnum
+           logger.info "Fin ciclo ahora minitemnum=#{minitemnum}, maxitemnum=#{maxitemnum}"
       end # loop
+      logger.info "Fin sincroniza_onbase"
 
     end
 
