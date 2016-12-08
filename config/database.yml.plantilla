@@ -48,3 +48,7 @@ test:
 production:
   <<: *default
   database: sal7711cinep_pro
+
+ensayo:
+  <<: *default
+  database: sal7711cinep_ensayo

@@ -6,7 +6,7 @@
 # See also http://unicorn.bogomips.org/examples/unicorn.conf.rb for
 # a more verbose configuration using more features.
 
-listen 2021 # by default Unicorn listens on port 2011
+listen 2022 # by default Unicorn listens on port 2011
 APP_PATH = "/var/www/htdocs/sal7711_cinep-ensayo"
 working_directory APP_PATH
 worker_processes 8 # this should be >= nr_cpus
