@@ -69,12 +69,20 @@ class LotesController < ApplicationController
     if !ActiveRecord::Base.connection.data_source_exists? 'vestadolote'
       ActiveRecord::Base.connection.execute(
         "CREATE OR REPLACE VIEW vestadolote AS 
-         SELECT CASE WHEN id NOT IN (select distinct lote.id as lote_id from lote join sal7711_gen_articulo as a on lote.id=a.lote_id where 
-          not exists(select * from sal7711_gen_articulo_categoriaprensa as cp where  a.id=cp.articulo_id)) THEN 'PROCESADO' 
-          WHEN id NOT IN (select lote.id FROM lote JOIN sal7711_gen_articulo as a ON a.lote_id=lote.id 
-          JOIN sal7711_gen_articulo_categoriaprensa as cp ON cp.articulo_id=a.id) THEN 'EN ESPERA' 
-          ELSE 'EN PROGRESO' END AS estado, 
-        lote.id AS lote_id, nombre
+         SELECT CASE 
+          WHEN id NOT IN (SELECT DISTINCT lote.id AS lote_id 
+            FROM lote JOIN sal7711_gen_articulo AS a ON lote.id=a.lote_id 
+            WHERE NOT EXISTS(SELECT * FROM 
+              sal7711_gen_articulo_categoriaprensa AS cp 
+              WHERE  a.id=cp.articulo_id)) AND id NOT IN (
+            SELECT lote_id FROM sal7711_gen_articulo 
+              WHERE pagina IS NULL) THEN 'PROCESADO' 
+          WHEN id NOT IN (SELECT lote.id FROM lote JOIN 
+            sal7711_gen_articulo as a ON a.lote_id=lote.id 
+            JOIN sal7711_gen_articulo_categoriaprensa as cp 
+            ON cp.articulo_id=a.id) THEN 'EN ESPERA' 
+          ELSE 'EN PROGRESO' 
+        END AS estado, lote.id AS lote_id, nombre
         FROM lote ORDER BY 1,2,3;")
     end
     @lotes_lote = nil
