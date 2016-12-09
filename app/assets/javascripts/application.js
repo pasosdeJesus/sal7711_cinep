@@ -24,14 +24,17 @@ $(document).on('turbolinks:load', function() {
 	sip_prepara_eventos_comunes(root, true);
 	sal7711_gen_prepara_eventos_comunes(root);
 
-	// Establece categorias de prensa que se muestra en el orden
-	// que se guardó
-	l=$($('#categoriaprensa_sinorden').get(0))
-	if (l != []) {
+
+	// ========== EDICIÓN DE UN ARTÍCULO ===========
+	// Al editar artículo establece categorias de prensa que se muestra en el orden
+	// que se guardaron
+	var l = $($('#categoriaprensa_sinorden').get(0))
+	if (l.length > 0) {
 		l.setSelectionOrder($('#articulo_categoriaprensa_ids').val(), 
 			true);
 	}
 
+	// Al ediar articuo foco comienza en departamento
 	if ($('#articulo_departamento_id').length == 1)  {
 		$('#articulo_departamento_id')[0].focus();
 	}
@@ -48,10 +51,8 @@ $(document).on('turbolinks:load', function() {
 		}
 	})
 
-	$(document).on('change', 'select[id$=canddepartamento_id]', function(e) {
-		llena_municipio($(this), root, true)
-	})
 
+	// Candado en fecha
 	$(document).on('change', '#articulo_fecha_localizada', function(e) {
 		if ($(this).val() != "")
 			$("#articulo_icfecha").removeAttr("disabled");
@@ -62,6 +63,7 @@ $(document).on('turbolinks:load', function() {
 		$('#articulo_departamento_id')[0].focus();
 	})
 
+	// Candado en departamento
 	$(document).on('change', '#articulo_departamento_id', function(e) {
 		if ($(this).val() != "")
 			$("#articulo_icdepartamento").removeAttr(
@@ -73,6 +75,7 @@ $(document).on('turbolinks:load', function() {
 		}
 	})
 
+	// Candado en municipio
 	$(document).on('change', '#articulo_municipio_id', function(e) {
 		if ($(this).val() != "")
 			$("#articulo_icmunicipio").removeAttr("disabled");
@@ -81,6 +84,8 @@ $(document).on('turbolinks:load', function() {
 			$("#articulo_icmunicipio").attr("disabled", true);
 		}
 	})
+	
+	// Candado en fuente de prensa
 	$(document).on('change', '#articulo_fuenteprensa_id', function(e) {
 		if ($(this).val() != "")
 			$("#articulo_icfuenteprensa").removeAttr(
@@ -92,9 +97,47 @@ $(document).on('turbolinks:load', function() {
 					"checked");
 		}
 	})
+
+	// Al editar artículos TAB en el campo categoria es diferente, si hay 
+	// selección la elige, si no hay pasa al siguiente
+	$(document).on('keydown', '#categoriaprensa_sinorden_chosen input', function(e) {
+		if (e.keyCode == 9) {
+		       var d = $('select#categoriaprensa_sinorden').chosen().data('chosen')
+		       if (d.results_showing) {
+			       d.result_select(e);
+			       d.mouse_on_container = false;
+			       //e.preventDefault();
+			       return;
+		       }
+		}
+	})
+
+
+	// ========== EDICIÓN DE UN LOTE ===========
+	
+	$(document).on('change', 'select[id$=canddepartamento_id]', function(e) {
+		llena_municipio($(this), root, true)
+	})
+
 	$(document).on('change', '#lote_candfecha_localizada', function(e) {
 		$("#lote_nombre").val($(this).val());
 	})
+
+	// ========== LISTADO DE LOTES ===========
+
+	// Si se presenta un cierto lote, elegirlo en cuadro de selección
+	if ($('#lotes_lote').length == 1)  {
+		var l = $('#lotes_lote')
+		if (typeof l.attr('value') != 'undefined') {
+			l.val(l.attr('value'))
+			l.trigger('chosen:updated')
+		}
+		// Si por error de chosen se presenta segundo cuadro chosen eliminarlo
+		while ($('.chosen-container[id=lotes_lote_chosen]').length > 1) {
+			$('.chosen-container[id=lotes_lote_chosen]')[1].remove()
+		}
+	}
+
 	$(document).on('change', '#lotes_lote', function(e) {
 		root = window;
 		enviarautomatico_formulario(root, $(this).closest('form'));
