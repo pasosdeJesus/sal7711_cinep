@@ -1,7 +1,7 @@
 # encoding: UTF-8
 require 'bcrypt'
 
-class UsuariosController < Sip::UsuariosController
+class UsuariosController < Sal7711Gen::UsuariosController
   def new
     super
     @miurl = crea_usuario_url 

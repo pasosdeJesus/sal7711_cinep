@@ -980,6 +980,54 @@ CREATE MATERIALIZED VIEW vcatporarticulo AS
 
 
 --
+-- Name: vestadolote; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW vestadolote AS
+ SELECT
+        CASE
+            WHEN ((NOT (lote.id IN ( SELECT DISTINCT lote_1.id AS lote_id
+               FROM (lote lote_1
+                 JOIN sal7711_gen_articulo a ON ((lote_1.id = a.lote_id)))
+              WHERE (NOT (EXISTS ( SELECT cp.articulo_id,
+                        cp.categoriaprensa_id,
+                        cp.id,
+                        cp.orden
+                       FROM sal7711_gen_articulo_categoriaprensa cp
+                      WHERE (a.id = cp.articulo_id))))))) AND (NOT (lote.id IN ( SELECT sal7711_gen_articulo.lote_id
+               FROM sal7711_gen_articulo
+              WHERE (sal7711_gen_articulo.pagina IS NULL))))) THEN 'PROCESADO'::text
+            WHEN (NOT (lote.id IN ( SELECT lote_1.id
+               FROM ((lote lote_1
+                 JOIN sal7711_gen_articulo a ON ((a.lote_id = lote_1.id)))
+                 JOIN sal7711_gen_articulo_categoriaprensa cp ON ((cp.articulo_id = a.id)))))) THEN 'EN ESPERA'::text
+            ELSE 'EN PROGRESO'::text
+        END AS estado,
+    lote.id AS lote_id,
+    lote.nombre
+   FROM lote
+  ORDER BY
+        CASE
+            WHEN ((NOT (lote.id IN ( SELECT DISTINCT lote_1.id AS lote_id
+               FROM (lote lote_1
+                 JOIN sal7711_gen_articulo a ON ((lote_1.id = a.lote_id)))
+              WHERE (NOT (EXISTS ( SELECT cp.articulo_id,
+                        cp.categoriaprensa_id,
+                        cp.id,
+                        cp.orden
+                       FROM sal7711_gen_articulo_categoriaprensa cp
+                      WHERE (a.id = cp.articulo_id))))))) AND (NOT (lote.id IN ( SELECT sal7711_gen_articulo.lote_id
+               FROM sal7711_gen_articulo
+              WHERE (sal7711_gen_articulo.pagina IS NULL))))) THEN 'PROCESADO'::text
+            WHEN (NOT (lote.id IN ( SELECT lote_1.id
+               FROM ((lote lote_1
+                 JOIN sal7711_gen_articulo a ON ((a.lote_id = lote_1.id)))
+                 JOIN sal7711_gen_articulo_categoriaprensa cp ON ((cp.articulo_id = a.id)))))) THEN 'EN ESPERA'::text
+            ELSE 'EN PROGRESO'::text
+        END, lote.id, lote.nombre;
+
+
+--
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
