@@ -32,7 +32,7 @@
                    name="articulo[icfecha]"
                    type="checkbox" 
                    <%= @icfecha ? "checked" : "" %> 
-                   <%= "disabled='disabled'" if !f.object.departamento_id %>
+                   <%= "disabled='disabled'" if !f.object %>
             />
             <label class="labelcandado" for="articulo_icfecha"></label>
           </div>
@@ -73,9 +73,13 @@
 
         <% if f.object.lote_id %> 
           <div class="col-xs-11">
+            <% cw = "sip_departamento.id_pais = '170' " %>
+            <% if f.object.departamento_id %>
+              <% cw += "AND sip_departamento.id='#{f.object.departamento_id}'"%>
+            <% end %>
             <%= f.association :municipio,
               collection: Sip::Municipio.habilitados.joins(:departamento).
-              where("sip_departamento.id_pais = '170'"),
+              where(cw),
               label_method: :nombre, 
               value_method: :id
             %>
@@ -137,13 +141,13 @@
   
         <% if f.object.lote_id %> 
           <div class="col-xs-11">
-            <%= f.input :texto %> 
+            <%= f.input :texto, as: :hidden %> 
           </div>
           <div class="col-xs-1">
           </div>
         <% else %>
           <div class="col-xs-12">
-            <%= f.input :texto %> 
+            <%= f.input :texto, as: :hidden %> 
           </div>
         <% end %>
 

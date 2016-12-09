@@ -129,8 +129,8 @@ module Sal7711Gen
              end
 
              if sig
-               redirect_to edit_articulo_path(sig["id"]), 
-                 notice: 'Artículo actualizado y progresando en lote.' 
+               redirect_to edit_articulo_path(sig["id"])#, 
+                 #notice: 'Artículo actualizado y progresando en lote.' 
              else
                redirect_to(main_app.lotes_path + 
                            "?lotes_lote=#{@articulo.lote_id.to_i}", 
