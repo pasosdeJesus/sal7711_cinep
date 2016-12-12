@@ -90,6 +90,9 @@ module Sal7711Gen
       authorize! :edit, Sal7711Gen::Articulo
       respond_to do |format|
         if @articulo.update(articulo_params)
+          Sal7711Gen::Bitacora.a( request.remote_ip, current_usuario, 
+                                 'edita', params, @articulo.id, 
+                                 @articulo.lote_id)
           ordena_articulo
           #byebug
           actualiza_lote(request.params[:articulo])
@@ -362,6 +365,9 @@ module Sal7711Gen
       lotereg = @articulo.lote_id.nil? ? '' : 
         "?lotes_lote=#{@articulo.lote_id.to_s}"
       @articulo.destroy
+      Sal7711Gen::Bitacora.a( request.remote_ip, current_usuario, 
+                             'elimina', params, @articulo.id,
+                             @articulo.lote_id)
       respond_to do |format|
         format.html { 
           ruta = File.join(Rails.configuration.relative_url_root, 
