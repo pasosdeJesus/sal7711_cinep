@@ -9,6 +9,9 @@ gem "rails-i18n"
 # Postgresql
 gem "pg"
 
+# Mientras solucionan https://github.com/sparklemotion/nokogiri/issues/1569
+gem 'nokogiri', '1.6.8.1' 
+
 gem 'mail_form'
 
 gem 'tiny_tds', '~> 0.7'
@@ -93,11 +96,6 @@ gem 'sip', git: "https://github.com/pasosdeJesus/sip.git"
 gem 'sal7711_gen', git: "https://github.com/pasosdeJesus/sal7711_gen.git"
 #gem 'sal7711_gen', path: '../sal7711_gen'
 
-
-group :doc do
-    # Genera documentación en doc/api con bundle exec rake doc:rails
-    gem "sdoc", require: false
-end
 
 # Los siguientes son para desarrollo o para pruebas con generadores
 group :development do
