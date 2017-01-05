@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 3619554e9757f622ccdac7750b57f5cb188cf2cf
+  revision: 21188e6bb26ae4801278dcc4732f19486078d339
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 333937a24631a61e6ad94ad4121bb75c156f3391
+  revision: 667db057ee07ad374b81a848a8c650af941d14de
   specs:
     sip (2.0.b1)
       bootstrap-datepicker-rails
@@ -168,7 +168,7 @@ GEM
     minitest (5.10.1)
     multi_json (1.12.1)
     nio4r (1.2.1)
-    nokogiri (1.6.8.1)
+    nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
     orm_adapter (0.5.0)
     paperclip (5.1.0)
@@ -322,7 +322,6 @@ DEPENDENCIES
   mail_form
   meta_request
   minitest
-  nokogiri (= 1.6.8.1)
   paperclip
   pg
   prawn
