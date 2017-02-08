@@ -18,6 +18,14 @@ chdir APP_ROOT do
   system! 'gem install bundler --conservative'
   system('bundle check') || system!('bundle install')
 
+  if !ENV['PGSSLKEY'] 
+    puts "Definir PGSSLKEY"
+    exit 1;
+  end
+  if !ENV['PGSSLCERT'] 
+    puts "Definir PGSSLKEY"
+    exit 1;
+  end
   puts "\n== Updating database =="
   system! 'bin/rails db:migrate'
 
