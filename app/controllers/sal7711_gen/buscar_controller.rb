@@ -583,7 +583,7 @@ module Sal7711Gen
 
       pasada = 0
       deltaitemnum = 1000
-      minitemnum = ENV['MINITEMNUM'] ? ENV['MINITEMNUM'] : 1 
+      minitemnum = ENV['MINITEMNUM'] ? ENV['MINITEMNUM'].to_i : 1 
       maxitemnum = minitemnum + deltaitemnum
 
       # Al intentar toda la consulta se presentaron errores Read Failed

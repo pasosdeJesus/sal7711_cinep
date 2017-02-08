@@ -25,7 +25,8 @@ class Ability  < Sal7711Gen::Ability
   ]
 
   NOBASICAS_INDSEQID = [
-    ['', 'lote']
+    ['', 'lote'],
+    ['sal7711_gen', 'bitacora']
   ]
 
 

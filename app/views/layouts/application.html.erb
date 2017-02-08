@@ -57,8 +57,7 @@
       <%= menu_item "Iniciar Sesión", main_app.new_usuario_session_path %>
       <!--%= menu_item "Ingresar", 
         Rails.application.routes.url_helpers.new_usuario_session_url( urlop, only_path: true ) %--> 
-      <!--%= menu_item "Inscribirse", 
-        Rails.application.routes.url_helpers.new_usuario_registration_url(urlop, only_path: true) %-->
+      <%= menu_item "Inscribirse", sign_up_path %>
     <% end %> <!-- else current_usuario -->
   <% end %> <!-- menu_group -->
 <% end %> <!-- content_for :menu -->
