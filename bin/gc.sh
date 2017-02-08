@@ -51,7 +51,7 @@ if (test "$?" != "0") then {
 	exit 1;
 } fi;
 
-rake test
+bundle exec rails test
 if (test "$?" != "0") then {
 	echo "No pasaron pruebas";
 	exit 1;

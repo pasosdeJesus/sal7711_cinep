@@ -94,11 +94,6 @@ gem 'sal7711_gen', git: "https://github.com/pasosdeJesus/sal7711_gen.git"
 #gem 'sal7711_gen', path: '../sal7711_gen'
 
 
-group :doc do
-    # Genera documentación en doc/api con bundle exec rake doc:rails
-    gem "sdoc", require: false
-end
-
 # Los siguientes son para desarrollo o para pruebas con generadores
 group :development do
 
