@@ -8,4 +8,5 @@ Sip.setup do |config|
         config.ruta_anexos = "#{Rails.root}/tmp/"
       end
       config.titulo = "Sal7711 - Versión " + Sal7711Gen::VERSION
+      config.longitud_nusuario = 255
 end
