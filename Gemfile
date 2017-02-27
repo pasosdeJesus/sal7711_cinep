@@ -43,7 +43,7 @@ gem "prawn"
 gem "jbuilder"
 
 # Uglifier comprime recursos Javascript
-gem "uglifier"
+gem "uglifier", '3.0.4'
 
 # CoffeeScript para recuersos .js.coffee y vistas
 gem "coffee-rails"
