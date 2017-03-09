@@ -230,7 +230,7 @@ module Sal7711Gen
         if art.adjunto_descripcion != desc
           puts "** Corrigiendo #{art.id}"
           art.adjunto_descripcion = desc
-          art.save!
+          art.save
           corregidos += 1
           puts "** Van #{corregidos} corregidos"
         end
