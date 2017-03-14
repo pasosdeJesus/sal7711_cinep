@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: bc2a45e5e003c222996bb16866419924b3c2f78f
+  revision: d2f7a6c4a9629fa72c864d00974d16d13ac46db8
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -176,11 +176,11 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
-    pdf-core (0.6.1)
-    pg (0.19.0)
-    prawn (2.1.0)
-      pdf-core (~> 0.6.1)
-      ttfunk (~> 1.4.0)
+    pdf-core (0.7.0)
+    pg (0.20.0)
+    prawn (2.2.0)
+      pdf-core (~> 0.7.0)
+      ttfunk (~> 1.5)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -192,7 +192,7 @@ GEM
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
     public_suffix (2.0.5)
-    puma (3.7.1)
+    puma (3.8.2)
     rack (2.0.1)
     rack-contrib (1.2.0)
       rack (>= 0.9.1)
@@ -262,7 +262,7 @@ GEM
     tilt (2.0.6)
     tiny_tds (0.7.0)
       mini_portile (= 0.6.2)
-    ttfunk (1.4.0)
+    ttfunk (1.5.0)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.0)
