@@ -10,7 +10,8 @@
       <div class="row">
         <div class="col-xs-12">
           <% if !f.object || !f.object.id || !f.object.adjunto_file_name %>
-            <%= f.input :adjunto, as: :file, label: 'Archivo (.jpg, .png, .tiff)',
+            <%= f.input :adjunto, as: :file, 
+              label: 'Archivo (.jpg, .png, .tiff)',
               input_html: { "data-imagenpre": 'imagen-detalle'} %>
           <% else %>
             <div class="articulo_adjunto">

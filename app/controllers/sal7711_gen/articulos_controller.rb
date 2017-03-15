@@ -34,6 +34,12 @@ module Sal7711Gen
           @articulo.fuenteprensa_id = lote.candfuenteprensa_id
           @icfuenteprensa = true
         end
+        @iccategoriaprensa = false
+        if lote.candcategoria1_id
+          @articulo.categoriaprensa_ids = [lote.candcategoria1_id,
+            lote.candcategoria2_id, lote.candcategoria3_id]
+          @iccategoriaprensa = true
+        end
 
       end
     end
@@ -73,6 +79,7 @@ module Sal7711Gen
 
     def actualiza_lote(par)
       if @articulo.lote_id
+        byebug
         lote = ::Lote.find(@articulo.lote_id)
         lote.candfecha = par[:icfecha] ? @articulo.fecha : nil
         lote.canddepartamento_id = par[:icdepartamento] ? 
@@ -81,6 +88,14 @@ module Sal7711Gen
           nil
         lote.candfuenteprensa_id = par[:icfuenteprensa] ? 
           @articulo.fuenteprensa_id : nil
+        if (par[:iccategoriaprensa]) 
+          a = @articulo.articulo_categoriaprensa.where(orden: 1).take
+          lote.candcategoria1_id = a ? a.categoriaprensa_id : nil
+          a = @articulo.articulo_categoriaprensa.where(orden: 2).take
+          lote.candcategoria2_id = a ? a.categoriaprensa_id : nil
+          a = @articulo.articulo_categoriaprensa.where(orden: 3).take
+          lote.candcategoria3_id = a ? a.categoriaprensa_id : nil
+        end
         lote.save
       end
     end
