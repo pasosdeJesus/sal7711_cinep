@@ -79,7 +79,6 @@ module Sal7711Gen
 
     def actualiza_lote(par)
       if @articulo.lote_id
-        byebug
         lote = ::Lote.find(@articulo.lote_id)
         lote.candfecha = par[:icfecha] ? @articulo.fecha : nil
         lote.canddepartamento_id = par[:icdepartamento] ? 

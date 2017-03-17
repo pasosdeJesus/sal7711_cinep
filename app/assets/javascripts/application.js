@@ -87,7 +87,17 @@ $(document).on('turbolinks:load', function() {
 			$("#articulo_icmunicipio").attr("disabled", true);
 		}
 	})
-	
+
+	// Candado en categoria
+	$(document).on('change', '#categoriaprensa_sinorden', function(e) {
+		if ($(this).val() != "")
+			$("#articulo_iccategoriaprensa").removeAttr("disabled");
+		else {
+			$("#articulo_iccategoriaprensa").removeAttr("checked");
+			$("#articulo_iccategoriaprensa").attr("disabled", true);
+		}
+	})
+
 	// Candado en fuente de prensa
 	$(document).on('change', '#articulo_fuenteprensa_id', function(e) {
 		if ($(this).val() != "")
