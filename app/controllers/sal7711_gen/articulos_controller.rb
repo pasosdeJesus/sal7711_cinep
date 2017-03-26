@@ -34,24 +34,31 @@ module Sal7711Gen
           @articulo.fuenteprensa_id = lote.candfuenteprensa_id
           @icfuenteprensa = true
         end
+        @iccategoriaprensa = false
+        if lote.candcategoria1_id
+          @articulo.categoriaprensa_ids = [lote.candcategoria1_id,
+            lote.candcategoria2_id, lote.candcategoria3_id]
+          @iccategoriaprensa = true
+        end
 
       end
     end
 
 
-    def gen_descripcion_categoria_bd articulo
-      return articulo.articulo_categoriaprensa.order(:orden).to_a.map {|i| 
+    def self.gen_descripcion_categoria_bd articulo
+      ac = articulo.articulo_categoriaprensa.order(:orden).to_a
+      lc = ac.map {|i| 
         i.categoriaprensa_id 
       }.uniq.inject("") { 
         |memo, i| 
         c = Sal7711Gen::Categoriaprensa.find(i).codigo
         memo == "" ? c : memo + ", " + c 
       }
+      return lc
     end
 
     # Completa @articulo
     def ordena_articulo
-      #byebug
       orden = 0
       articulo_params[:categoriaprensa_ids].each do |c|
         puts c
@@ -80,6 +87,14 @@ module Sal7711Gen
           nil
         lote.candfuenteprensa_id = par[:icfuenteprensa] ? 
           @articulo.fuenteprensa_id : nil
+        if (par[:iccategoriaprensa]) 
+          a = @articulo.articulo_categoriaprensa.where(orden: 1).take
+          lote.candcategoria1_id = a ? a.categoriaprensa_id : nil
+          a = @articulo.articulo_categoriaprensa.where(orden: 2).take
+          lote.candcategoria2_id = a ? a.categoriaprensa_id : nil
+          a = @articulo.articulo_categoriaprensa.where(orden: 3).take
+          lote.candcategoria3_id = a ? a.categoriaprensa_id : nil
+        end
         lote.save
       end
     end
@@ -215,6 +230,33 @@ module Sal7711Gen
 
     # Genera listado de rutas a archivos referenciados en BD
     # Genera en @arcbd
+    def arregla_desc
+      arts = Sal7711Gen::Articulo.where('id>664700')
+      logger.debug "#{arts.count} archivos referenciados en base de datos"
+      i2 = 0
+      corregidos = 0
+      arts.find_each(batch_size: 100000) do |art|
+        i2 += 1
+        if ((i2 % 1000) == 1)
+          logger.debug "OJO arregla_desc=#{i2}"
+        end
+        desc = Sal7711Gen::ArticulosController.gen_descripcion_bd(art)
+        if art.adjunto_descripcion != desc
+          puts "** Corrigiendo #{art.id}"
+          art.adjunto_descripcion = desc
+          art.save
+          corregidos += 1
+          puts "** Van #{corregidos} corregidos"
+        end
+
+      end
+      puts "Terminado"
+      byebug
+    end
+
+
+    # Genera listado de rutas a archivos referenciados en BD
+    # Genera en @arcbd
     def gen_rutas_bd
       arts = Sal7711Gen::Articulo.all
       logger.debug "#{arts.count} archivos referenciados en base de datos"
@@ -307,10 +349,11 @@ module Sal7711Gen
         @saelim='/tmp/rbverifica-elimina-sa.sh'
         @bdelim='/tmp/rbverifica-elimina-bd.sql'
         @arcord='/tmp/rbverifica.sh'
+        arregla_desc
         @arcbd = gen_rutas_bd
         puts "#{@arcbd.length} archivos referenciados en base de datos"
         @numarcsa = 0
-        @arcsa = Array.new(@arcbd.length)
+        @arcsa = Array.new(@arcbd.lengt)
         gen_rutas_sa(File.join(Sip.ruta_anexos))
         puts "#{@numarcsa} archivos en sistema de archivos"
         @arcsa.sort!

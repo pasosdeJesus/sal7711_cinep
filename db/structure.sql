@@ -221,7 +221,9 @@ CREATE TABLE lote (
     updated_at timestamp without time zone NOT NULL,
     nombre character varying(511),
     estado character varying(127) DEFAULT 'EN ESPERA'::character varying,
-    candcategoriaprensa_id integer
+    candcategoria1_id integer,
+    candcategoria2_id integer,
+    candcategoria3_id integer
 );
 
 
@@ -311,7 +313,8 @@ CREATE TABLE sal7711_gen_articulo (
     adjunto_descripcion character varying(1500),
     onbase_itemnum integer,
     lote_id integer,
-    orden character varying(100)
+    orden character varying(100),
+    textoocr text
 );
 
 
@@ -1735,6 +1738,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20161110133820'),
 ('20161128160817'),
 ('20161206124846'),
-('20161212175928');
+('20161212175928'),
+('20170308020053'),
+('20170314212246'),
+('20170321211200');
 
 

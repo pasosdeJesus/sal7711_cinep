@@ -1,22 +1,22 @@
 language: ruby
 rvm:
-        - 2.2
+        - 2.4.0
 notifications:
         email: false
-script: CODECLIMATE_REPO_TOKEN=CODECLIMATE_REPO_TOKEN=82e4de777b66e8692bac7cccbb0c327b9b900ba2573532a40644d361206e1ee0 xvfb-run rake test
+script: CODECLIMATE_REPO_TOKEN=CODECLIMATE_REPO_TOKEN=82e4de777b66e8692bac7cccbb0c327b9b900ba2573532a40644d361206e1ee0 bundle exec rails test
 env:
         global:
                 - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
 before_install: 
-        - sudo apt-add-repository -y ppa:ubuntu-sdk-team/ppa
-        - sudo apt-get update
-        - sudo apt-get install libqt5webkit5-dev qtdeclarative5-dev qtlocation5-dev qtsensors5-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev qt4-default
         - sudo locale-gen --no-archive es_CO.UTF-8
         - psql -c 'CREATE DATABASE sal7711_pru;' -U postgres
         - bundle install
         - cp db/structure.sql db/structure.sql.conlock
         - sed -e "s/SET lock_timeout = 0;//g" db/structure.sql.conlock >db/structure.sql
         - cp config/database.travis.yml config/database.yml
+        - cp config/application.rb.plantilla config/application.rb
+        - cp config/routes.rb.plantilla config/routes.rb
+        - cp config/initializers/sip.rb.plantilla config/initializers/sip.rb
         - rake db:setup
         - rake sip:indices
 

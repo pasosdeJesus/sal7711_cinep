@@ -41,13 +41,16 @@ $(document).on('turbolinks:load', function() {
 
 	// Pone orden a categoria por guardar de acuerdo al orden dado
 	// por el usuario
-	$(document).on('change', '#categoriaprensa_sinorden', function(e) {
+	$(document).on('change', '#categoriaprensa_sinorden', function(e, params) {
 		l=$($('#categoriaprensa_sinorden').get(0)).getSelectionOrder()
 		$('#articulo_categoriaprensa_ids').html('')
 		for(i = 0; i < l.length; i++) {
-			$('#articulo_categoriaprensa_ids').append(
-				'<option val="' + l[i] + '" selected>' +
-				l[i] + '</option>')
+			if (typeof params.deselected == "undefined" || 
+					params.deselected.indexOf(l[i]) === -1) {
+				$('#articulo_categoriaprensa_ids').append(
+						'<option val="' + l[i] + '" selected>' +
+						l[i] + '</option>')
+			}
 		}
 	})
 
@@ -84,7 +87,17 @@ $(document).on('turbolinks:load', function() {
 			$("#articulo_icmunicipio").attr("disabled", true);
 		}
 	})
-	
+
+	// Candado en categoria
+	$(document).on('change', '#categoriaprensa_sinorden', function(e) {
+		if ($(this).val() != "")
+			$("#articulo_iccategoriaprensa").removeAttr("disabled");
+		else {
+			$("#articulo_iccategoriaprensa").removeAttr("checked");
+			$("#articulo_iccategoriaprensa").attr("disabled", true);
+		}
+	})
+
 	// Candado en fuente de prensa
 	$(document).on('change', '#articulo_fuenteprensa_id', function(e) {
 		if ($(this).val() != "")

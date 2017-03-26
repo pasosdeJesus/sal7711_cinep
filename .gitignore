@@ -25,3 +25,5 @@ config/routes.rb
 config/unicorn.conf.minimal.rb
 *swp
 herram/
+.byebug_history
+

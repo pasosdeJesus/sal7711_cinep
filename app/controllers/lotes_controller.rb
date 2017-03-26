@@ -40,9 +40,9 @@ class LotesController < ApplicationController
             end
             @a.adjunto_descripcion = "Imagen #{@a.orden} del lote #{@lote.id}"
             @a.save(validate: false)
-            if @lote.candcategoriaprensa_id
+            if @lote.candcategoria1_id
               c = Sal7711Gen::ArticuloCategoriaprensa.new(
-                categoriaprensa_id: @lote.candcategoriaprensa_id, articulo_id: @a.id)
+                categoriaprensa_id: @lote.candcategoria1_id, articulo_id: @a.id)
               c.save(validate: false)
             end
           }
@@ -171,7 +171,7 @@ class LotesController < ApplicationController
       :nombre,
       :canddepartamento_id,
       :candmunicipio_id,
-      :candcategoriaprensa_id,
+      :candcategoria1_id,
       :candfuenteprensa_id
     )
   end # lote_params

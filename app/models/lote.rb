@@ -13,7 +13,14 @@ class Lote < ActiveRecord::Base
     validate: true, class_name: 'Sip::Departamento'
   belongs_to :municipio, foreign_key: "candmunicipio_id", 
     validate: true, class_name: 'Sip::Municipio'
-  belongs_to :categoriaprensa, foreign_key: "candcategoriaprensa_id", 
+  belongs_to :candcategoria1, 
+    foreign_key: "candcategoria1_id", 
+    validate: true, class_name: 'Sal7711Gen::Categoriaprensa'
+  belongs_to :candcategoria2, 
+    foreign_key: "candcategoria2_id", 
+    validate: true, class_name: 'Sal7711Gen::Categoriaprensa'
+  belongs_to :candcategoria3, 
+    foreign_key: "candcategoria3_id", 
     validate: true, class_name: 'Sal7711Gen::Categoriaprensa'
   belongs_to :fuenteprensa, foreign_key: "candfuenteprensa_id", 
     validate: true, class_name: 'Sip::Fuenteprensa'

@@ -10,7 +10,8 @@
       <div class="row">
         <div class="col-xs-12">
           <% if !f.object || !f.object.id || !f.object.adjunto_file_name %>
-            <%= f.input :adjunto, as: :file, label: 'Archivo (.jpg, .png, .tiff)',
+            <%= f.input :adjunto, as: :file, 
+              label: 'Archivo (.jpg, .png, .tiff)',
               input_html: { "data-imagenpre": 'imagen-detalle'} %>
           <% else %>
             <div class="articulo_adjunto">
@@ -138,18 +139,19 @@
         <%= render partial: 'articulos_complemento0', locals: { f: f } %>
 
         <%= render partial: 'articulos_complemento1', locals: { f: f } %>
-  
+
         <% if f.object.lote_id %> 
           <div class="col-xs-11">
-            <%= f.input :texto, as: :hidden %> 
+            <%= f.input :texto %> 
           </div>
           <div class="col-xs-1">
           </div>
         <% else %>
           <div class="col-xs-12">
-            <%= f.input :texto, as: :hidden %> 
+            <%= f.input :texto %> 
           </div>
         <% end %>
+
 
         <div class="col-xs-12 form-actions abajocentrado">
           <% if f.object.lote_id %> 

@@ -19,7 +19,7 @@
 
       <%= render partial: 'sal7711_gen/articulos/geo_campos', locals: { f: f } %>
 
-      <%= f.association :categoriaprensa,
+      <%= f.association :candcategoria1,
         collection: Sal7711Gen::Categoriaprensa.habilitados,
         label_method: lambda {|t| t.presenta_nombre },
         value_method: :id,
