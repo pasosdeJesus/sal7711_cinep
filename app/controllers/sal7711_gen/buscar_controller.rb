@@ -284,7 +284,9 @@ module Sal7711Gen
         cuentar = @client.execute(c)
         @numregistros = cuentar.first["cuenta"]
         if @numregistros != 1
-          cprob += "<br>Departamento #{d.nombre} aparece #{@numregistros} veces"
+          prob = "<br>Departamento #{d.nombre} aparece #{@numregistros} veces"
+          puts prob
+          cprob += prob
         end
       end
       c="SELECT keyvaluechar FROM keytable108;"
@@ -294,7 +296,9 @@ module Sal7711Gen
           nd = fila["keyvaluechar"].strip
           if Sip::Departamento.
             where("SUBSTRING(nombre FROM 1 FOR 45) = '#{nd}'").count == 0
-            cprob += "<br>Departamento #{nd} de SQL Server no aparece en PostgreSQL"
+            prob = "<br>Departamento #{nd} de SQL Server no aparece en PostgreSQL"
+            puts prob
+            cprob += prob
           end
         end
       end
@@ -311,7 +315,9 @@ module Sal7711Gen
           nd = fila["keyvaluechar"].strip
           if Sip::Municipio.
             where("SUBSTRING(nombre FROM 1 FOR 45) = '#{nd}'").count == 0
-            cprob += "<br>Municipio #{nd} de SQL Server no aparece en PostgreSQL"
+            prob = "<br>Municipio #{nd} de SQL Server no aparece en PostgreSQL"
+            puts prob
+            cprob += prob
           end
         end
       end
@@ -551,7 +557,7 @@ module Sal7711Gen
       #conecta_onbase
     end
 
-    def sincroniza_onbase
+    def sincroniza_onbase_faltantes
       @examinados = 0
       @procesados = 0
       @sinc = []
@@ -616,6 +622,198 @@ module Sal7711Gen
       end # loop
       logger.info "Fin sincroniza_onbase"
 
+    end
+
+    def procesa_grupo_ubicacion(minitemnum, maxitemnum)
+      conecta_onbase
+      if !@client.closed?
+        @client.close
+      end
+      @client = TinyTds::Client.new(@@hbase)
+      @client.execute("USE OnBase").do;
+     
+      fbuenos = "FROM itemdata 
+          JOIN itemdatapage ON itemdata.itemnum=itemdatapage.itemnum 
+          JOIN keyitem103 ON keyitem103.itemnum=itemdata.itemnum   
+          JOIN keyxitem101 ON keyxitem101.itemnum = itemdata.itemnum
+          JOIN keytable101 ON keyxitem101.keywordnum = keytable101.keywordnum 
+          JOIN keyxitem104 ON keyxitem104.itemnum = itemdata.itemnum
+          JOIN keytable104  ON keyxitem104.keywordnum = keytable104.keywordnum 
+          LEFT JOIN keyxitem112 ON keyxitem112.itemnum = itemdata.itemnum
+          LEFT JOIN keytable112  ON keyxitem112.keywordnum = keytable112.keywordnum 
+          LEFT JOIN keyxitem108 ON keyxitem108.itemnum = itemdata.itemnum
+          LEFT JOIN keytable108  ON 
+            keyxitem108.keywordnum = keytable108.keywordnum 
+          LEFT JOIN keyxitem110 ON keyxitem110.itemnum = itemdata.itemnum
+          LEFT JOIN keytable110  ON 
+            keyxitem110.keywordnum = keytable110.keywordnum 
+          LEFT JOIN keyxitem113 ON keyxitem113.itemnum = itemdata.itemnum
+          LEFT JOIN keytable113  ON 
+            keyxitem113.keywordnum = keytable113.keywordnum 
+          LEFT JOIN keyxitem114 ON keyxitem114.itemnum = itemdata.itemnum
+          LEFT JOIN keytable114  ON 
+            keyxitem114.keywordnum = keytable114.keywordnum 
+          LEFT JOIN archivedqueue ON
+           itemdata.batchnum = archivedqueue.batchnum 
+          WHERE keyitem103.keyvaluedate >= '1960-01-01'
+          AND keyitem103.keyvaluedate <= '#{Time.now.strftime("%Y-%m-%d")}'
+          AND itemname LIKE 'Prensa Cinep%' "
+
+      c="SELECT itemdata.itemnum AS itemnum, itemdata.itemname AS itemname,
+          itemdata.batchnum AS batchnum,
+          itemdatapage.filepath AS filepath,
+          keyitem103.keyvaluedate AS fecha,
+          keytable101.keyvaluechar AS fuenteprensa,
+          keytable104.keyvaluechar AS pagina,
+          keytable108.keyvaluechar AS departamento,
+          keytable110.keyvaluechar AS municipio,
+          keytable112.keyvaluechar AS cat1,
+          keytable113.keyvaluechar AS cat2,
+          keytable114.keyvaluechar AS cat3,
+          archivedqueue.batchname AS batchname
+          #{fbuenos}
+          AND itemdata.itemnum < #{maxitemnum}
+          AND itemdata.itemnum >= #{minitemnum}
+          AND keytable108.keyvaluechar IN ('QUINDIO', 'BOGOTÁ, D.C.')
+          ORDER BY itemnum "
+      puts "OJO q=#{c}"
+      numreg = 0
+      # Resultado a colchon en memoria
+      colchon = []
+      result = @client.execute(c)
+      result.try(:each) do |fila|
+        colchon << fila
+      end
+      result.cancel
+      @client.close
+
+      if colchon.length == 0
+        puts "De los que faltan en base local no hay registros completos en remota"
+        return
+      end
+      puts "Procesando colchon"
+      # Se procesa colchon
+      colchon.each do |fila|
+        numreg += 1
+        itemnum = fila['itemnum']
+        puts "numreg=#{numreg}, itemnum=#{itemnum}"
+        guardar = false
+        a = Sal7711Gen::Articulo.where(onbase_itemnum: itemnum).take
+        if a.nil? 
+          prob = "<br>No existe en postgres artículo con itemnum=#{itemnum}"
+          puts prob
+          @cprob += prob
+        else
+          # Departamento
+          #          #byebug
+          dep = fila["departamento"]
+          if dep && dep.strip != ''
+            depo = Sip::Departamento.where(
+              "SUBSTRING(nombre FROM 1 FOR 45) = '#{dep.strip}'").first
+             if depo.nil?
+                  prob = "<br>Referencia a departamento no existente #{dep}  en #{itemnum}"
+                  puts prob
+                  @cprob += prob
+            elsif a.departamento_id != depo.id
+              prob = "<br>Diferente departamento en registro itemnum=#{itemnum}, id=#{a.id}, dep_ms=#{depo.id}, dep_pg=#{a.departamento_id}"
+              puts prob
+              @cprob += prob
+              a.departamento_id = depo.id
+              guardar = true
+            end
+
+            # Municipio
+            mun=fila["municipio"]
+            if mun && mun.strip != ''
+              muno = Sip::Municipio.where(
+                id_departamento: depo.id).
+                where("SUBSTRING(nombre FROM 1 FOR 45) = '#{mun.strip}'").first
+                if muno.nil?
+                  prob = "<br>Referencia a municipio no existente #{mun}  en #{itemnum}"
+                  puts prob
+                  @cprob += prob
+                elsif a.municipio_id != muno.id
+                  prob = "<br>Diferente municipio en registro itemnum=#{itemnum}, id=#{a.id}, mun_ms=#{muno.id}, mun_pg=#{a.municipio_id}"
+                  puts prob
+                  @cprob += prob
+                  a.municipio_id = muno.id
+                  guardar = true
+                end
+
+            end
+          end
+          dc = Sal7711Gen::ArticulosController.gen_descripcion_bd(a)
+          if a.adjunto_descripcion != dc
+            prob = "<br>Descripciones no coinciden itemnum=#{itemnum}, id=#{a.id}"
+            puts prob
+            @cprob += prob
+            a.adjunto_descripcion = dc
+            guardar = true
+          end
+          
+          #nart.save
+
+          if guardar
+            a.save
+            @modificados += 1
+            puts "Modificado (van #{@modificados})"
+          end
+          @procesados += 1
+        end
+        @examinados += 1
+      end
+      #conecta_onbase
+    end
+
+
+    def sincroniza_onbase_ubicacion
+      @examinados = 0
+      @procesados = 0
+      @modificados = 0
+      @sinc = []
+      @cprob = ''
+      conecta_onbase
+      if !@client.active?
+        conecta_onbase
+      end
+      @regprob = []
+      @cprob += verifica_departamentos_onbase
+      @cprob += verifica_municipios_onbase
+      @numregprob = @regprob.reject(&:nil?).count
+
+      #return
+      #return if @cprob != ''
+      #      minitemnum = Sal7711Gen::Articulo.maximum(:onbase_itemnum) || 0
+      #      maxitemnum = 1870
+
+      # No me ha funcioando
+      # r = @client.execute('SELECT MAX(itemnum) FROM itemdata;')
+      #maxmax = r.first['max']
+      maxmax=700000
+      #maxmax=10000
+
+      pasada = 0
+      deltaitemnum = 1000
+      minitemnum = ENV['MINITEMNUM'] ? ENV['MINITEMNUM'].to_i : 1
+      maxitemnum = minitemnum + deltaitemnum
+
+      # Al intentar toda la consulta se presentaron errores Read Failed
+      # Tuvimos que procesar en lotes 
+      @numexiste = 0
+      loop do
+        pasada += 1
+           procesa_grupo_ubicacion(minitemnum, maxitemnum)
+           break if maxitemnum > maxmax
+           minitemnum += deltaitemnum
+           maxitemnum += deltaitemnum
+           logger.info "Fin ciclo ahora minitemnum=#{minitemnum}, maxitemnum=#{maxitemnum}"
+      end # loop
+      logger.info "Fin sincroniza_onbase"
+
+    end
+
+    def sincroniza_onbase
+      sincroniza_onbase_faltantes
     end
 
     def prepara_pagina_comp(articulos, params)

@@ -6,6 +6,7 @@ module Sal7711Gen
   class BitacoraController < ApplicationController
  
     include Sal7711Gen::Concerns::Controllers::BitacoraController
+    include Sip::FormatoFechaHelper
 
     # Prepara una página de resultados
     def usuario
@@ -23,11 +24,39 @@ module Sal7711Gen
       end
     end
 
+
+    def filtro_fechas(form, w)
+      if (params[form] && params[form][:fechaini] && 
+          params[form][:fechaini] != '')
+        pfi = fecha_local_estandar(params[form][:fechaini])
+        w += " AND fecha >= '#{pfi}'"
+      end
+      if(params[form] && params[form][:fechafin] && 
+         params[form][:fechafin] != '')
+        pfd = fecha_local_estandar(params[form][:fechafin])
+        w += " AND fecha <= '#{pff}'"
+      end
+      return w
+    end
+
+    def filtro_idbasica(form, campo)
+      if (params[form] && params[form][campo] && 
+          params[form][campo] != '')
+        o = params[form][campo].to_i
+        w += " AND #{campo} = '#{o}'"
+      end
+
+    end
+ 
     def admin
+      authorize! :manage, Sal7711Gen::Bitacora
+
+      w=filtro_fechas(:consultausuario, '')
+
       @usuarioscons = Sal7711Gen::Bitacora.connection.select_rows(
         "SELECT nusuario, count(*) FROM sal7711_gen_bitacora 
           JOIN usuario ON usuario_id=usuario.id WHERE
-          operacion = 'index' GROUP BY 1"
+          operacion = 'index' #{w} GROUP BY 1"
       )
       @totconsultas = Sal7711Gen::Bitacora.where(operacion: 'index').all.count
     end

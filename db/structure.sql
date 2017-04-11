@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.1
+-- Dumped from database version 9.5.4
 -- Dumped by pg_dump version 9.6.1
 
 SET statement_timeout = 0;
@@ -220,7 +220,6 @@ CREATE TABLE lote (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     nombre character varying(511),
-    estado character varying(127) DEFAULT 'EN ESPERA'::character varying,
     candcategoria1_id integer,
     candcategoria2_id integer,
     candcategoria3_id integer
@@ -973,31 +972,17 @@ CREATE TABLE usuario (
 
 
 --
--- Name: vcatporarticulo; Type: VIEW; Schema: public; Owner: -
+-- Name: vcatporarticulo; Type: MATERIALIZED VIEW; Schema: public; Owner: -
 --
 
-CREATE VIEW vcatporarticulo AS
+CREATE MATERIALIZED VIEW vcatporarticulo AS
  SELECT sal7711_gen_articulo.lote_id,
     sal7711_gen_articulo.id AS articulo_id,
-    count(sal7711_gen_articulo_categoriaprensa.categoriaprensa_id) AS ncat
-   FROM (sal7711_gen_articulo
-     LEFT JOIN sal7711_gen_articulo_categoriaprensa ON ((sal7711_gen_articulo_categoriaprensa.articulo_id = sal7711_gen_articulo.id)))
-  GROUP BY sal7711_gen_articulo.lote_id, sal7711_gen_articulo.id;
-
-
---
--- Name: vestadisticalote; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW vestadisticalote AS
- SELECT DISTINCT sal7711_gen_articulo.lote_id,
-    COALESCE(array_length(ARRAY( SELECT vcatporarticulo.articulo_id
-           FROM vcatporarticulo
-          WHERE ((vcatporarticulo.lote_id = sal7711_gen_articulo.lote_id) AND (vcatporarticulo.ncat = 0))), 1), 0) AS sin,
-    COALESCE(array_length(ARRAY( SELECT vcatporarticulo.articulo_id
-           FROM vcatporarticulo
-          WHERE ((vcatporarticulo.lote_id = sal7711_gen_articulo.lote_id) AND (vcatporarticulo.ncat > 0))), 1), 0) AS con
-   FROM sal7711_gen_articulo;
+    (EXISTS ( SELECT sal7711_gen_articulo_categoriaprensa.categoriaprensa_id
+           FROM sal7711_gen_articulo_categoriaprensa
+          WHERE (sal7711_gen_articulo_categoriaprensa.articulo_id = sal7711_gen_articulo.id))) AS ncat
+   FROM sal7711_gen_articulo
+  WITH NO DATA;
 
 
 --
@@ -1042,31 +1027,6 @@ CREATE VIEW vestadolote AS
                  JOIN sal7711_gen_articulo_categoriaprensa cp ON ((cp.articulo_id = a.id)))))) THEN 'EN ESPERA'::text
             ELSE 'EN PROGRESO'::text
         END, lote.id, lote.nombre;
-
-
---
--- Name: vestlote; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW vestlote AS
- SELECT t.lote_id,
-    s.proc,
-    t.tot,
-    (t.tot - s.proc) AS por
-   FROM ( SELECT sal7711_gen_articulo.lote_id,
-            count(sal7711_gen_articulo.id) AS proc
-           FROM sal7711_gen_articulo
-          WHERE (NOT (sal7711_gen_articulo.id IN ( SELECT sal7711_gen_articulo_1.id
-                   FROM (sal7711_gen_articulo_categoriaprensa
-                     JOIN sal7711_gen_articulo sal7711_gen_articulo_1 ON ((sal7711_gen_articulo_categoriaprensa.articulo_id = sal7711_gen_articulo_1.id))))))
-          GROUP BY sal7711_gen_articulo.lote_id
-          ORDER BY sal7711_gen_articulo.lote_id) s,
-    ( SELECT sal7711_gen_articulo.lote_id,
-            count(sal7711_gen_articulo.id) AS tot
-           FROM sal7711_gen_articulo
-          GROUP BY sal7711_gen_articulo.lote_id
-          ORDER BY sal7711_gen_articulo.lote_id) t
-  WHERE (s.lote_id = t.lote_id);
 
 
 --
@@ -1396,6 +1356,20 @@ CREATE UNIQUE INDEX index_usuario_on_email ON usuario USING btree (email);
 
 
 --
+-- Name: lote_id_ind; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX lote_id_ind ON sal7711_gen_articulo USING btree (lote_id);
+
+
+--
+-- Name: lote_id_ind_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX lote_id_ind_id ON sal7711_gen_articulo USING btree (lote_id, id);
+
+
+--
 -- Name: s7_artcat_a; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1428,6 +1402,13 @@ CREATE INDEX sip_busca_mundep ON sip_mundep USING gin (mundep);
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: vcatporarticulo_lote_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX vcatporarticulo_lote_id_idx ON vcatporarticulo USING btree (lote_id);
 
 
 --
@@ -1682,7 +1663,7 @@ ALTER TABLE ONLY sip_ubicacion
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user", public;
+SET search_path TO public, pg_catalog;
 
 INSERT INTO "schema_migrations" (version) VALUES
 ('20150327104439'),
@@ -1741,6 +1722,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20161212175928'),
 ('20170308020053'),
 ('20170314212246'),
-('20170321211200');
+('20170321211200'),
+('20170405104322');
 
 

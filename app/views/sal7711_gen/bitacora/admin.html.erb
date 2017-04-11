@@ -2,49 +2,86 @@
   <h1><%=t '.title', :default => "Consultas por usuario" %></h1>
 </div>
 
-<div sytle="text-align: right">
-  <%= form_tag('/bitacora/admin', method: "get", remote: true) do %>
-      Recepción entre:
-    <%= text_field_tag 'fechaini', @fechaini, maxlength: 10, size: 12,
-      "data-behaviour" => "datepicker", "data-contarautomatico" => ""
-    %>
-    -
-    <%= text_field_tag 'fechafin', @fechafin, maxlength: 10, size: 12,
-      "data-behaviour" => "datepicker", "data-contarautomatico" => ""
-    %>
-    <br>
-    Organización:
-    <% o = options_from_collection_for_select(
-         ::Organizacion.habilitados, "id", "nombre"
-      )
-    %>
-    <%= select_tag "organizacion", o,
-      {include_blank: true, "data-contarautomatico" => ""}
-    %>
-    <%= submit_tag("Contar") %>
-  <% end %>
-</div>
+<%= simple_form_for Sal7711Gen::Consultausuario.new, 
+  :url => sal7711_gen.bitacora_admin
+  :html => { :class => 'form-horizontal' } do |f| 
+%>
+  <div data-role="content" class="form-inputs">
+    <div id="errores">
+      <% if f.object.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-error">
+            El formulario tiene 
+            <%= pluralize(f.object.errors.count, "error") %>.
+          </div>
+          <ul>
+            <% f.object.errors.full_messages.each do |msg| %>
+              <li>* <%= msg %></li>
+            <% end %>
+          </ul>
+        </div> <!-- error-explanation -->
+      <% end %>
+      <%= f.error_notification %>
+    </div> <!-- errores -->
+    <div class="container">
+      <div class="row filtro-fila">
+        <div class="col-sm-offset-0 col-sm-2 col-md-offset-1 col-md-1">
+          Recepción entre
+        </div>
+        <div class="col-sm-offset-0 col-sm-4">
+          <%= f.input :fechaini,
+            maxlength: 10, 
+            size: 10,
+            label: false,
+            placeholder: 'Inicial',
+            input_html: {
+              "data-behaviour" => "datepicker",
+              value: params[:validarcaso] ? 
+                params[:validarcaso][:fechaini] : ''
+            }
+          %>
+        </div>
+        <div class="col-sm-offset-1 col-sm-4">
+          <%= f.input :fechafin,
+            maxlength: 10, 
+            size: 10,
+            label: false,
+            placeholder: 'Final',
+            input_html: {
+              "data-behaviour" => "datepicker",
+              value: params[:validarcaso] ? 
+                params[:validarcaso][:fechafin] : ''
+            }
+          %>
+        </div>
+      </div> <!-- row -->
 
+      <div class="row filtro-fila">
+        <div class="col-sm-offset-0 col-sm-2 col-md-offset-1 col-md-1">
+          Organización
+        </div>
+        <div class="col-sm-offset-0 col-sm-4">
+          <%= f.input :organizacion,
+            collection: ::Organizacion,
+            value_method: :id,
+            label_method: :nombre,
+            label: false,
+            selected: params[:consultausuario] ? 
+            params[:consultausuario][:organizacion_id] : nil
+          %>
+        </div>
+      </div> <!-- row -->
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    Usuarios con consultas: <%= @usuarioscons.count %>.
-    Total consultas:  <%= @totconsultas %>.
-  </div>
+      <div class="row filtro-fila">
+        <div class="col-md-offset-5 col-md-2">
+          <%= f.button :submit, 'Filtrar', class: 'btn btn-default' %>
+        </div>
+      </div> <!-- class: row -->
 
-  <div class="panel-body">
-    <table class="table table-striped">
-      <thead>
-        <tr><th>Usuario</th><th>Consultas</th>
-      </thead>
-      <tbody>
-        <% @usuarioscons.try(:each) do |u| %>
-          <tr>
-            <td><%= u[0] %></td>
-            <td><%= u[1] %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+    </div>  <!-- class:container -->
+  </div> <!-- class:form-inputs -->
+<% end %>
+
+<div id="resultado">
+  <%= render 'sal7711_ge/bitacora/consultausuario' %>   
 </div>
