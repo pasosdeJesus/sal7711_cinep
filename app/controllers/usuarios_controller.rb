@@ -1,20 +1,23 @@
 # encoding: UTF-8
+
 require 'bcrypt'
 
 class UsuariosController < Sal7711Gen::UsuariosController
+
   def new
-    super
     @miurl = crea_usuario_url 
+    super
   end
 
   def create
-    @usuario.confirmed_at = Date.today
     super
+    @usuario.confirmed_at = Date.today
+    @usuario.save
   end
 
   def edit
-    super
     @miurl = actualiza_usuario_url 
+    super
   end
 
   def devise_registrations_edit
