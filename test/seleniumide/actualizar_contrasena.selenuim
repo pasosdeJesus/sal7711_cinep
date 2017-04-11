@@ -38,6 +38,11 @@
 </tr>
 <tr>
 	<td>type</td>
+	<td>id=usuario_descripcion</td>
+	<td>desc-prueba</td>
+</tr>
+<tr>
+	<td>type</td>
 	<td>id=usuario_current_password</td>
 	<td>sal7711</td>
 </tr>
@@ -46,7 +51,6 @@
 	<td>name=commit</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
