@@ -47,8 +47,10 @@ class LotesController < ApplicationController
             end
           }
         end
-        format.html { redirect_to main_app.lotes_path, 
-                      notice: "Lote #{@lote.id} creado." }
+        format.html { 
+          redirect_to main_app.lotes_path, 
+                      notice: "Lote #{@lote.id} creado." 
+        }
         format.json { render json: @lote, status: :created }
       else
         format.html { render action: "new" }
