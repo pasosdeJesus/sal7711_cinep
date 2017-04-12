@@ -140,39 +140,6 @@
 
         <%= render partial: 'articulos_complemento1', locals: { f: f } %>
 
-        <% if f.object.lote_id %> 
-          <div class="col-xs-11">
-            <%= f.input :texto %> 
-          </div>
-          <div class="col-xs-1">
-          </div>
-        <% else %>
-          <div class="col-xs-12">
-            <%= f.input :texto %> 
-          </div>
-        <% end %>
-
-
-        <div class="col-xs-12 form-actions abajocentrado">
-          <% if f.object.lote_id %> 
-            <%= f.button :submit, 
-              name: 'progresar', 
-              value: 'Actualizar y progresar', 
-              class: 'btn-primary',
-              "data-disable-with": 'Actualizar y progresar' %>
-          <% end %>
-
-          <%= f.button :submit, 
-            name: 'actualizar', 
-            value: 'Actualizar', 
-            class: 'btn-primary',
-            "data-disable-with": 'Actualizar' %>
-
-          <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-            sal7711_gen.articulos_path, :class => 'btn' 
-          %>
-        </div> <!--  clas="col-xs-12 form-actions abajocentrado" -->
-
       </div> <!-- row -->
 
     </div> <!-- class="col-sm-offset-0 col-sm-7 col-md-8" -->
@@ -185,5 +152,38 @@
       <% end %>
     </div> <!-- id: resultados -->
   </div> <!-- row -->
+  <div class="row">
+    <% if f.object.lote_id %> 
+      <div class="col-xs-11">
+        <%= f.input :texto %> 
+      </div>
+      <div class="col-xs-1">
+      </div>
+    <% else %>
+      <div class="col-xs-12">
+        <%= f.input :texto %> 
+      </div>
+    <% end %>
+
+    <div class="col-xs-12 form-actions abajocentrado">
+      <% if f.object.lote_id %> 
+        <%= f.button :submit, 
+          name: 'progresar', 
+          value: 'Actualizar y progresar', 
+          class: 'btn-primary',
+          "data-disable-with": 'Actualizar y progresar' %>
+      <% end %>
+
+      <%= f.button :submit, 
+        name: 'actualizar', 
+        value: 'Actualizar', 
+        class: 'btn-primary',
+        "data-disable-with": 'Actualizar' %>
+
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+        sal7711_gen.articulos_path, :class => 'btn' 
+      %>
+    </div> <!--  clas="col-xs-12 form-actions abajocentrado" -->
+  </div>
 
 <% end %>

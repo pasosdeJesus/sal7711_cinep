@@ -9,6 +9,14 @@ Sistema para manejo de un archivo de prensa
 
 Ver <https://github.com/pasosdeJesus/sip/wiki/Requerimientos>
 
+Para hacer reconocimiento de caracteres se requiere ```tessearact``` y
+su  módulo de español.  En adJ (OpenBSD) los instala con:
+
+```
+doas pkg_add tesseract
+doas pkg_add tesseract-spa 
+```
+
 ### Arquitectura
 
 Es una aplicación que emplea los motores genéricos 
@@ -28,3 +36,8 @@ SAL7711_ONBASE_SERV=http://181.143.184.115:2400
 Se usa para armar el URL de los correos de confirmación 
 (usado por ejemplo al cambiar correo de un usuario).
 
+Instalación
+
+Uso
+
+tesseract imagen stdout   -l spa

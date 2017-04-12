@@ -40,9 +40,11 @@ class LotesController < ApplicationController
             end
             @a.adjunto_descripcion = "Imagen #{@a.orden} del lote #{@lote.id}"
             @a.save(validate: false)
+            OcrarticulosJob.perform_later @a.id
             if @lote.candcategoria1_id
               c = Sal7711Gen::ArticuloCategoriaprensa.new(
-                categoriaprensa_id: @lote.candcategoria1_id, articulo_id: @a.id)
+                categoriaprensa_id: @lote.candcategoria1_id, 
+                articulo_id: @a.id)
               c.save(validate: false)
             end
           }
