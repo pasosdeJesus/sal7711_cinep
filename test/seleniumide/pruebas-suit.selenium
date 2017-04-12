@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <title>Test Suite</title>
+</head>
+<body>
+<table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
+<tr><td><b>Test Suite</b></td></tr>
+<tr><td><a href="acerca_de.selenium">acerca_de</a></td></tr>
+<tr><td><a href="actualizar_contrasena.selenuim">actualizar_contrasena</a></td></tr>
+<tr><td><a href="categorias.selenuim">categorias</a></td></tr>
+<tr><td><a href="departamentos.selenium">departamentos</a></td></tr>
+<tr><td><a href="fuente_de_prensa.selenuim">fuente_de_prensa</a></td></tr>
+<tr><td><a href="municipio.selenuim">municipio</a></td></tr>
+<tr><td><a href="organizaciones.selenuim">organizaciones</a></td></tr>
+<tr><td><a href="pais.selenuim">pais</a></td></tr>
+<tr><td><a href="usuarios.selenuim">usuarios</a></td></tr>
+</tbody></table>
+</body>
+</html>

@@ -39,7 +39,7 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>id=usuario_nusuario</td>
-	<td>felipe</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -81,7 +81,6 @@
 	<td>css=img.logo-cinep</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
