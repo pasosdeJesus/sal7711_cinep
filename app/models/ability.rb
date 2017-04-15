@@ -36,6 +36,7 @@ class Ability  < Sal7711Gen::Ability
       BASICAS_PROPIAS  - [
         ['Sip', 'clase'],
         ['Sip', 'etiqueta'],
+        ['Sip', 'grupo'],
         ['Sip', 'oficina'],
         ['Sip', 'tclase'],
         ['Sip', 'tdocumento'],
