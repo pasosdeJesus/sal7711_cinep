@@ -12,6 +12,16 @@ class LotesController < ApplicationController
                      usuario: current_usuario)
   end
 
+
+  def ocrfaltante
+    @faltante = Sal7711Gen::Articulo.where("textoocr is NULL OR textoocr=''").limit(1000)
+    @faltante.each do |a|
+      OcrarticulosJob.perform_later a.id
+    end
+    render :ocrfaltante, layout: 'application'
+  end
+
+
   def create
     authorize! :edit, Lote
     # Referencia: http://www.railscook.com/recipes/multiple-files-upload-with-nested-resource-using-paperclip-in-rails/
