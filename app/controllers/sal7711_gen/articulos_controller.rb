@@ -115,35 +115,52 @@ module Sal7711Gen
             if @articulo.lote_id && params[:progresar] == 'Actualizar y progresar'
               # Primero los no editados ordenados por nombre de archivo (posteriores primero, anteriores despues)
               # A continuación los editados pero sin categorias completas también ordenados por nombre de archivo
-             sig = Sal7711Gen::Articulo.connection.select_one(
+             cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
                "SELECT id FROM sal7711_gen_articulo 
-                WHERE lote_id='#{@articulo.lote_id.to_i}' 
-                  AND orden > '#{@articulo.orden}' 
+                WHERE lote_id=?
+                  AND orden > ?
                   AND substring(adjunto_descripcion from 1 for 6) = 'Imagen'
-                ORDER BY orden LIMIT 1;")  
+                ORDER BY orden LIMIT 1", 
+                @articulo.lote_id.to_i, @articulo.orden 
+             ])
+             sig = Sal7711Gen::Articulo.connection.select_one(cons_t)
              if !sig
-               sig = Sal7711Gen::Articulo.connection.select_one(
-               "SELECT id FROM sal7711_gen_articulo 
-                WHERE lote_id='#{@articulo.lote_id.to_i}' 
-                  AND orden < '#{@articulo.orden}' 
-                  AND substring(adjunto_descripcion from 1 for 6) = 'Imagen'
-                  ORDER BY orden LIMIT 1;")  
+               cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
+                 "SELECT id FROM sal7711_gen_articulo 
+                  WHERE lote_id=?
+                    AND orden < ?
+                    AND substring(adjunto_descripcion from 1 for 6) = 
+                      'Imagen'
+                  ORDER BY orden LIMIT 1",
+                  @articulo.lote_id.to_i, @articulo.orden 
+               ])
+               sig = Sal7711Gen::Articulo.connection.select_one(cons_t)
              end
              if !sig
-               sig = Sal7711Gen::Articulo.connection.select_one(
-                "SELECT id FROM sal7711_gen_articulo 
-                  WHERE lote_id='#{@articulo.lote_id.to_i}' 
-                    AND id>'#{@articulo.id.to_i}' 
-                    AND NOT EXISTS(SELECT * FROM sal7711_gen_articulo_categoriaprensa WHERE articulo_id=sal7711_gen_articulo.id)
-                  ORDER BY orden LIMIT 1;")  
+               cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
+                 "SELECT id FROM sal7711_gen_articulo 
+                  WHERE lote_id = ?
+                    AND id > ?
+                    AND NOT EXISTS (
+                      SELECT * FROM sal7711_gen_articulo_categoriaprensa 
+                      WHERE articulo_id=sal7711_gen_articulo.id)
+                  ORDER BY orden LIMIT 1",  
+                  @articulo.lote_id.to_i, @articulo.id.to_i
+               ])
+               sig = Sal7711Gen::Articulo.connection.select_one(cons_t)
              end
              if !sig
-               sig = Sal7711Gen::Articulo.connection.select_one(
-                "SELECT id FROM sal7711_gen_articulo 
-                  WHERE lote_id='#{@articulo.lote_id.to_i}' 
-                  AND id<'#{@articulo.id.to_i}' 
-                  AND NOT EXISTS(SELECT * FROM sal7711_gen_articulo_categoriaprensa WHERE articulo_id=sal7711_gen_articulo.id)
-                  ORDER BY orden LIMIT 1;")  
+               cons_t = Sal7711Gen::Articulo.send(sanitize_sql_array, [
+                 "SELECT id FROM sal7711_gen_articulo 
+                    WHERE lote_id = ?
+                      AND id < ?
+                      AND NOT EXISTS(
+                        SELECT * FROM sal7711_gen_articulo_categoriaprensa 
+                        WHERE articulo_id=sal7711_gen_articulo.id)
+                  ORDER BY orden LIMIT 1",
+                  @articulo.lote_id.to_i, @articulo.id.to_i
+               ])
+               sig = Sal7711Gen::Articulo.connection.select_one(cons_t)
              end
 
              if sig

@@ -173,7 +173,7 @@ module Sal7711Gen
         if fila['keyvaluechar'] && fila['keyvaluechar'].strip != ''
           nf = fila["keyvaluechar"].strip
           if Sip::Fuenteprensa.
-            where("SUBSTRING(nombre FROM 1 FOR 45) = '#{nf}'").count == 0
+            where("SUBSTRING(nombre FROM 1 FOR 45) = ?", nf).count == 0
             cprob += "<br>Fuente #{nf} de SQL Server no aparece en PostgreSQL"
           end
         end
@@ -295,7 +295,7 @@ module Sal7711Gen
         if fila['keyvaluechar'] && fila['keyvaluechar'].strip != ''
           nd = fila["keyvaluechar"].strip
           if Sip::Departamento.
-            where("SUBSTRING(nombre FROM 1 FOR 45) = '#{nd}'").count == 0
+            where("SUBSTRING(nombre FROM 1 FOR 45) = ?", nd).count == 0
             prob = "<br>Departamento #{nd} de SQL Server no aparece en PostgreSQL"
             puts prob
             cprob += prob
@@ -314,7 +314,7 @@ module Sal7711Gen
         if fila['keyvaluechar'] && fila['keyvaluechar'].strip != ''
           nd = fila["keyvaluechar"].strip
           if Sip::Municipio.
-            where("SUBSTRING(nombre FROM 1 FOR 45) = '#{nd}'").count == 0
+            where("SUBSTRING(nombre FROM 1 FOR 45) = ?", nd).count == 0
             prob = "<br>Municipio #{nd} de SQL Server no aparece en PostgreSQL"
             puts prob
             cprob += prob
@@ -465,13 +465,14 @@ module Sal7711Gen
           #          #byebug
           dep = fila["departamento"]
           if dep && dep.strip != ''
-            nart.departamento = Sip::Departamento.where("SUBSTRING(nombre FROM 1 FOR 45) = '#{dep.strip}'").first
+            nart.departamento = Sip::Departamento.where(
+              "SUBSTRING(nombre FROM 1 FOR 45) = ?", dep.strip).first
             # Municipio
             mun=fila["municipio"]
             if mun && mun.strip != ''
               nart.municipio = Sip::Municipio.where(
-                id_departamento: nart.departamento_id).
-                where("SUBSTRING(nombre FROM 1 FOR 45) = '#{mun.strip}'").first
+                id_departamento: nart.departamento_id).where(
+                  "SUBSTRING(nombre FROM 1 FOR 45) = ?", mun.strip).first
             end
           end
 
@@ -482,7 +483,8 @@ module Sal7711Gen
             incregprob(itemnum)
             next
           end
-          nart.fuenteprensa = Sip::Fuenteprensa.where("SUBSTRING(nombre FROM 1 FOR 45) = '#{f.strip}'").first
+          nart.fuenteprensa = Sip::Fuenteprensa.where(
+            "SUBSTRING(nombre FROM 1 FOR 45) = ?", f.strip).first
           if nart.fuenteprensa.nil?
             @cprob += "<br>Elemento #{itemnum} tiene fuente errada #{f} (saltando)"
             incregprob(itemnum)
@@ -709,7 +711,7 @@ module Sal7711Gen
           dep = fila["departamento"]
           if dep && dep.strip != ''
             depo = Sip::Departamento.where(
-              "SUBSTRING(nombre FROM 1 FOR 45) = '#{dep.strip}'").first
+              "SUBSTRING(nombre FROM 1 FOR 45) = ?", dep.strip).first
              if depo.nil?
                   prob = "<br>Referencia a departamento no existente #{dep}  en #{itemnum}"
                   puts prob
@@ -726,8 +728,8 @@ module Sal7711Gen
             mun=fila["municipio"]
             if mun && mun.strip != ''
               muno = Sip::Municipio.where(
-                id_departamento: depo.id).
-                where("SUBSTRING(nombre FROM 1 FOR 45) = '#{mun.strip}'").first
+                id_departamento: depo.id).where(
+                  "SUBSTRING(nombre FROM 1 FOR 45) = ?", mun.strip).first
                 if muno.nil?
                   prob = "<br>Referencia a municipio no existente #{mun}  en #{itemnum}"
                   puts prob
@@ -826,7 +828,7 @@ module Sal7711Gen
         op = ' LIKE '
         cod = "#{ccat.split('*')[0]}%"
       else 
-        cat = Sal7711Gen::Categoriaprensa.where('codigo=?', ccat).take;
+        cat = Sal7711Gen::Categoriaprensa.where(codigo: ccat).take;
         if cat && cat.supracategoria
           op = ' LIKE '
           cod = "#{cat.codigo}%"
