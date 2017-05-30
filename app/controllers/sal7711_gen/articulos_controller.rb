@@ -150,7 +150,7 @@ module Sal7711Gen
                sig = Sal7711Gen::Articulo.connection.select_one(cons_t)
              end
              if !sig
-               cons_t = Sal7711Gen::Articulo.send(sanitize_sql_array, [
+               cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
                  "SELECT id FROM sal7711_gen_articulo 
                     WHERE lote_id = ?
                       AND id < ?

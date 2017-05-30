@@ -134,6 +134,7 @@ class Ability  < Sal7711Gen::Ability
       when Ability::ROLADMIN
         revisarvig = false
         can :cambiarclave, ::Usuario
+        can :manage, Sal7711Gen::Bitacora
         can :manage, Sal7711Gen::Categoriaprensa
         can :manage, Sal7711Gen::Articulo
         can :manage, Sip::Ubicacion
