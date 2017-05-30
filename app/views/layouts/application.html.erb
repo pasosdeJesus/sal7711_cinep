@@ -32,7 +32,7 @@
           <% if current_usuario.rol == Ability::ROLADMIN %>
             <%= menu_item "Usuarios", main_app.usuarios_path %>
             <%= menu_item "Tablas Básicas", sip.tablasbasicas_path %>
-            <%= menu_item "Consultas por usuario", "/bitacora/admin" %>
+            <%= menu_item "Bitácora", "/bitacora/admin" %>
             <%= menu_item "Consultas en tiempo", "/bitacora/tiempo" %>
             <%= menu_item "Ejecutar OCR en artículos faltantes", "/lotes/ocrfaltante" %>
             <!-- Solo arreglos %= menu_item "Verificar archivos", '/verificaarchivos' %-->

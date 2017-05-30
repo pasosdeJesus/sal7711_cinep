@@ -1,19 +1,19 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    Usuarios con consultas: <%= @usuarioscons.count %>.
-    Total consultas:  <%= @totconsultas %>.
+    Total registros:  <%= @totconsultas %>.
   </div>
 
   <div class="panel-body">
     <table class="table table-striped">
       <thead>
-        <tr><th>Usuario</th><th>Consultas</th>
+        <tr><th>Id</th><th>Fecha</th><th>Usuario</th><th>IP</th><th>Operacion</th>
       </thead>
       <tbody>
         <% @usuarioscons.try(:each) do |u| %>
           <tr>
-            <td><%= u[0] %></td>
-            <td><%= u[1] %></td>
+            <% (0..4).each do |i| %>
+              <td><%= u[i] %></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

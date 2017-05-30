@@ -33,7 +33,7 @@ module Sal7711Gen
       end
       if(params[form] && params[form][:fechafin] && 
          params[form][:fechafin] != '')
-        pfd = fecha_local_estandar(params[form][:fechafin])
+        pff = fecha_local_estandar(params[form][:fechafin])
         w += " AND fecha <= '#{pff}'"
       end
       return w
@@ -45,20 +45,20 @@ module Sal7711Gen
         o = params[form][campo].to_i
         w += " AND #{campo} = '#{o}'"
       end
-
     end
  
     def admin
       authorize! :manage, Sal7711Gen::Bitacora
 
-      w=filtro_fechas(:consultausuario, '')
+      w = filtro_fechas(:consultausuario, '')
 
       @usuarioscons = Sal7711Gen::Bitacora.connection.select_rows(
-        "SELECT nusuario, count(*) FROM sal7711_gen_bitacora 
-          JOIN usuario ON usuario_id=usuario.id WHERE
-          operacion = 'index' #{w} GROUP BY 1"
+        "SELECT b.id, fecha, nusuario, ip, operacion
+          FROM sal7711_gen_bitacora AS b, usuario 
+          WHERE usuario_id=usuario.id #{w}
+          ORDER BY fecha "
       )
-      @totconsultas = Sal7711Gen::Bitacora.where(operacion: 'index').all.count
+      @totconsultas = @usuarioscons.count
     end
  
     def tiempo

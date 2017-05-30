@@ -3,7 +3,7 @@
 </div>
 
 <%= simple_form_for Sal7711Gen::Consultausuario.new, 
-  :url => sal7711_gen.bitacora_admin,
+  :url => main_app.bitacora_admin_path,
   :html => { :class => 'form-horizontal' } do |f| 
 %>
   <div data-role="content" class="form-inputs">
@@ -36,8 +36,8 @@
             placeholder: 'Inicial',
             input_html: {
               "data-behaviour" => "datepicker",
-              value: params[:validarcaso] ? 
-                params[:validarcaso][:fechaini] : ''
+              value: params[:consultausuario] ? 
+                params[:consultausuario][:fechaini] : ''
             }
           %>
         </div>
@@ -49,8 +49,8 @@
             placeholder: 'Final',
             input_html: {
               "data-behaviour" => "datepicker",
-              value: params[:validarcaso] ? 
-                params[:validarcaso][:fechafin] : ''
+              value: params[:consultausuario] ? 
+                params[:consultausuario][:fechafin] : ''
             }
           %>
         </div>
@@ -61,14 +61,14 @@
           Organización
         </div>
         <div class="col-sm-offset-0 col-sm-4">
-          <%= f.input :organizacion,
+          <!--%= f.input :organizacion,
             collection: ::Organizacion,
             value_method: :id,
             label_method: :nombre,
             label: false,
             selected: params[:consultausuario] ? 
             params[:consultausuario][:organizacion_id] : nil
-          %>
+          %-->
         </div>
       </div> <!-- row -->
 
@@ -83,5 +83,5 @@
 <% end %>
 
 <div id="resultado">
-  <%= render 'sal7711_ge/bitacora/consultausuario' %>   
+  <%= render 'sal7711_gen/bitacora/consultausuario' %>   
 </div>
