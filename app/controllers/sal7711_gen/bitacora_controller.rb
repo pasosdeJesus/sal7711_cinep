@@ -50,6 +50,10 @@ module Sal7711Gen
       authorize! :manage, Sal7711Gen::Bitacora
 
       w = filtro_fechas(:consultausuario, '')
+      if w == '' && !params[:consultausuario]
+        w += " AND fecha >= '#{Date.today.beginning_of_month.to_s}'"
+        w += " AND fecha <= '#{Date.today.end_of_month.to_s}'"
+      end
 
       @usuarioscons = Sal7711Gen::Bitacora.connection.select_rows(
         "SELECT b.id, fecha, nusuario, ip, operacion

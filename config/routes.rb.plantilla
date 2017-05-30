@@ -34,13 +34,13 @@ Rails.application.routes.draw do
   patch 'usuarios/:id/actualiza' => 'usuarios#update', 
           :as => 'actualiza_usuario'           
   get 'usuarios/reconfirma' => 'usuarios#reconfirma'
-  get 'bitacora/admin' => 'sal7711_gen/bitacora#admin', as: 'bitacora_admin'
+  post 'bitacora/admin' => 'sal7711_gen/bitacora#admin', 
+    as: 'bitacora_publica'
+  get 'bitacora/admin' => 'sal7711_gen/bitacora#admin', 
+	  as: 'bitacora_admin'
   get 'bitacora/tiempo' => 'sal7711_gen/bitacora#tiempo', 
           as: 'bitacora_tiempo'
-  get 'sincroniza' => 'sal7711_gen/buscar#sincroniza_onbase', as: 'buscar_sincroniza'
-  get 'verificaarchivos' => 'sal7711_gen/articulos#verifica_archivos', 
-    as: 'verificaarchivos'
-  
+
   get 'lotes/nuevo' => 'lotes#new', as: 'new_lote'
   post  'lotes/nuevo' => 'lotes#create', as: 'create_lote'
 
