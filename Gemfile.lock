@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 102208dd4244a15c07a4bfb4bccb2454bc3202e6
+  revision: 00fe2332a9ce9f248ec3a5abbbad7933e79a8eb6
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: d3d4809bd30cd356351ac957b4482a40f1185123
+  revision: d9a7752b44694bf63e31db3f8ab0661c30a67993
   specs:
     sip (2.0.b3)
       bootstrap-datepicker-rails
@@ -103,9 +103,9 @@ GEM
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.1)
-    coffee-rails (4.2.1)
+    coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
-      railties (>= 4.0.0, < 5.2.x)
+      railties (>= 4.0.0)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -156,9 +156,9 @@ GEM
     mail_form (1.6.0)
       actionmailer (>= 3.2, < 5.1)
       activemodel (>= 3.2, < 5.1)
-    meta_request (0.4.2)
+    meta_request (0.4.3)
       callsite (~> 0.0, >= 0.0.11)
-      rack-contrib (~> 1.1)
+      rack-contrib (>= 1.1, < 3)
       railties (>= 3.0.0, < 5.2.0)
     method_source (0.8.2)
     mime-types (3.1)
@@ -169,7 +169,7 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
-    nio4r (2.0.0)
+    nio4r (2.1.0)
     nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
     orm_adapter (0.5.0)
@@ -299,7 +299,7 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     will_paginate (3.1.5)
-    xpath (2.0.0)
+    xpath (2.1.0)
       nokogiri (~> 1.3)
 
 PLATFORMS
