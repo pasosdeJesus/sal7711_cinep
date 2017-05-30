@@ -24,7 +24,6 @@ module Sal7711Gen
       end
     end
 
-
     def filtro_fechas(form, w)
       if (params[form] && params[form][:fechaini] && 
           params[form][:fechaini] != '')

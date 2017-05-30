@@ -37,7 +37,8 @@
             input_html: {
               "data-behaviour" => "datepicker",
               value: params[:consultausuario] ? 
-                params[:consultausuario][:fechaini] : ''
+                params[:consultausuario][:fechaini] : 
+                fecha_estandar_local(Date.today.beginning_of_month.to_s)
             }
           %>
         </div>
@@ -50,7 +51,8 @@
             input_html: {
               "data-behaviour" => "datepicker",
               value: params[:consultausuario] ? 
-                params[:consultausuario][:fechafin] : ''
+                params[:consultausuario][:fechafin] : 
+                fecha_estandar_local(Date.today.end_of_month.to_s)
             }
           %>
         </div>
