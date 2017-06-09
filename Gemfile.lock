@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: b53c6fc3a23c20cec51cdd3e11cfb33916f6c02e
+  revision: 0f16bd607f01ef67165288781b6b4dc0aff0d42c
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 89216f90ce26f4249f13328d6146a89eeb2f75d9
+  revision: 3b730f2e9f6226b90ebbf18589de83e3fdf7ea63
   specs:
     sip (2.0.b3)
       bootstrap-datepicker-rails
@@ -87,7 +87,7 @@ GEM
     callsite (0.0.11)
     camertron-eprun (1.1.1)
     cancancan (2.0.0)
-    capybara (2.14.0)
+    capybara (2.14.1)
       addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -298,7 +298,7 @@ GEM
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
-    will_paginate (3.1.5)
+    will_paginate (3.1.6)
     xpath (2.1.0)
       nokogiri (~> 1.3)
 
