@@ -49,7 +49,8 @@
         <% if f.object.lote_id %> 
           <div class="col-xs-11">
             <%= f.association :departamento,
-              collection: Sip::Departamento.habilitados.where(id_pais: 170),
+              collection: Sip::Departamento.habilitados.
+                where(id_pais: Sip.paisomision),
               label_method: :nombre, 
               value_method: :id %>
           </div>
@@ -66,7 +67,8 @@
         <% else %>
           <div class="col-xs-12">
             <%= f.association :departamento,
-              collection: Sip::Departamento.habilitados.where(id_pais: 170),
+                    collection: Sip::Departamento.habilitados.
+                    where(id_pais: Sip.paisomision),
               label_method: :nombre, 
               value_method: :id %>
           </div>
@@ -74,7 +76,7 @@
 
         <% if f.object.lote_id %> 
           <div class="col-xs-11">
-            <% cw = "sip_departamento.id_pais = '170' " %>
+            <% cw = "sip_departamento.id_pais = '#{Sip.paisomision}' " %>
             <% if f.object.departamento_id %>
               <% cw += "AND sip_departamento.id='#{f.object.departamento_id}'"%>
             <% end %>
@@ -99,7 +101,8 @@
           <div class="col-xs-12">
             <%= f.association :municipio,
               collection: Sip::Municipio.habilitados.joins(:departamento).
-              where("sip_departamento.id_pais = '170'"),
+              where("sip_departamento.id_pais = ?", 
+                    Sip.paisomision),
               label_method: :nombre, 
               value_method: :id
             %>

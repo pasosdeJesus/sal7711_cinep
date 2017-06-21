@@ -276,7 +276,7 @@ module Sal7711Gen
 
     def verifica_departamentos_onbase
       cprob = ''
-      ds = Sip::Departamento.all.where(id_pais: 170).
+      ds = Sip::Departamento.all.where(id_pais: Sip.paisomision).
         where("nombre != 'EXTERIOR'")
       ds.each do |d|
         puts d.nombre[0..44]
