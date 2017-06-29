@@ -22,16 +22,24 @@ class ::SessionsController < Devise::SessionsController
   #  end
   end
 
-  def createx
-    if current_usuario
-      puts "OJO no autentico por IP";
-      current_usuario.autenticado_por_ip = false
-      current_usuario.save!
-    end
+  def create
+    #if current_usuario
+    #  puts "OJO no autentico por IP";
+    #  current_usuario.autenticado_por_ip = false
+    #  current_usuario.save!
+    #end
     super
+    if current_usuario
+      Sal7711Gen::Bitacora.a( request.remote_ip, current_usuario, 
+                             'ingreso', nil)
+    end
   end
 
   def destroy
+    if current_usuario
+      Sal7711Gen::Bitacora.a( request.remote_ip, current_usuario, 
+                             'salida', nil)
+    end
     signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
     set_flash_message :notice, :signed_out if signed_out && is_flashing_format?
     flash[:error] = Ability::ultimo_error_aut if Ability::ultimo_error_aut
