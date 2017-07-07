@@ -52,6 +52,17 @@ COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
 
 
 --
+-- Name: f_unaccent(text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION f_unaccent(text) RETURNS text
+    LANGUAGE sql IMMUTABLE
+    AS $_$
+      SELECT public.unaccent('public.unaccent', $1)  
+      $_$;
+
+
+--
 -- Name: soundexesp(text); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -177,6 +188,124 @@ CREATE TABLE ar_internal_metadata (
 
 
 --
+-- Name: sal7711_gen_articulo; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE sal7711_gen_articulo (
+    id integer NOT NULL,
+    departamento_id integer,
+    municipio_id integer,
+    fuenteprensa_id integer,
+    fecha date,
+    pagina character varying(20),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    texto text,
+    adjunto_file_name character varying,
+    adjunto_content_type character varying,
+    adjunto_file_size integer,
+    adjunto_updated_at timestamp without time zone,
+    anexo_id_antiguo integer,
+    adjunto_descripcion character varying(1500),
+    onbase_itemnum integer,
+    lote_id integer,
+    orden character varying(100),
+    textoocr text
+);
+
+
+--
+-- Name: sip_departamento_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE sip_departamento_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sip_departamento; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE sip_departamento (
+    id_deplocal integer,
+    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    latitud double precision,
+    longitud double precision,
+    fechacreacion date DEFAULT ('now'::text)::date NOT NULL,
+    fechadeshabilitacion date,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    id_pais integer NOT NULL,
+    id integer DEFAULT nextval('sip_departamento_id_seq'::regclass) NOT NULL,
+    observaciones character varying(5000) COLLATE public.es_co_utf_8,
+    CONSTRAINT departamento_check CHECK (((fechadeshabilitacion IS NULL) OR (fechadeshabilitacion >= fechacreacion)))
+);
+
+
+--
+-- Name: sip_fuenteprensa; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE sip_fuenteprensa (
+    id integer NOT NULL,
+    nombre character varying(500) COLLATE public.es_co_utf_8,
+    observaciones character varying(5000) COLLATE public.es_co_utf_8,
+    fechacreacion date,
+    fechadeshabilitacion date,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: sip_municipio_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE sip_municipio_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sip_municipio; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE sip_municipio (
+    id_munlocal integer,
+    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    latitud double precision,
+    longitud double precision,
+    fechacreacion date DEFAULT ('now'::text)::date NOT NULL,
+    fechadeshabilitacion date,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    id_departamento integer,
+    id integer DEFAULT nextval('sip_municipio_id_seq'::regclass) NOT NULL,
+    observaciones character varying(5000) COLLATE public.es_co_utf_8,
+    CONSTRAINT municipio_check CHECK (((fechadeshabilitacion IS NULL) OR (fechadeshabilitacion >= fechacreacion)))
+);
+
+
+--
+-- Name: articulo_metadatos; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW articulo_metadatos AS
+ SELECT ((((((((((sal7711_gen_articulo.fecha || ' '::text) || sal7711_gen_articulo.texto) || ' '::text) || (sip_departamento.nombre)::text) || ' '::text) || (sip_municipio.nombre)::text) || ' '::text) || (sip_fuenteprensa.nombre)::text) || sal7711_gen_articulo.texto) || (sal7711_gen_articulo.pagina)::text)
+   FROM (((sal7711_gen_articulo
+     JOIN sip_departamento ON ((sal7711_gen_articulo.departamento_id = sip_departamento.id)))
+     JOIN sip_municipio ON ((sal7711_gen_articulo.municipio_id = sip_municipio.id)))
+     JOIN sip_fuenteprensa ON ((sal7711_gen_articulo.fuenteprensa_id = sip_fuenteprensa.id)));
+
+
+--
 -- Name: ip_organizacion; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -247,6 +376,31 @@ ALTER SEQUENCE lote_id_seq OWNED BY lote.id;
 
 
 --
+-- Name: m; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW m AS
+ SELECT sal7711_gen_articulo.id,
+    ((((sal7711_gen_articulo.texto || ' '::text) || sal7711_gen_articulo.fecha) || ' '::text) || (COALESCE(sal7711_gen_articulo.pagina, ''::character varying))::text)
+   FROM sal7711_gen_articulo
+  WITH NO DATA;
+
+
+--
+-- Name: md_articulo; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW md_articulo AS
+ SELECT sal7711_gen_articulo.id,
+    ((((((((((sal7711_gen_articulo.fecha || ' '::text) || COALESCE(sal7711_gen_articulo.texto, ''::text)) || ' '::text) || (COALESCE(sip_departamento.nombre, ''::character varying))::text) || ' '::text) || (COALESCE(sip_municipio.nombre, ''::character varying))::text) || ' '::text) || (COALESCE(sip_fuenteprensa.nombre, ''::character varying))::text) || ' '::text) || (COALESCE(sal7711_gen_articulo.pagina, ''::character varying))::text) AS mdt
+   FROM (((sal7711_gen_articulo
+     LEFT JOIN sip_departamento ON ((sal7711_gen_articulo.departamento_id = sip_departamento.id)))
+     LEFT JOIN sip_municipio ON ((sal7711_gen_articulo.municipio_id = sip_municipio.id)))
+     LEFT JOIN sip_fuenteprensa ON ((sal7711_gen_articulo.fuenteprensa_id = sip_fuenteprensa.id)))
+  WITH NO DATA;
+
+
+--
 -- Name: organizacion; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -289,33 +443,6 @@ CREATE SEQUENCE organizacion_id_seq
 --
 
 ALTER SEQUENCE organizacion_id_seq OWNED BY organizacion.id;
-
-
---
--- Name: sal7711_gen_articulo; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE sal7711_gen_articulo (
-    id integer NOT NULL,
-    departamento_id integer,
-    municipio_id integer,
-    fuenteprensa_id integer,
-    fecha date,
-    pagina character varying(20),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    texto text,
-    adjunto_file_name character varying,
-    adjunto_content_type character varying,
-    adjunto_file_size integer,
-    adjunto_updated_at timestamp without time zone,
-    anexo_id_antiguo integer,
-    adjunto_descripcion character varying(1500),
-    onbase_itemnum integer,
-    lote_id integer,
-    orden character varying(100),
-    textoocr text
-);
 
 
 --
@@ -504,38 +631,6 @@ CREATE TABLE sip_clase (
 
 
 --
--- Name: sip_departamento_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE sip_departamento_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: sip_departamento; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE sip_departamento (
-    id_deplocal integer,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
-    latitud double precision,
-    longitud double precision,
-    fechacreacion date DEFAULT ('now'::text)::date NOT NULL,
-    fechadeshabilitacion date,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    id_pais integer NOT NULL,
-    id integer DEFAULT nextval('sip_departamento_id_seq'::regclass) NOT NULL,
-    observaciones character varying(5000) COLLATE public.es_co_utf_8,
-    CONSTRAINT departamento_check CHECK (((fechadeshabilitacion IS NULL) OR (fechadeshabilitacion >= fechacreacion)))
-);
-
-
---
 -- Name: sip_etiqueta_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -560,21 +655,6 @@ CREATE TABLE sip_etiqueta (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     CONSTRAINT etiqueta_check CHECK (((fechadeshabilitacion IS NULL) OR (fechadeshabilitacion >= fechacreacion)))
-);
-
-
---
--- Name: sip_fuenteprensa; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE sip_fuenteprensa (
-    id integer NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8,
-    observaciones character varying(5000) COLLATE public.es_co_utf_8,
-    fechacreacion date,
-    fechadeshabilitacion date,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone
 );
 
 
@@ -638,38 +718,6 @@ ALTER SEQUENCE sip_grupo_id_seq OWNED BY sip_grupo.id;
 CREATE TABLE sip_grupo_usuario (
     usuario_id integer NOT NULL,
     sip_grupo_id integer NOT NULL
-);
-
-
---
--- Name: sip_municipio_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE sip_municipio_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: sip_municipio; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE sip_municipio (
-    id_munlocal integer,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
-    latitud double precision,
-    longitud double precision,
-    fechacreacion date DEFAULT ('now'::text)::date NOT NULL,
-    fechadeshabilitacion date,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    id_departamento integer,
-    id integer DEFAULT nextval('sip_municipio_id_seq'::regclass) NOT NULL,
-    observaciones character varying(5000) COLLATE public.es_co_utf_8,
-    CONSTRAINT municipio_check CHECK (((fechadeshabilitacion IS NULL) OR (fechadeshabilitacion >= fechacreacion)))
 );
 
 
@@ -1455,6 +1503,13 @@ CREATE UNIQUE INDEX index_usuario_on_email ON usuario USING btree (email);
 
 
 --
+-- Name: md_articulo_b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX md_articulo_b ON md_articulo USING gin (to_tsvector('spanish'::regconfig, f_unaccent(mdt)));
+
+
+--
 -- Name: s7_artcat_a; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1820,6 +1875,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170405104322'),
 ('20170413185012'),
 ('20170414035328'),
-('20170424184620');
+('20170424184620'),
+('20170706193814');
 
 

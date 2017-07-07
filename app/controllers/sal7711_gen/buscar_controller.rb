@@ -2,6 +2,7 @@
 require_dependency "sal7711_gen/concerns/controllers/buscar_controller"
 #require_dependency "paperclip/contet_type_detector.rb"
 
+require 'i18n'
 
 module Sal7711Gen
   class BuscarController < ApplicationController
@@ -819,6 +820,15 @@ module Sal7711Gen
     end
 
     def prepara_pagina_comp(articulos, params)
+      if params[:buscar][:textob]  && params[:buscar][:textob] != ''
+        I18n.available_locales = [:es]
+        t =  ActiveRecord::Base.connection.quote(
+          I18n.transliterate(params[:buscar][:textob].downcase)
+        ) # En ruby opera con acentos
+        w = "to_tsvector('spanish', unaccent(mdt)) @@ " +
+          "plainto_tsquery('spanish', #{t})"
+        articulos = articulos.where("id in (SELECT id FROM md_articulo WHERE #{w})")
+      end
       return articulos
     end
  
