@@ -6,7 +6,7 @@ require 'mail'
 class ::RegistrationsController < Devise::RegistrationsController 
 
   # Ver SessionsController
-  skip_before_filter :require_no_authentication
+  skip_before_action :require_no_authentication
 
   def new
     if current_usuario && current_usuario.autenticado_por_ip
