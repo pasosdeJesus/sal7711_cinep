@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 #ruby "2.2.2"
 
 # Rails (internacionalización)
-gem "rails", '~> 5.0.0'
+gem "rails", '~> 5.1.0'
 gem "rails-i18n"
 
 # Postgresql
@@ -102,7 +102,7 @@ group :development do
   #gem "minitest-reporters"
  
   # Depurar
-  gem 'byebug'
+  #gem 'byebug'
 
   # Consola irb en páginas con excepciones o usando <%= console %> en vistas
   gem 'web-console'
