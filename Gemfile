@@ -9,7 +9,7 @@ gem "pg"
 
 gem 'mail_form'
 
-gem 'tiny_tds', '~> 0.7'
+gem 'tiny_tds'
 
 gem 'puma'
 
@@ -41,7 +41,7 @@ gem "prawn"
 gem "jbuilder"
 
 # Uglifier comprime recursos Javascript
-gem "uglifier", '3.0.4'
+gem "uglifier"
 
 # CoffeeScript para recuersos .js.coffee y vistas
 gem "coffee-rails"

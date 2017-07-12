@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 9eb5dc25a2eca1b72a742e3e5fba92dcd4932f25
+  revision: ba6ad10b9ac909a110e27f8472bb9463abd05444
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -165,7 +165,6 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mimemagic (0.3.2)
-    mini_portile (0.6.2)
     mini_portile2 (2.2.0)
     minitest (5.10.2)
     multi_json (1.12.1)
@@ -264,8 +263,8 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.7)
-    tiny_tds (0.7.0)
-      mini_portile (= 0.6.2)
+    tiny_tds (2.0.0)
+      mini_portile2 (~> 2.0)
     ttfunk (1.5.1)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
@@ -283,7 +282,7 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2017.2)
       tzinfo (>= 1.0.0)
-    uglifier (3.0.4)
+    uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
     unicorn (5.3.0)
       kgio (~> 2.6)
@@ -341,13 +340,13 @@ DEPENDENCIES
   simple_form
   sip!
   spring
-  tiny_tds (~> 0.7)
+  tiny_tds
   turbolinks
   twitter-bootstrap-rails
   twitter_cldr
   tzinfo
   tzinfo-data
-  uglifier (= 3.0.4)
+  uglifier
   unicorn
   web-console
   will_paginate
