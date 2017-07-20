@@ -98,6 +98,13 @@ $(document).on('turbolinks:load', function() {
 		}
 	})
 
+	$(document).on('change', '#articulo_iccategoriaprensa', function (e) {
+		if ($(e.target).prop('checked')) {
+			$('#categoriaprensa_sinorden').prop('disabled', true).trigger('chosen:updated')
+		} else {
+			$('#categoriaprensa_sinorden').prop('disabled', false).trigger('chosen:updated')
+		}
+	})
 	// Candado en fuente de prensa
 	$(document).on('change', '#articulo_fuenteprensa_id', function(e) {
 		if ($(this).val() != "")
@@ -153,7 +160,7 @@ $(document).on('turbolinks:load', function() {
 
 	$(document).on('change', '#lotes_lote', function(e) {
 		root = window;
-		enviarautomatico_formulario(root, $(this).closest('form'));
+		sip_enviarautomatico_formulario($(this).closest('form'));
 	})
 
 

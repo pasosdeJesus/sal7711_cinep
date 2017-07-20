@@ -11,8 +11,14 @@
     p = options_from_collection_for_select(
       Sal7711Gen::Categoriaprensa.habilitados, "id", "presenta_nombre"
     )
-    select_tag "categoriaprensa_sinorden", p, multiple: true,
+    opsel = { 
+      multiple: true,
       class: 'chosen-select'
+    }
+    if @iccategoriaprensa
+      opsel[:disabled] = "true"
+    end
+    select_tag "categoriaprensa_sinorden", p, opsel
   %>
 </div>
 
