@@ -825,7 +825,7 @@ module Sal7711Gen
         t =  ActiveRecord::Base.connection.quote(
           I18n.transliterate(params[:buscar][:textob].downcase)
         ) # En ruby opera con acentos
-        w = "to_tsvector('spanish', unaccent(mdt)) @@ " +
+        w = "to_tsvector('spanish', f_unaccent(mdt)) @@ " +
           "plainto_tsquery('spanish', #{t})"
         articulos = articulos.where("id in (SELECT id FROM md_articulo WHERE #{w})")
       end
