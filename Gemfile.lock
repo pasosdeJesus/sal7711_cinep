@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 55b2220ce36ca27124eb5d57bc05d571ac6bec95
+  revision: dd8448f6344f3a58053dc859e61e7844d70e940a
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 6ea3725653ab8d14ee678a72ed1c025c9f8f3a6b
+  revision: bb8f824a90057db506b536d38a43f0715fddb60d
   specs:
     sip (2.0.b4)
       bootstrap-datepicker-rails
@@ -167,7 +167,7 @@ GEM
     mime-types-data (3.2016.0521)
     mimemagic (0.3.2)
     mini_portile2 (2.2.0)
-    minitest (5.10.2)
+    minitest (5.10.3)
     multi_json (1.12.1)
     nio4r (2.1.0)
     nokogiri (1.8.0)
@@ -360,4 +360,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   1.15.2
+   1.15.3
