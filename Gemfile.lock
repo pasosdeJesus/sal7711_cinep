@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: dd8448f6344f3a58053dc859e61e7844d70e940a
+  revision: 32c734c70b3c1760b064fee7df79c786fa303b39
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: bb8f824a90057db506b536d38a43f0715fddb60d
+  revision: fd44a8fbf419c056d754a86b5b974f7a93b064a3
   specs:
     sip (2.0.b4)
       bootstrap-datepicker-rails
@@ -270,7 +270,7 @@ GEM
       sprockets (>= 3.0.0)
     thor (0.19.4)
     thread_safe (0.3.6)
-    tilt (2.0.7)
+    tilt (2.0.8)
     tiny_tds (2.0.0)
       mini_portile2 (~> 2.0)
     ttfunk (1.5.1)
