@@ -4,8 +4,11 @@ require 'pg'
 require 'yaml'
 require 'byebug'
 
-e = 'production'
+if ENV['RAILS_ENV'].nil?
+  puts "RAILS_ENV deberia definir tipo de ambiente, e.g ensayo o production"
+end
 
+e = ENV['RAILS_ENV']
 
 if ENV['MINID'].nil?
   minid=1
@@ -62,4 +65,7 @@ conn.exec(cons ) do |sinocr|
     conn.exec( "UPDATE sal7711_gen_articulo SET textoocr='#{conn.escape_string(res)}', texto='#{conn.escape_string(res)}' WHERE id=#{fila["id"].to_i};")
   end
 end
+act="REFRESH MATERIALIZED VIEW md_articulo"
+puts act
+conn.exec(act)
 conn.finish
