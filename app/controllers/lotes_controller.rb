@@ -14,7 +14,7 @@ class LotesController < ApplicationController
 
 
   def ocrfaltante
-    @faltante = Sal7711Gen::Articulo.where("textoocr is NULL OR textoocr=''").limit(1000)
+    @faltante = Sal7711Gen::Articulo.where("textoocr is NULL OR textoocr=''").reorder('id desc').limit(1000)
     @faltante.each do |a|
       OcrarticulosJob.perform_later a.id
     end
