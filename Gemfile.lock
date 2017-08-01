@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 0438bf19bd8622940f56c991cf8a82169fd29103
+  revision: 5665e34dee9b4556b678024f9d93e6d3dd21db9a
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 456fc3d392e0d6b1d72fb64900ae6bf8ecae6231
+  revision: 26fb095546f3896fd2fc1aabce6e9205f05211d4
   specs:
     sip (2.0.b4)
       bootstrap-datepicker-rails
@@ -282,7 +282,7 @@ GEM
       execjs (~> 2.7)
       less-rails (~> 2.8, >= 2.8.0)
       railties (~> 5.0, >= 5.0.1)
-    twitter_cldr (4.4.1)
+    twitter_cldr (4.4.2)
       camertron-eprun
       cldr-plurals-runtime-rb (~> 1.0)
       tzinfo
