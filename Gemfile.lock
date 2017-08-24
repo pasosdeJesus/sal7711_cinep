@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: c6f2b7f7c1574d24c34125ce1a11b65e48b64dc0
+  revision: efcd83c643af00c15eea0c61d7e67686db6d55b2
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 26cea6aa4d7272f336864d771f130eacd0a7807a
+  revision: a9c912fc40bbde92909172e816fdb0a8d379e2ae
   specs:
     sip (2.0.b4)
       bootstrap-datepicker-rails
