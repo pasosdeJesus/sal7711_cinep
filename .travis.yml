@@ -9,7 +9,7 @@ env:
         global:
                 - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
 before_install: 
-        - sudo apt-get wget build-essential libc6-dev
+        - sudo apt-get install wget build-essential libc6-dev
         - mkdir fts && cd fts && wget ftp://ftp.freetds.org/pub/freetds/stable/freetds-1.00.21.tar.gz && tar -xzf freetds-1.00.21.tar.gz && cd freetds-1.00.21 && ./configure --prefix=/usr/local --with-tdsver=7.3 && make &&  make install
         - sudo locale-gen --no-archive es_CO.UTF-8
         - psql -c 'CREATE DATABASE sal7711_pru;' -U postgres
