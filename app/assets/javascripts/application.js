@@ -23,6 +23,7 @@ $(document).on('turbolinks:load', function() {
 		exports : window;
 	sip_prepara_eventos_comunes(root, true);
 	sal7711_gen_prepara_eventos_comunes(root);
+	sal7711_cinep_prepara_eventos_comunes(root);
 
 
 	// ========== EDICIÓN DE UN ARTÍCULO ===========

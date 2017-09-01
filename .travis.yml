@@ -1,9 +1,10 @@
 language: ruby
 rvm:
         - 2.4.0
+addons:
+        postgresql '9.6'
 notifications:
         email: false
-script: CODECLIMATE_REPO_TOKEN=CODECLIMATE_REPO_TOKEN=82e4de777b66e8692bac7cccbb0c327b9b900ba2573532a40644d361206e1ee0 bundle exec rails test
 env:
         global:
                 - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
