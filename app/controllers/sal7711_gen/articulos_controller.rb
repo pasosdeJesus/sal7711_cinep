@@ -35,6 +35,7 @@ module Sal7711Gen
           @icfuenteprensa = true
         end
         @iccategoriaprensa = false
+
         if lote.candcategoria1_id
           @articulo.categoriaprensa_ids = [lote.candcategoria1_id,
             lote.candcategoria2_id, lote.candcategoria3_id]
@@ -87,6 +88,7 @@ module Sal7711Gen
           nil
         lote.candfuenteprensa_id = par[:icfuenteprensa] ? 
           @articulo.fuenteprensa_id : nil
+        lote.candcategoria1_id = nil
         if (par[:iccategoriaprensa]) 
           a = @articulo.articulo_categoriaprensa.where(orden: 1).take
           lote.candcategoria1_id = a ? a.categoriaprensa_id : nil
@@ -115,68 +117,68 @@ module Sal7711Gen
             if @articulo.lote_id && params[:progresar] == 'Actualizar y progresar'
               # Primero los no editados ordenados por nombre de archivo (posteriores primero, anteriores despues)
               # A continuación los editados pero sin categorias completas también ordenados por nombre de archivo
-             cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
+              cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
                "SELECT id FROM sal7711_gen_articulo 
                 WHERE lote_id=?
                   AND orden > ?
                   AND substring(adjunto_descripcion from 1 for 6) = 'Imagen'
                 ORDER BY orden LIMIT 1", 
                 @articulo.lote_id.to_i, @articulo.orden 
-             ])
-             sig = Sal7711Gen::Articulo.connection.select_one(cons_t)
-             if !sig
-               cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
-                 "SELECT id FROM sal7711_gen_articulo 
-                  WHERE lote_id=?
-                    AND orden < ?
-                    AND substring(adjunto_descripcion from 1 for 6) = 
-                      'Imagen'
-                  ORDER BY orden LIMIT 1",
-                  @articulo.lote_id.to_i, @articulo.orden 
-               ])
+              ])
+              sig = Sal7711Gen::Articulo.connection.select_one(cons_t)
+              if !sig
+                cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
+                  "SELECT id FROM sal7711_gen_articulo 
+                   WHERE lote_id=?
+                     AND orden < ?
+                     AND substring(adjunto_descripcion from 1 for 6) = 
+                       'Imagen'
+                   ORDER BY orden LIMIT 1",
+                   @articulo.lote_id.to_i, @articulo.orden 
+                ])
+                sig = Sal7711Gen::Articulo.connection.select_one(cons_t)
+              end
+              if !sig
+                cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
+                  "SELECT id FROM sal7711_gen_articulo 
+                   WHERE lote_id = ?
+                     AND id > ?
+                     AND NOT EXISTS (
+                       SELECT * FROM sal7711_gen_articulo_categoriaprensa 
+                       WHERE articulo_id=sal7711_gen_articulo.id)
+                   ORDER BY orden LIMIT 1",  
+                   @articulo.lote_id.to_i, @articulo.id.to_i
+                ])
                sig = Sal7711Gen::Articulo.connection.select_one(cons_t)
-             end
-             if !sig
-               cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
-                 "SELECT id FROM sal7711_gen_articulo 
-                  WHERE lote_id = ?
-                    AND id > ?
-                    AND NOT EXISTS (
-                      SELECT * FROM sal7711_gen_articulo_categoriaprensa 
-                      WHERE articulo_id=sal7711_gen_articulo.id)
-                  ORDER BY orden LIMIT 1",  
-                  @articulo.lote_id.to_i, @articulo.id.to_i
-               ])
-               sig = Sal7711Gen::Articulo.connection.select_one(cons_t)
-             end
-             if !sig
-               cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
-                 "SELECT id FROM sal7711_gen_articulo 
-                    WHERE lote_id = ?
-                      AND id < ?
-                      AND NOT EXISTS(
-                        SELECT * FROM sal7711_gen_articulo_categoriaprensa 
-                        WHERE articulo_id=sal7711_gen_articulo.id)
-                  ORDER BY orden LIMIT 1",
-                  @articulo.lote_id.to_i, @articulo.id.to_i
-               ])
-               sig = Sal7711Gen::Articulo.connection.select_one(cons_t)
-             end
+              end
+              if !sig
+                cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
+                  "SELECT id FROM sal7711_gen_articulo 
+                     WHERE lote_id = ?
+                       AND id < ?
+                       AND NOT EXISTS(
+                         SELECT * FROM sal7711_gen_articulo_categoriaprensa 
+                         WHERE articulo_id=sal7711_gen_articulo.id)
+                   ORDER BY orden LIMIT 1",
+                   @articulo.lote_id.to_i, @articulo.id.to_i
+                ])
+                sig = Sal7711Gen::Articulo.connection.select_one(cons_t)
+              end
 
-             if sig
+              if sig
                redirect_to edit_articulo_path(sig["id"])#, 
                  #notice: 'Artículo actualizado y progresando en lote.' 
-             else
-               redirect_to(main_app.lotes_path + 
+              else
+                redirect_to(main_app.lotes_path + 
                            "?lotes_lote=#{@articulo.lote_id.to_i}", 
                  notice: 'Artículo actualizado. Lote procesado.' )
-             end
-           else
-             li = @articulo.lote_id ? 
-               "?lotes_lote=#{@articulo.lote_id.to_i}" : ''
-             redirect_to(main_app.lotes_path + li,
-               notice: 'Artículo actualizado.' )
-           end
+              end
+            else
+              li = @articulo.lote_id ? 
+                "?lotes_lote=#{@articulo.lote_id.to_i}" : ''
+              redirect_to(main_app.lotes_path + li,
+                notice: 'Artículo actualizado.' )
+            end
           }
           format.json { render :show, status: :ok, location: @articulo }
         else

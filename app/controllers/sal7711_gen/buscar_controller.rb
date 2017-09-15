@@ -713,10 +713,10 @@ module Sal7711Gen
           if dep && dep.strip != ''
             depo = Sip::Departamento.where(
               "SUBSTRING(nombre FROM 1 FOR 45) = ?", dep.strip).first
-             if depo.nil?
-                  prob = "<br>Referencia a departamento no existente #{dep}  en #{itemnum}"
-                  puts prob
-                  @cprob += prob
+            if depo.nil?
+              prob = "<br>Referencia a departamento no existente #{dep}  en #{itemnum}"
+              puts prob
+              @cprob += prob
             elsif a.departamento_id != depo.id
               prob = "<br>Diferente departamento en registro itemnum=#{itemnum}, id=#{a.id}, dep_ms=#{depo.id}, dep_pg=#{a.departamento_id}"
               puts prob

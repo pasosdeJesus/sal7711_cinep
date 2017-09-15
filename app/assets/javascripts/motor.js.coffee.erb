@@ -7,10 +7,27 @@
 @sal7711_cinep_prepara_eventos_comunes = (root) ->
 
 
-  $(document).on('click', '#ver-ocr', (e) ->
-    e.preventDefault();
-    e.stopPropagation();
-    $('#imagen-contenido').html(root.sal7711_gen_texto)
+  $(document).on('click', '#ver-texto', (e) ->
+    root = window
+    t = Date.now()
+    d = -1
+    if (root.sal7711_cinep_ver_texto_t)
+      d = (t - root.sal7711_cinep_ver_texto_t)/1000
+    root.sal7711_cinep_ver_texto_t = t
+    if (d == -1 || d > 1)
+      e.preventDefault();
+      e.stopPropagation();
+      m = $('#ver-texto').html()
+      if $('#modal-imgtmp').html() == ''
+        $('#modal-imgtmp').html($('.modal-body').html())
+        $('.modal-body').html($('#modal-texto').html())
+        $('#ver-texto').html(m.replace('texto', 'imagen'))
+      else
+        $('.modal-body').html($('#modal-imgtmp').html())
+        $('#modal-imgtmp').html('')
+        $('#ver-texto').html(m.replace('imagen', 'texto'))
+    
+      $('#modal-imagen').modal('handleUpdate')
     return
   )
   return

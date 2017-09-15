@@ -84,11 +84,11 @@ gem "tzinfo"
 gem "tzinfo-data"
 
 # Motor de sistemas de información estilo Pasos de Jesús
-gem 'sip', git: "https://github.com/pasosdeJesus/sip.git"
+gem 'sip', git: "https://github.com/pasosdeJesus/sip.git", branch: :us_modelo
 #gem 'sip', path: '../sip'
 
 # Motor 
-gem 'sal7711_gen', git: "https://github.com/pasosdeJesus/sal7711_gen.git"
+gem 'sal7711_gen', git: "https://github.com/pasosdeJesus/sal7711_gen.git", branch: :us_modelo
 #gem 'sal7711_gen', path: '../sal7711_gen'
 
 
@@ -100,7 +100,7 @@ group :development do
   #gem "minitest-reporters"
  
   # Depurar
-  #gem 'byebug'
+  #gem 'byebug', platform: :mri
 
   # Consola irb en páginas con excepciones o usando <%= console %> en vistas
   gem 'web-console'

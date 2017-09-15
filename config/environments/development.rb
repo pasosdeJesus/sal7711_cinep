@@ -54,8 +54,8 @@ Rails.application.configure do
  
   config.action_mailer.default_url_options = { 
     protocol: 'https',
-    host: ENV['SAL7711_ONBASE_SERV'],
-    port: ENV['SAL7711_ONBASE_SERV_PUERTO'] || 443
+    host: ENV['SAL7711_ONBASE_SERV'] || 'archivoprensa.cinep.org.co',
+    port: ENV['SAL7711_ONBASE_SERV_PUERTO'] || 3000
   }
 
   # nombre de servidor no cifrado --puede cambiar en caso de ezproxy

@@ -176,7 +176,7 @@ class LotesController < ApplicationController
       format.json { head :no_content }
       format.js   { render 'resultados' }
     end
- end
+  end
 
 
   def lote_params

@@ -4,6 +4,44 @@ require 'bcrypt'
 
 class UsuariosController < Sal7711Gen::UsuariosController
 
+  def atributos_index
+    [ "id",
+      "nusuario",
+      "nombre",
+      "descripcion",
+      "rol",
+      "email",
+      "created_at_localizada"
+    ]
+  end
+
+  def atributos_form
+    r = [ 
+      "nusuario",
+      "nombre",
+      "descripcion",
+      "rol",
+      "idioma",
+      "email",
+    ]
+    if can?(:manage, Sip::Grupo)
+      r += ["sip_grupo"]
+    end
+    r += [
+      "encrypted_password",
+      "fecharenovacion_localizada",
+      "diasvigencia",
+      "fechacreacion_localizada",
+      "fechadeshabilitacion_localizada",
+      "failed_attempts",
+      "unlock_token",
+      "locked_at",
+      "unconfirmed_email",
+      "confirmation_token",
+      "confirmed_at_localizada"
+    ]
+  end
+
   def new
     @miurl = crea_usuario_url 
     super
@@ -11,8 +49,8 @@ class UsuariosController < Sal7711Gen::UsuariosController
 
   def create
     super
-    @usuario.confirmed_at = Date.today
-    @usuario.save
+    @registro.confirmed_at = Date.today
+    @registro.save
   end
 
   def edit

@@ -1,5 +1,9 @@
 
 es:
+  devise:
+    registrations:
+      usuario:
+        correo_desconocido: Dominio del correo desconocido
   attributes:
   activerecord:
     attributes:
@@ -8,6 +12,9 @@ es:
         diasvigencia:  Días de vigencia tras renovación
         fechacreacion_localizada:  Creación
         fechadeshabilitacion_localizada:  Deshabilitación
+        unconfirmed_email: Correo por confirmar
+        confirmation_token: Testigo de confirmación de correo
+        confirmed_at_localizada: Fecha confirmación
       "lote":
         candfecha_localizada: "Fecha por omisión"
         departamento: "Departamento por omisión"
