@@ -1,13 +1,4 @@
 GIT
-  remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: cb2d68c2da7cd6a832f8183cca5041c1e971ffd3
-  branch: us_modelo
-  specs:
-    sal7711_gen (1.0.b1)
-      rails
-      sip
-
-GIT
   remote: https://github.com/pasosdeJesus/sip.git
   revision: 1e785bad185d8dff9aba41ee444b21e4f10a6d42
   branch: us_modelo
@@ -35,6 +26,13 @@ GIT
   revision: 20f8f3bab2fee21309c57b586f5fab9921ac0894
   specs:
     cocoon (1.2.6)
+
+PATH
+  remote: ../sal7711_gen
+  specs:
+    sal7711_gen (1.0.b1)
+      rails
+      sip
 
 GEM
   remote: https://rubygems.org/
