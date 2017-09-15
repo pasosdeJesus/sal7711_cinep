@@ -88,8 +88,8 @@ gem 'sip', git: "https://github.com/pasosdeJesus/sip.git", branch: :us_modelo
 #gem 'sip', path: '../sip'
 
 # Motor 
-#gem 'sal7711_gen', git: "https://github.com/pasosdeJesus/sal7711_gen.git", branch: :us_modelo
-gem 'sal7711_gen', path: '../sal7711_gen'
+gem 'sal7711_gen', git: "https://github.com/pasosdeJesus/sal7711_gen.git", branch: :us_modelo
+#gem 'sal7711_gen', path: '../sal7711_gen'
 
 
 # Los siguientes son para desarrollo o para pruebas con generadores
