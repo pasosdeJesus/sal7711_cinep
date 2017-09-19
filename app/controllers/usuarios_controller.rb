@@ -1,8 +1,11 @@
 # encoding: UTF-8
 
 require 'bcrypt'
+require 'sal7711_gen/concerns/controllers/usuarios_controller'
 
-class UsuariosController < Sal7711Gen::UsuariosController
+
+class UsuariosController < Sip::ModelosController
+  include Sal7711Gen::Concerns::Controllers::UsuariosController
 
   def atributos_index
     [ "id",
