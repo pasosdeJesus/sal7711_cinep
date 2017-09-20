@@ -51,6 +51,7 @@ class UsuariosController < Sip::ModelosController
   end
 
   def create
+    sip_pre_create
     super
     @registro.confirmed_at = Date.today
     @registro.save
