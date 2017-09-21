@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   get 'lotes/nuevo' => 'lotes#new', as: 'new_lote'
   post  'lotes/nuevo' => 'lotes#create', as: 'create_lote'
 
+  get 'lotes/ocrfaltante' => 'lotes#ocrfaltante', as: 'ocrfaltante'
 #  resource 'contacto', only: [:new, :create]
 
   resources 'lotes', only: [:new, :create, :index], 
