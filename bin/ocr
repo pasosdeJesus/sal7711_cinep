@@ -1,0 +1,1 @@
+RAILS_ENV=ensayo PGSSLCERT=/var/sal7711cinep/sipdesc.crt PGSSLKEY=/var/sal7711cinep/sipdesc.key ordenes/ocr.rb
