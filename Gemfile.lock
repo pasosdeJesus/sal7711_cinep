@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 2ee856c427b4ff96dca56a0c94a3c0a644c7f8be
+  revision: 1d1b78f214e5a2e243c33742c581ad02f09a3ce8
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: b9fb1ef09f6c15a0220134cb85006edc53f8ab51
+  revision: bd814795025a0b0be2c6fa4167280458da06a8ce
   specs:
     sip (2.0.b4)
       bootstrap-datepicker-rails
@@ -113,6 +113,7 @@ GEM
     colorize (0.8.1)
     commonjs (0.2.7)
     concurrent-ruby (1.0.5)
+    crass (1.0.2)
     debug_inspector (0.0.3)
     devise (4.3.0)
       bcrypt (~> 3.0)
@@ -150,7 +151,8 @@ GEM
       less (~> 2.6.0)
       sprockets (> 2, < 4)
       tilt
-    loofah (2.0.3)
+    loofah (2.1.1)
+      crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.6)
       mime-types (>= 1.16, < 4)
@@ -185,10 +187,9 @@ GEM
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
-    pry (0.10.4)
+    pry (0.11.0)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
-      slop (~> 3.4)
     pry-rescue (1.4.5)
       interception (>= 0.5)
       pry
@@ -259,7 +260,6 @@ GEM
     simple_form (3.5.0)
       actionpack (> 4, < 5.2)
       activemodel (> 4, < 5.2)
-    slop (3.6.0)
     spring (2.0.2)
       activesupport (>= 4.2)
     sprockets (3.7.1)
