@@ -827,7 +827,7 @@ module Sal7711Gen
         ) # En ruby opera con acentos
         w = "to_tsvector('spanish', f_unaccent(mdt)) @@ " +
           "plainto_tsquery('spanish', #{t})"
-        articulos = articulos.where("id in (SELECT id FROM md_articulo WHERE #{w})")
+        articulos = articulos.where("sal7711_gen_articulo.id in (SELECT id FROM md_articulo WHERE #{w})")
       end
       return articulos
     end

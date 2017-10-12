@@ -1,4 +1,4 @@
-<h1>OCR programado para los siguientes artículos</h1>
+<h1>OCR programado para los siguientes <%= @faltante.count %> artículos</h1>
 <% @faltante.each do |a| %>
   <li><%= link_to a.id, sal7711_gen.edit_articulo_path(a) %>: <%= a.adjunto_descripcion %></li>
 <% end %>
