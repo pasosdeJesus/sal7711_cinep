@@ -1,0 +1,8 @@
+<div id="raiztextob" style="display: none"><%= 
+    r = ''
+    if params[:buscar] && params[:buscar][:textob]
+      r = ActiveRecord::Base.connection.execute("SELECT plainto_tsquery('spanish', '#{ActiveRecord::Base.connection.quote_string(params[:buscar][:textob])}') AS r")
+      r = r[0]['r'].gsub("'", "").gsub(" & ", " ")
+    end
+    r
+  %></div>

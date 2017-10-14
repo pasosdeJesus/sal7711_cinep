@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 603eb08d22226d1e2db6516f606351c32978b92d
+  revision: c09f0e483af62d860436453e25aabf8206aca6ec
   specs:
     sal7711_gen (1.0.b1)
       rails

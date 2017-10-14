@@ -6,5 +6,9 @@
 
 <%= f.input :textob,
   label: 'Texto',
-  required: false
+  required: false,
+  input_html: {
+    "data-toggle" => 'tooltip',
+    "title" => 'Se buscarán raices de las palabras que ingrese. Se buscarán separadas.'
+  }
 %>

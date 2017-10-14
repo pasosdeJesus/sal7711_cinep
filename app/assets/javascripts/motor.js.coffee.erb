@@ -19,8 +19,14 @@
       e.stopPropagation();
       m = $('#ver-texto').html()
       if $('#modal-imgtmp').html() == ''
+        textob = $('#raiztextob').text().split(/\s+/)
+        ntexto = $('#modal-texto').html()
+        textob.forEach( (t) -> 
+          ntexto = ntexto.replace(new RegExp(t, 'gi'), 
+            "<span style='background-color: yellow'>" + t+ "</span>")
+        )
         $('#modal-imgtmp').html($('.modal-body').html())
-        $('.modal-body').html($('#modal-texto').html())
+        $('.modal-body').html(ntexto)
         $('#ver-texto').html(m.replace('texto', 'imagen'))
       else
         $('.modal-body').html($('#modal-imgtmp').html())

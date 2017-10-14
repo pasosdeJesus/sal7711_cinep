@@ -858,6 +858,12 @@ module Sal7711Gen
       return articulos
     end
 
+
+    def mostraruno_mejoratexto(texto, params)
+      return texto
+    end
+
+
     # Resultado de aplicar filtro
     def index
       autentica_especial
