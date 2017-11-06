@@ -16,7 +16,36 @@ class Ability  < Sal7711Gen::Ability
     ["Indexador", ROLINDEXADOR], # 3
     ["Investigador", ROLINV], # 4
     ["Investigador Anónimo", ROLINVANON], # 5
-    ["", 0] #5
+  ]
+
+  ROLES_CA = [
+    'Administrar artículos. ' +
+    'Administrar lotes. ' +
+    'Administrar tablas básicas (categorias de prensa, etc). ' +
+    'Consultar bitácora. ' +
+    'Administrar usuarios. ' +
+    'Cambiar su clave. ', #ROLADMIN 1
+
+    'Administrar artículos. ' +
+    'Consultar categorias de prensa. ' +
+    'Administrar lotes. ' +
+    'Cambiar su clave. ', #ROLADMINORG 2
+
+    'Administrar artículos. ' +
+    'Consultar categorias de prensa. ' +
+    'Administrar lotes. ' +
+    'Administrar ubicaciones. ' +
+    'Cambiar su clave. ', #ROLINDEXADOR 3
+
+    'Consultar artículos. ' +
+    'Consultar categorias de prensa. ' +
+    'Consultar ubicaciones. ' +
+    'Cambiar su clave. ', #ROLINV 4
+
+    'Consultar artículos. ' +
+    'Consultar categorias de prensa. ' +
+    'Consultar ubicaciones. ' #ROLINVANON 5
+
   ]
 
 

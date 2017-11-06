@@ -38,6 +38,7 @@
             <!-- Solo arreglos %= menu_item "Verificar archivos", '/verificaarchivos' %-->
             <!--%= menu_item "Enviar instrucciones de reconfirmación", "/usuarios/reconfirma" %-->
           <% end %>
+          <%= menu_item "Ver Control de Acceso", sip.ayuda_controldeacceso_path %>
         <% end %>
         <%= menu_item "Salir #{current_usuario.nusuario}", main_app.sign_out_path %>
       <!--% else % -->
