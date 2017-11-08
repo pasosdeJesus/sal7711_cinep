@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://archivoprensa.cinep.org.co:3000/" />
+<title>añadir_lote</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">añadir_lote</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Lote</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Añadir un lote</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=lote_nombre</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=lote_nombre</td>
+	<td>recientes</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=lote_canddepartamento_id</td>
+	<td>label=CASANARE</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=lote_candmunicipio_id</td>
+	<td>label=TRINIDAD</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=lote_candfuenteprensa_id</td>
+	<td>label=EL NUEVO ORIENTE</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=imagenes_</td>
+	<td>/home/blanca/Documentos/prensa/Entre-Chicoral-y-La-Habana-_-ELESPECTADOR-001.jpg</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>name=commit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=commit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=rcmbtn107</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=rcmbtn107</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPopUp</td>
+	<td></td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=_to</td>
+	<td>v</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=compose-subject</td>
+	<td>Anzorc</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=composebody</td>
+	<td>Buenas tardes<br /><br />Ayer en Anzorc verificamos que la impresora <br /><br />Bendiciones</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=composebody</td>
+	<td>Buenas tardes<br /><br />Ayer en Anzorc verificamos que la impresora <br />funcionara con el computador de Lorena.<br />Empezamos a instalar el virtual box de nuevo <br />porque estaba borrado.<br />En el computador de Leidy, Vladimir<br />restituyo el puente entre ubuntu y el <br />windows de la maquina virtual.<br />Falta terminar de instalar el virtual box <br /><br /><br />Bendiciones</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=rcmbtn115</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -4,16 +4,16 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://archivoprensa.cinep.org.co:3000/" />
-<title>categorias</title>
+<title>actualizar contraseña</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">categorias</td></tr>
+<tr><td rowspan="1" colspan="3">actualizar contraseña</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/buscar</td>
+	<td>/</td>
 	<td></td>
 </tr>
 <tr>
@@ -23,43 +23,13 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Tablas Básicas</td>
+	<td>link=Clave</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>link=Categorias de Prensa</td>
+	<td>name=commit</td>
 	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Categorias de Prensa</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>link=Nueva</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Nueva</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>id=categoriaprensa_codigo</td>
-	<td>456</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=categoriaprensa_codigo</td>
-	<td>456</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=categoriaprensa_nombre</td>
-	<td>ppppppppppppppppppp</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -67,18 +37,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Eliminar</td>
-	<td></td>
+	<td>type</td>
+	<td>id=usuario_current_password</td>
+	<td>sal7711</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>¿Está seguro(a)?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css=img.logo-cinep</td>
+	<td>clickAndWait</td>
+	<td>name=commit</td>
 	<td></td>
 </tr>
 </tbody></table>

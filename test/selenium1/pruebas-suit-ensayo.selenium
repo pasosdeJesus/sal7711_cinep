@@ -8,13 +8,9 @@
 <body>
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
-<tr><td><a href="suit_archivo_prensa">suit_archivo_prensa</a></td></tr>
-<tr><td><a href="tabla-categorias-de-prensa.selenuim">tabla-categorias-de-prensa</a></td></tr>
-<tr><td><a href="tabla-departamentos.selenium">tabla-departamentos</a></td></tr>
-<tr><td><a href="tabla-fuente-de- prensa.selenuim">tabla-fuente-de- prensa</a></td></tr>
-<tr><td><a href="tabla-organizaciones.selenuim">tabla-organizaciones</a></td></tr>
-<tr><td><a href="tabla-pais.selenuim">tabla-pais</a></td></tr>
-<tr><td><a href="usuarios.selenuim">usuarios</a></td></tr>
+<tr><td><a href="pruebas-suit-ensayo.selenium">pruebas-suit-ensayo</a></td></tr>
+<tr><td><a href="buscar-resaltar-texto.selenium">buscar-resaltar-texto</a></td></tr>
+<tr><td><a href="buscar_por_municipio.selenuim">buscar_por_municipio</a></td></tr>
 <tr><td><a href="usuarios-filtrar-rol.selenuim">usuarios-filtrar-rol</a></td></tr>
 </tbody></table>
 </body>

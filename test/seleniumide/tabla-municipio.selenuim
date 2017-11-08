@@ -54,91 +54,31 @@
 <tr>
 	<td>type</td>
 	<td>id=municipio_nombre</td>
-	<td>sssssssssssssssssssssssssssssss</td>
+	<td>aaa</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=a.chosen-single.chosen-default &gt; span</td>
+	<td></td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>id=municipio_id_departamento</td>
-	<td>label=AMAZONAS / VENEZUELA</td>
+	<td>css=a.chosen-single.chosen-default &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=municipio_observaciones</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=municipio_id_munlocal</td>
-	<td>-1</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=municipio_id_munlocal</td>
-	<td>-2</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=municipio_id_munlocal</td>
-	<td>-3</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=municipio_id_munlocal</td>
-	<td>-4</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=municipio_id_munlocal</td>
-	<td>-5</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=municipio_id_munlocal</td>
-	<td>-6</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=municipio_id_munlocal</td>
-	<td>-7</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=municipio_id_munlocal</td>
-	<td>-8</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=municipio_id_munlocal</td>
-	<td>-9</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=municipio_id_munlocal</td>
-	<td>-1</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=municipio_id_munlocal</td>
-	<td>-2</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=municipio_id_munlocal</td>
-	<td>-3</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=municipio_id_munlocal</td>
-	<td>-4</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=municipio_id_munlocal</td>
-	<td>-5</td>
+	<td>id=municipio_observaciones</td>
+	<td>bbb</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>name=commit</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Eliminar</td>
 	<td></td>
 </tr>
 <tr>

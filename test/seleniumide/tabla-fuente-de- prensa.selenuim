@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://archivoprensa.cinep.org.co:3000/" />
-<title>actualizar contraseña</title>
+<title>fuente-de-prensa</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">actualizar contraseña</td></tr>
+<tr><td rowspan="1" colspan="3">fuente-de-prensa</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -18,32 +18,62 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Administrar</td>
+	<td>//ul[2]/li/a/b</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Clave</td>
+	<td>link=Tablas Básicas</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>name=commit</td>
+	<td>link=Fuentes de Prensa</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>name=commit</td>
+	<td>click</td>
+	<td>link=Fuentes de Prensa</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>link=Nueva</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Nueva</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=fuenteprensa_nombre</td>
+	<td>yyyyyyyyyyyyyyy</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=usuario_current_password</td>
-	<td>sal7711</td>
+	<td>id=fuenteprensa_nombre</td>
+	<td>yyyyyyyyyyyyyyy</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>name=commit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Eliminar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>¿Está seguro(a)?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=img.logo-cinep</td>
 	<td></td>
 </tr>
 </tbody></table>

@@ -28,11 +28,6 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//ul[2]/li/a/b</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
 	<td>link=Tablas Básicas</td>
 	<td></td>
 </tr>
@@ -59,7 +54,7 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>id=pais_id</td>
-	<td>333</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -69,12 +64,32 @@
 <tr>
 	<td>type</td>
 	<td>id=pais_nombre</td>
-	<td>gggggggggggggggggggg</td>
+	<td>aaa</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>id=pais_nombreiso</td>
-	<td>gg</td>
+	<td>aa</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=pais_codiso</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=pais_codiso</td>
+	<td>abc</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=pais_observaciones</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=pais_observaciones</td>
+	<td>bbb</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -89,16 +104,6 @@
 <tr>
 	<td>assertConfirmation</td>
 	<td>¿Está seguro(a)?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>css=img.logo-cinep</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css=img.logo-cinep</td>
 	<td></td>
 </tr>
 </tbody></table>
