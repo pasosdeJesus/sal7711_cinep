@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: ea4a6f48102cdc32aa24ae8fa511e3e218393550
+  revision: a5847551a9db8978b57fd5c0eb1b550ce4bfdc40
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: d338dff0439f2cd5065c77fe619edba8e590e4ab
+  revision: 2b395969d3a468565ca52ddcef93ac9a235e270a
   specs:
     sip (2.0.b4)
       bootstrap-datepicker-rails
@@ -86,8 +86,8 @@ GEM
     builder (3.2.3)
     callsite (0.0.11)
     camertron-eprun (1.1.1)
-    cancancan (2.1.0)
-    capybara (2.15.4)
+    cancancan (2.1.1)
+    capybara (2.16.0)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (>= 1.3.3)
@@ -113,7 +113,7 @@ GEM
     colorize (0.8.1)
     commonjs (0.2.7)
     concurrent-ruby (1.0.5)
-    crass (1.0.2)
+    crass (1.0.3)
     debug_inspector (0.0.3)
     devise (4.3.0)
       bcrypt (~> 3.0)
@@ -362,4 +362,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   1.15.4
+   1.16.0
