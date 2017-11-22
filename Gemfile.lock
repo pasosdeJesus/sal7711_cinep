@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: ef40a9d8c7d7cc310713ddedf28e8b3569913a07
+  revision: bde9d1b8f29a2f9d16413f6e5be59efe69e18ae6
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: f44c1298d7feb37978f2275eb48b076a94fb8db7
+  revision: 9b4eaf40472e2aab2920ad530a594d9d3e738914
   specs:
     sip (2.0.b4)
       bootstrap-datepicker-rails
@@ -86,8 +86,8 @@ GEM
     builder (3.2.3)
     callsite (0.0.11)
     camertron-eprun (1.1.1)
-    cancancan (2.1.1)
-    capybara (2.16.0)
+    cancancan (2.1.2)
+    capybara (2.16.1)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (>= 1.3.3)
@@ -199,11 +199,11 @@ GEM
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
     public_suffix (3.0.1)
-    puma (3.10.0)
+    puma (3.11.0)
     rack (2.0.3)
     rack-contrib (1.2.0)
       rack (>= 0.9.1)
-    rack-test (0.7.0)
+    rack-test (0.8.2)
       rack (>= 1.0, < 3)
     rails (5.1.4)
       actioncable (= 5.1.4)
