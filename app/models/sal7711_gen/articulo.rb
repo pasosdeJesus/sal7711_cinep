@@ -6,6 +6,8 @@ module Sal7711Gen
   class Articulo < ActiveRecord::Base
     include Sal7711Gen::Concerns::Models::Articulo
 
+    validates_attachment_presence :adjunto
+
     belongs_to :lote, foreign_key: "lote_id",
       validate: true, class_name: "::Lote"
 
