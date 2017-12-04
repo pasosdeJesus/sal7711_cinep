@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: f3aa3fd9ef086f37a635ab23148eaafea1448c42
+  revision: ff7a43e574123337f1aa2581d1344813cbc4af4f
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 961e34dfed095fb7fba268650392f8bb141a0376
+  revision: eb1368920bae0482dfd878cec57bd1e41a61ee87
   specs:
     sip (2.0.b4)
       bootstrap-datepicker-rails
@@ -201,8 +201,8 @@ GEM
     public_suffix (3.0.1)
     puma (3.11.0)
     rack (2.0.3)
-    rack-contrib (1.2.0)
-      rack (>= 0.9.1)
+    rack-contrib (2.0.0)
+      rack (~> 2.0)
     rack-test (0.8.2)
       rack (>= 1.0, < 3)
     rails (5.1.4)
@@ -292,7 +292,7 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2017.3)
       tzinfo (>= 1.0.0)
-    uglifier (3.2.0)
+    uglifier (4.0.1)
       execjs (>= 0.3.0, < 3)
     unicorn (5.3.1)
       kgio (~> 2.6)
