@@ -3,8 +3,9 @@
 require 'sal7711_gen/concerns/controllers/articulos_controller'
 
 module Sal7711Gen
-  class ArticulosController < ApplicationController
- 
+  class ArticulosController < Sip::ModelosController
+
+    include Sal7711Gen::ApplicationHelper
     include Sal7711Gen::Concerns::Controllers::ArticulosController    
 
     # GET /articulos/1/edit
