@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: ff7a43e574123337f1aa2581d1344813cbc4af4f
+  revision: 5c102b1e6e46b3fd2ba073224a8a24221dc57522
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: eb1368920bae0482dfd878cec57bd1e41a61ee87
+  revision: c0fc94e453c1719c83b762b4e1e3df4fe86bf864
   specs:
     sip (2.0.b4)
       bootstrap-datepicker-rails
@@ -121,8 +121,8 @@ GEM
       railties (>= 4.1.0, < 5.2)
       responders
       warden (~> 1.2.3)
-    devise-i18n (1.4.0)
-      devise (>= 3.1)
+    devise-i18n (1.5.0)
+      devise (>= 3.4)
     erubi (1.7.0)
     execjs (2.7.0)
     ffi (1.9.18)
@@ -161,10 +161,10 @@ GEM
     mail_form (1.7.0)
       actionmailer (>= 3.2, < 5.2)
       activemodel (>= 3.2, < 5.2)
-    meta_request (0.4.3)
+    meta_request (0.5.0)
       callsite (~> 0.0, >= 0.0.11)
       rack-contrib (>= 1.1, < 3)
-      railties (>= 3.0.0, < 5.2.0)
+      railties (>= 3.0.0, < 6)
     method_source (0.9.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -201,7 +201,7 @@ GEM
     public_suffix (3.0.1)
     puma (3.11.0)
     rack (2.0.3)
-    rack-contrib (2.0.0)
+    rack-contrib (2.0.1)
       rack (~> 2.0)
     rack-test (0.8.2)
       rack (>= 1.0, < 3)
@@ -292,7 +292,7 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2017.3)
       tzinfo (>= 1.0.0)
-    uglifier (4.0.1)
+    uglifier (4.0.2)
       execjs (>= 0.3.0, < 3)
     unicorn (5.3.1)
       kgio (~> 2.6)
