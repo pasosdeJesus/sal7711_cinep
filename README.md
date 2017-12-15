@@ -3,7 +3,7 @@
 
 ![Logo de sal7711_cinep](https://raw.githubusercontent.com/pasosdeJesus/sal7711_cinep/master/public/images/logo.jpg)
 
-Sistema para manejo de un archivo de prensa
+Archivo de Prensa del CINEP/PPP
 
 ### Requerimientos
 
