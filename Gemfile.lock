@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 69bf52b3880a46fe0624f1bea7195ecd728445f3
+  revision: 28c858a1cc8a8f739df9e044b4964f10925e85c5
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 5bfcd031b58d312844fd43b4baeffb26ac686440
+  revision: e3131062bc4f0c9495af04eeb70441060da323fb
   specs:
     sip (2.0.b4)
       bootstrap-datepicker-rails
@@ -94,7 +94,7 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    chosen-rails (1.5.2)
+    chosen-rails (1.8.2)
       coffee-rails (>= 3.2)
       railties (>= 3.0)
       sass-rails (>= 3.2)
@@ -142,7 +142,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    kgio (2.11.0)
+    kgio (2.11.1)
     launchy (2.4.3)
       addressable (~> 2.3)
     lazybox (1.1.5)
@@ -174,7 +174,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.10.3)
     multi_json (1.12.2)
-    nio4r (2.1.0)
+    nio4r (2.2.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
@@ -248,7 +248,7 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
-    sass (3.5.3)
+    sass (3.5.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -292,9 +292,9 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2017.3)
       tzinfo (>= 1.0.0)
-    uglifier (4.0.2)
+    uglifier (4.1.0)
       execjs (>= 0.3.0, < 3)
-    unicorn (5.3.1)
+    unicorn (5.4.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
     warden (1.2.7)
