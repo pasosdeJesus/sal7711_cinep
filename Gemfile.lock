@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 7532c591359d5750b147865b7ee9fef12f617db4
+  revision: 2f6e08eeba7346fa100d940ca828e51e50b63f4f
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 2fdab5e0423451ceefab347f996f3365b30d8f0e
+  revision: f4a4ef413da7ba5f6a8b5de7f17f2215a086671e
   specs:
     sip (2.0.b4)
       bootstrap-datepicker-rails
@@ -121,7 +121,7 @@ GEM
       railties (>= 4.1.0, < 5.2)
       responders
       warden (~> 1.2.3)
-    devise-i18n (1.5.0)
+    devise-i18n (1.5.1)
       devise (>= 3.4)
     erubi (1.7.0)
     execjs (2.7.0)
@@ -142,7 +142,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    kgio (2.11.1)
+    kgio (2.11.2)
     launchy (2.4.3)
       addressable (~> 2.3)
     lazybox (1.1.5)
@@ -172,10 +172,10 @@ GEM
     mimemagic (0.3.2)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
-    minitest (5.11.2)
+    minitest (5.11.3)
     multi_json (1.13.1)
     nio4r (2.2.0)
-    nokogiri (1.8.1)
+    nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
     paperclip (5.2.1)
@@ -200,7 +200,7 @@ GEM
       pry (>= 0.9.11)
     public_suffix (3.0.1)
     puma (3.11.2)
-    rack (2.0.3)
+    rack (2.0.4)
     rack-contrib (2.0.1)
       rack (~> 2.0)
     rack-test (0.8.2)
@@ -292,7 +292,7 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2018.3)
       tzinfo (>= 1.0.0)
-    uglifier (4.1.4)
+    uglifier (4.1.5)
       execjs (>= 0.3.0, < 3)
     unicorn (5.4.0)
       kgio (~> 2.6)
