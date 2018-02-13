@@ -124,7 +124,9 @@ class Ability  < Sal7711Gen::Ability
     can :buscar, Sip::Ubicacion
     can :lista, Sip::Ubicacion
     can :index, Sip::Pais
+    can :read, Sip::Departamento
     can :index, Sip::Departamento
+    can :read, Sip::Municipio
     can :index, Sip::Municipio
     can :index, Sip::Clase
     can :descarga_anexo, Sip::Anexo
