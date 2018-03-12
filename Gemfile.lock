@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: abb199e95016127054ecfe2f06044f900a87c70f
+  revision: 8a79409805aa2a05686c90037423cc808962378d
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 5f5307b04fb780a0d0967174847f741ee12e80a7
+  revision: 236294194fd49d3d4bbd97b7c5d4bd5f5fdbdd94
   specs:
     sip (2.0.b4)
       bootstrap-datepicker-rails
@@ -292,7 +292,7 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2018.3)
       tzinfo (>= 1.0.0)
-    uglifier (4.1.6)
+    uglifier (4.1.7)
       execjs (>= 0.3.0, < 3)
     unicorn (5.4.0)
       kgio (~> 2.6)
