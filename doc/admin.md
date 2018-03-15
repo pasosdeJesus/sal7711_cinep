@@ -57,7 +57,7 @@ Se hace desde Lotes->Añadir un lote
 
 Un lote es un conjunto de artículos que posiblemente tienen características comunes de las registradas en el Archivo de Prensa.  Por ejemplo cuando proceden de la misma fuente de prensa o son de una misma fecha.
 
-Para poder añadir el lote es necesario ubicar todas las imágenes de los artículos en un mismo directorio (que no tenga otras imágenes).   Es posible que un lote conste de un solo artículo pero aún así debe ser la única imagen en el directorio del lote, y debe ser ese directorio el que se eliga en el campo "Artículos" del formulario para añadir un lote.
+Para poder añadir el lote es necesario ubicar todas las imágenes de los artículos en una misma carpeta (que no tenga otras imágenes).   Es posible que un lote conste de un solo artículo pero aún así debe ser la única imagen en la carpeta del lote, y debe ser esa carpeta la que se elija en el campo "Artículos" del formulario para añadir un lote.
 
 ### 4.1.1 Formatos soportados
 
