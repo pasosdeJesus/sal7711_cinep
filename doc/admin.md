@@ -49,12 +49,20 @@ Podrá operar siempre que:
 Un usuario en un plan corporativo es similar al anterior excepto porque no requiere ni fecha de última renovación, ni días de vigencia pues se usan los de su organización.
 
 
-## 4. Formatos soportados
+## 4. Edición de información
 
-La visualizacióne en web se hace con el formato JPG, pero se posibilita la descarga de un PDF con la imagen.
+### 4.1 Añadir un lote de artículos
 
-Se recomienda emplear TIF para las imágenes escanadas, las diversas páginas de un artículo en un TIF de una página.
+Se hace desde Lotes->Añadir un lote
 
-Sin embargo si emplea un TIF multipágina, las diversas páginas se concatenarán en el JPG, pero se convertirán en un PDF multipágina.
+Un lote es un conjunto de artículos que posiblemente tienen características comunes de las registradas en el Archivo de Prensa.  Por ejemplo cuando proceden de la misma fuente de prensa o son de una misma fecha.
+
+Para poder añadir el lote es necesario ubicar todas las imágenes de los artículos en un mismo directorio (que no tenga otras imágenes).   Es posible que un lote conste de un solo artículo pero aún así debe ser la única imagen en el directorio del lote, y debe ser ese directorio el que se eliga en el campo "Artículos" del formulario para añadir un lote.
+
+### 4.1.1 Formatos soportados
+
+La visualización de los artículos típicamente se hace en el formato JPG y se posibilita la descarga de un PDF con la imagen (o con las imagenes en caso de que sean varias páginas). Estos formatos se generar automáticamente a partir de las imágenes que suba al sistema en otros formatos (como TIF, PNG, GIF y JPG).
+
+Para escanear y subir información recomendamos que empleé el formato TIF por sus posibilidades multipágina.  Un artículo de una página debe escanearse en un TIF de una sóla página.  Un artículo de varias páginas (o varías partes) puede organizarse en un TIF de varias páginas, dejando cada parte del artículo en una página separada.   Así al emplear un TIF multipágina cuando se convierta a JPG las diversas páginas se concatenarán en una sóla imagen, pero al convertir a PDF, cada página del TIF se convertirá a una página diferente del PDF --que facilitará la lectura.
 
 
