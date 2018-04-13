@@ -1,7 +1,10 @@
 source 'https://rubygems.org'
 
 # Rails (internacionalización)
-gem "rails", '~> 5.1.0'
+#gem "rails", '~> 5.2.0'
+# Resuelve problema con minitest y rails 5.2.0
+gem "rails", '~> 5.2.0', git: 'https://github.com/rails/rails.git', ref: '4887f97bd8a8859294ad02ccea20d83a94ec0812'
+
 gem "rails-i18n"
 
 gem 'bootsnap', '>=1.1.0', require: false
@@ -84,11 +87,11 @@ gem "paperclip"
 gem "tzinfo"
 
 # Motor de sistemas de información estilo Pasos de Jesús
-gem 'sip', git: "https://github.com/pasosdeJesus/sip.git", branch: 'rails5.2'
+gem 'sip', git: "https://github.com/pasosdeJesus/sip.git"
 #gem 'sip', path: '../sip'
 
 # Motor 
-gem 'sal7711_gen', git: "https://github.com/pasosdeJesus/sal7711_gen.git", branch: 'rails5.2'
+gem 'sal7711_gen', git: "https://github.com/pasosdeJesus/sal7711_gen.git"
 #gem 'sal7711_gen', path: '../sal7711_gen'
 
 
