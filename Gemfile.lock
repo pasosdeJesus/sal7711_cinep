@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 2b03de25d84c8070758c714f047626f0013ebf52
+  revision: 498fd46c03dff057568f46b4d7d5cba7ef73e756
+  branch: rails5.2
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +9,8 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 5eebe7289bb6057449d44b91e690a5b50c46f728
+  revision: 627612ebb1716fb75159da25d06a28d42507460e
+  branch: rails5.2
   specs:
     sip (2.0.b4)
       bootstrap-datepicker-rails
@@ -81,6 +83,8 @@ GEM
     bindex (0.5.0)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
+    bootsnap (1.3.0)
+      msgpack (~> 1.0)
     bootstrap-datepicker-rails (1.8.0.1)
       railties (>= 3.0)
     builder (3.2.3)
@@ -171,6 +175,7 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
+    msgpack (1.2.4)
     multi_json (1.13.1)
     nio4r (2.3.0)
     nokogiri (1.8.2)
@@ -290,8 +295,6 @@ GEM
       tzinfo
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2018.4)
-      tzinfo (>= 1.0.0)
     uglifier (4.1.9)
       execjs (>= 0.3.0, < 3)
     unicorn (5.4.0)
@@ -316,6 +319,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt
+  bootsnap (>= 1.1.0)
   bootstrap-datepicker-rails
   cancancan
   capybara
@@ -355,7 +359,6 @@ DEPENDENCIES
   twitter-bootstrap-rails
   twitter_cldr
   tzinfo
-  tzinfo-data
   uglifier
   unicorn
   web-console
