@@ -16,7 +16,6 @@ module Admin
 		def atributos_index
       ["id", 
        "nombre", 
-       "observaciones", 
        "usuarioip_id", 
        "autoregistro", 
        "fechacreacion_localizada", 
