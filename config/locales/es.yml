@@ -5,8 +5,30 @@ es:
       usuario:
         correo_desconocido: Dominio del correo desconocido
   attributes:
+    'fechacreacion_localizada': Fecha de creación
+    'fechadeshabilitacion_localizada': Fecha de creación
   activerecord:
     attributes:
+      "lote":
+        candfecha_localizada: "Fecha por omisión"
+        departamento: "Departamento por omisión"
+        municipio: "Municipio por omisión"
+        fuenteprensa: "Fuente de prensa por omisión"
+        candcategoria1: 'Categoria de prensa por omisión'
+      'organizacion':
+        dominiocorreo: Dominio del correo
+        pexcluyecorreo: Patrón en correos para excluir de autoregistro
+        fecharenovacion: Fecha de renovación (proviene del administrador)
+        diasvigencia: Días de vigencia (proviene del administrador)
+        url_logoinst: URL del logo de la institución
+        usuarioip: Administrador de organización
+        opciones_url_nombre_cif: Dirección de conexión cifrada (Opcional)
+        opciones_url_puerto_cif: Puerto para conexión cifrada (Opcional)
+        opciones_url_nombre_nocif: Dirección de conexión no cifrada (Opcional)
+        opciones_url_puerto_nocif: Puerto para conexión no cifrada (Opcional)
+      'sal7711_gen/articulo':
+        textoocr: Texto OCR
+        texto: Texto
       "usuario":
         fecharenovacion_localizada:  Cuando se renovó
         diasvigencia:  Días de vigencia tras renovación
@@ -15,12 +37,4 @@ es:
         unconfirmed_email: Correo por confirmar
         confirmation_token: Testigo de confirmación de correo
         confirmed_at_localizada: Fecha confirmación
-      "lote":
-        candfecha_localizada: "Fecha por omisión"
-        departamento: "Departamento por omisión"
-        municipio: "Municipio por omisión"
-        fuenteprensa: "Fuente de prensa por omisión"
-        candcategoria1: 'Categoria de prensa por omisión'
-      'sal7711_gen/articulo':
-        textoocr: Texto OCR
-        texto: Texto
+

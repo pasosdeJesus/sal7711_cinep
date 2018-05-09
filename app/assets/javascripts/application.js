@@ -26,7 +26,7 @@ $(document).on('turbolinks:load', function() {
 	sal7711_cinep_prepara_eventos_comunes(root);
 
 
-	// ========== EDICIÓN DE UN ARTÍCULO ===========
+	// ========== FORMULARIO ARTÍCULO ===========
 	// Al editar artículo establece categorias de prensa que se muestra en el orden
 	// que se guardaron
 	var l = $($('#categoriaprensa_sinorden').get(0))
@@ -134,7 +134,7 @@ $(document).on('turbolinks:load', function() {
 	})
 
 
-	// ========== EDICIÓN DE UN LOTE ===========
+	// ========== FORMULARIO LOTE ===========
 	
 	$(document).on('change', 'select[id$=canddepartamento_id]', function(e) {
 		llena_municipio($(this), root, true)
@@ -164,6 +164,8 @@ $(document).on('turbolinks:load', function() {
 		sip_enviarautomatico_formulario($(this).closest('form'));
 	})
 
+	// ========== FORMULARIO ORGANIZACIÓN ===========
+        $('#organizacion_autoregistro').trigger('change')
 
 });
 

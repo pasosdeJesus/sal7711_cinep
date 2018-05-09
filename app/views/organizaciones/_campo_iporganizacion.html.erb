@@ -1,0 +1,28 @@
+<p></p>
+<div class="panel panel-default">
+  <div class="panel-heading">IPs</div>
+  <div class="panel-body">
+    <div class="div-ipsorganizacion">
+      <table border=1 width="100%">
+        <thead>
+          <tr>
+            <th>IP</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="ipsorganizacion">
+          <%= f.simple_fields_for :iporganizacion do |i| %>
+            <%= render 'organizaciones/iporganizacion_campos', f:  i %>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="links">
+        <%= link_to_add_association 'Agregar IP', f, :iporganizacion, 
+          :"data-association-insertion-node" => "tbody#ipsorganizacion", 
+          :"data-association-insertion-method" => "append", 
+          partial: 'organizaciones/iporganizacion_campos',
+          class: 'btn-primary' %>
+      </div> <!-- link -->
+    </div> <!-- .div-ipsorganizacion -->
+  </div> <!-- panel-body -->
+</div> <!-- panel -->

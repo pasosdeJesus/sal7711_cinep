@@ -4,9 +4,32 @@
 
 #//= require chosen-jquery
 
+@sal7711_cinep_organizacion_establece_autoregistro = (e) ->
+  if $('#organizacion_autoregistro').is(':checked')
+    $('#organizacion_dominiocorreo').removeAttr('readonly')
+    $('#organizacion_pexcluyecorreo').removeAttr('readonly')
+    $('.div-ipsorganizacion').hide()
+    $('#organizacion_url_logoinst').attr('readonly', 'readonly')
+    $('#organizacion_opciones_url_nombre_cif').attr('readonly', 'readonly')
+    $('#organizacion_opciones_url_puerto_cif').attr('readonly', 'readonly')
+    $('#organizacion_opciones_url_nombre_nocif').attr('readonly', 'readonly')
+    $('#organizacion_opciones_url_puerto_nocif').attr('readonly', 'readonly')
+  else
+    $('#organizacion_dominiocorreo').attr('readonly', 'readonly')
+    $('#organizacion_pexcluyecorreo').attr('readonly', 'readonly')
+    $('.div-ipsorganizacion').show()
+    $('#organizacion_url_logoinst').removeAttr('readonly')
+    $('#organizacion_opciones_url_nombre_cif').removeAttr('readonly')
+    $('#organizacion_opciones_url_puerto_cif').removeAttr('readonly')
+    $('#organizacion_opciones_url_nombre_nocif').removeAttr('readonly')
+    $('#organizacion_opciones_url_puerto_nocif').removeAttr('readonly')
+
+
 @sal7711_cinep_prepara_eventos_comunes = (root) ->
 
-
+  $(document).on('change', '#organizacion_autoregistro', 
+    sal7711_cinep_organizacion_establece_autoregistro
+  )
   $(document).on('click', '#ver-texto', (e) ->
     root = window
     t = Date.now()

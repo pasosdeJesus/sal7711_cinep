@@ -8,9 +8,9 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 2bb534b1b602ccee482754007115b3f7e30feff8
+  revision: 4bf89edbbd37762cb587f9298bee8bcda1393819
   specs:
-    sip (2.0.b4)
+    sip (2.0.b5)
       bootstrap-datepicker-rails
       cancancan
       chosen-rails
@@ -96,7 +96,7 @@ GIT
 
 GIT
   remote: https://github.com/vtamara/cocoon.git
-  revision: f8fbad8d9d6bb087223221d70733b58a3d2efd8a
+  revision: f710fc1759612895846adeb7a7753e4191ddeb10
   branch: new_id_with_ajax
   specs:
     cocoon (1.2.11)
@@ -119,7 +119,7 @@ GEM
     callsite (0.0.11)
     camertron-eprun (1.1.1)
     cancancan (2.2.0)
-    capybara (3.0.2)
+    capybara (3.0.3)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
@@ -207,7 +207,7 @@ GEM
     minitest (5.11.3)
     msgpack (1.2.4)
     multi_json (1.13.1)
-    nio4r (2.3.0)
+    nio4r (2.3.1)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
@@ -314,7 +314,7 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.7)
       rack (>= 1.0)
-    web-console (3.6.1)
+    web-console (3.6.2)
       actionview (>= 5.0)
       activemodel (>= 5.0)
       bindex (>= 0.4.0)

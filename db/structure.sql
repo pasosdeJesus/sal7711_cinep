@@ -299,10 +299,10 @@ CREATE VIEW articulo_metadatos AS
 
 
 --
--- Name: ip_organizacion; Type: TABLE; Schema: public; Owner: -
+-- Name: iporganizacion; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE ip_organizacion (
+CREATE TABLE iporganizacion (
     id integer NOT NULL,
     organizacion_id integer NOT NULL,
     ip inet NOT NULL
@@ -310,10 +310,10 @@ CREATE TABLE ip_organizacion (
 
 
 --
--- Name: ip_organizacion_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: iporganizacion_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE ip_organizacion_id_seq
+CREATE SEQUENCE iporganizacion_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -322,10 +322,10 @@ CREATE SEQUENCE ip_organizacion_id_seq
 
 
 --
--- Name: ip_organizacion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: iporganizacion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE ip_organizacion_id_seq OWNED BY ip_organizacion.id;
+ALTER SEQUENCE iporganizacion_id_seq OWNED BY iporganizacion.id;
 
 
 --
@@ -408,9 +408,7 @@ CREATE TABLE organizacion (
     autoregistro boolean DEFAULT false,
     dominiocorreo character varying(500),
     pexcluyecorreo character varying(500),
-    diasvigencia integer,
-    fecharenovacion date,
-    usuarioip_id integer,
+    usuarioip_id integer NOT NULL,
     url_logoinst character varying(1000),
     opciones_url_nombre_cif character varying(1000),
     opciones_url_puerto_cif integer,
@@ -1155,10 +1153,10 @@ CREATE VIEW vestlote AS
 
 
 --
--- Name: ip_organizacion id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: iporganizacion id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY ip_organizacion ALTER COLUMN id SET DEFAULT nextval('ip_organizacion_id_seq'::regclass);
+ALTER TABLE ONLY iporganizacion ALTER COLUMN id SET DEFAULT nextval('iporganizacion_id_seq'::regclass);
 
 
 --
@@ -1242,11 +1240,11 @@ ALTER TABLE ONLY sip_etiqueta
 
 
 --
--- Name: ip_organizacion ip_organizacion_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: iporganizacion iporganizacion_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY ip_organizacion
-    ADD CONSTRAINT ip_organizacion_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY iporganizacion
+    ADD CONSTRAINT iporganizacion_pkey PRIMARY KEY (id);
 
 
 --
@@ -1612,10 +1610,10 @@ ALTER TABLE ONLY lote
 
 
 --
--- Name: ip_organizacion fk_rails_2831af4765; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: iporganizacion fk_rails_2831af4765; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY ip_organizacion
+ALTER TABLE ONLY iporganizacion
     ADD CONSTRAINT fk_rails_2831af4765 FOREIGN KEY (organizacion_id) REFERENCES organizacion(id);
 
 
@@ -1915,6 +1913,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170721034516'),
 ('20170920102340'),
 ('20180320230847'),
-('20180321203833');
+('20180321203833'),
+('20180507191933'),
+('20180508181258');
 
 
