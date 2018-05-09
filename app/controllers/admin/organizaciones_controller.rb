@@ -28,12 +28,12 @@ module Admin
        "nombre", 
        "observaciones", 
        "usuarioip_id", 
+       "fecharenovacion",
+       "diasvigencia", 
        "autoregistro", 
        "dominiocorreo", 
        "pexcluyecorreo", 
        "iporganizacion", 
-       "fecharenovacion",
-       "diasvigencia", 
        "url_logoinst",
        "opciones_url_nombre_cif",
        "opciones_url_puerto_cif",
@@ -45,13 +45,16 @@ module Admin
 
 
 		def atributos_form
-      atributos_show
+      atributos_show - ['id']
 		end
 
 
     def new
       @registro = clase.constantize.new
       @registro.nombre = 'O'
+      @registro.created_at = @registro.updated_at =  
+        @registro.fechacreacion = Date.today
+      
       @registro.save!(validate: false)
       redirect_to main_app.edit_admin_organizacion_path(@registro)
     end

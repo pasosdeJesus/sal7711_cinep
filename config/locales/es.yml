@@ -6,7 +6,7 @@ es:
         correo_desconocido: Dominio del correo desconocido
   attributes:
     'fechacreacion_localizada': Fecha de creación
-    'fechadeshabilitacion_localizada': Fecha de creación
+    'fechadeshabilitacion_localizada': Fecha de deshabilitacion
   activerecord:
     attributes:
       "lote":
@@ -22,6 +22,7 @@ es:
         diasvigencia: Días de vigencia (proviene del administrador)
         url_logoinst: URL del logo de la institución
         usuarioip: Administrador de organización
+        usuarioip_id: Administrador de organización
         opciones_url_nombre_cif: Dirección de conexión cifrada (Opcional)
         opciones_url_puerto_cif: Puerto para conexión cifrada (Opcional)
         opciones_url_nombre_nocif: Dirección de conexión no cifrada (Opcional)
