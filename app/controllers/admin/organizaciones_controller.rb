@@ -40,7 +40,7 @@ module Admin
        "opciones_url_puerto_nocif",
        "fechacreacion_localizada", 
        "fechadeshabilitacion_localizada"  ]
-		end
+    end
 
 
 		def atributos_form
