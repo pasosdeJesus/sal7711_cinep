@@ -38,7 +38,7 @@ class UsuariosController < Sip::ModelosController
       "fechadeshabilitacion_localizada",
       "failed_attempts",
       "unlock_token",
-      "locked_at",
+      "locked_at_localizada",
       "unconfirmed_email",
       "confirmation_token",
       "confirmed_at_localizada"
