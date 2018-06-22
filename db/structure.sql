@@ -1047,7 +1047,6 @@ CREATE TABLE usuario (
     confirmed_at timestamp without time zone,
     confirmation_sent_at timestamp without time zone,
     unconfirmed_email character varying,
-    diasvigencia integer,
     fecharenovacion date,
     autenticado_por_ip boolean,
     CONSTRAINT usuario_check CHECK (((fechadeshabilitacion IS NULL) OR (fechadeshabilitacion >= fechacreacion))),
