@@ -849,11 +849,11 @@ module Sal7711Gen
          cod = "#{ccat}%"
         end
       end
-      articulos = articulos.joins(
-        :articulo_categoriaprensa).joins(
-          'INNER JOIN sal7711_gen_categoriaprensa ON 
-           sal7711_gen_categoriaprensa.id = sal7711_gen_articulo_categoriaprensa.categoriaprensa_id').where(
-          "codigo #{op} ?", cod)
+      articulos = articulos.where("id IN (SELECT articulo_id FROM
+        sal7711_gen_articulo_categoriaprensa INNER JOIN 
+        sal7711_gen_categoriaprensa ON 
+        sal7711_gen_categoriaprensa.id = sal7711_gen_articulo_categoriaprensa.categoriaprensa_id 
+        WHERE codigo #{op} ?)", cod)
       return articulos
     end
 
