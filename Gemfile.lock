@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: fbbd574e46d0e6de38283a90ef79549aeaad5fd8
+  revision: 2b9d2094f31eacec76f7af389905e268a1cf821c
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: d22b153f0e9774e14a791227950e8b11d58931ca
+  revision: ea457f50cb7348e1cc42dc65d5fdbaa213ffa814
   specs:
     sip (2.0.b5)
       bootstrap-datepicker-rails
@@ -299,7 +299,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    selenium-webdriver (3.12.0)
+    selenium-webdriver (3.13.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2)
     simple_form (4.0.1)
