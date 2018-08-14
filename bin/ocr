@@ -1,1 +1,6 @@
-RAILS_ENV=ensayo PGSSLCERT=/var/sal7711cinep/sipdesc.crt PGSSLKEY=/var/sal7711cinep/sipdesc.key ordenes/ocr.rb
+#!/bin/sh
+
+if (test "$RAILS_ENV" = "") then {
+ 	RAILS_ENV="ensayo"
+} fi;
+RAILS_ENV=${RAILS_ENV} PGSSLCERT=/var/sal7711cinep/sipdesc.crt PGSSLKEY=/var/sal7711cinep/sipdesc.key ordenes/ocr.rb

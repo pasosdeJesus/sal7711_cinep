@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/local/bin/ruby
 
 require 'pg'
 require 'yaml'
@@ -9,6 +9,7 @@ if ENV['RAILS_ENV'].nil?
 end
 
 e = ENV['RAILS_ENV']
+puts "Ambiente: #{e}"
 
 if ENV['MINID'].nil?
   minid=1
@@ -20,6 +21,8 @@ if ENV['MAXID'].nil?
 else
   maxid=ENV['MAXID'].to_i
 end
+puts "minid: #{minid}"
+puts "maxid: #{maxid}"
 
 def ruta_articulo(id, creacion, adjunto_file_name)
   created_at=Date.parse(creacion)
@@ -36,12 +39,12 @@ conf = config[e]
 conf.delete('adapter')
 conf.delete('encoding')
 conf.delete('pool')
+puts "dbname: #{conf['database']}"
 conn = PG.connect( host: conf['host'], dbname: conf['database'], user: conf['username'], password: conf['password'])
-cuenta = 0
 
+cuenta = 0
 cons = "SELECT id, adjunto_file_name, created_at, texto 
-  FROM sal7711_gen_articulo WHERE 
-  (texto IS NULL OR TRIM(texto)='') 
+  FROM sal7711_gen_articulo WHERE texto=''
   AND "
 if maxid > 0
   cons += "id>='#{minid.to_s}' AND id<='#{maxid.to_s}'"
@@ -50,8 +53,19 @@ else
 end
 cons += " ORDER BY id"
 
+#cons += " LIMIT 2"
+#deco = PG::TextDecoder::CopyRow.new
+#conn.copy_data "COPY (#{cons}) TO STDOUT", deco do
+#    while row=conn.get_copy_data
+#      puts "row=#{row}"
+#    end
+#end
+#puts "termino"
+#exit 1
 puts "cons='#{cons}'"
 conn.exec(cons ) do |sinocr|
+  puts sinocr.inspect
+  puts "sinocr.count=#{sinocr.count}"
   sinocr.each do |fila|
     r=ruta_articulo(fila['id'], fila['created_at'], fila['adjunto_file_name'])
     cuenta += 1
@@ -62,10 +76,13 @@ conn.exec(cons ) do |sinocr|
     res.strip!
     l = res.nil? ? 0 : res.length
     puts "Resultado OCR para artículo #{fila['id']}: #{l}"
-    conn.exec( "UPDATE sal7711_gen_articulo SET textoocr='#{conn.escape_string(res)}', texto='#{conn.escape_string(res)}' WHERE id=#{fila["id"].to_i};")
+    conn.exec( "UPDATE sal7711_gen_articulo SET textoocr=TRIM('#{conn.escape_string(res)}'), texto=TRIM('#{conn.escape_string(res)}') WHERE id=#{fila["id"].to_i};")
   end
 end
-act="REFRESH MATERIALIZED VIEW md_articulo"
-puts act
-conn.exec(act)
+puts "cuenta=#{cuenta}"
+if cuenta > 0
+  act="REFRESH MATERIALIZED VIEW md_articulo"
+  puts act
+  conn.exec(act)
+end
 conn.finish
