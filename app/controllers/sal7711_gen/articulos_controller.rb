@@ -175,9 +175,9 @@ module Sal7711Gen
                  notice: 'Artículo actualizado. Lote procesado.' )
               end
             else
-              li = @articulo.lote_id ? 
-                "?lotes_lote=#{@articulo.lote_id.to_i}" : ''
-              redirect_to(main_app.lotes_path + li,
+              #li = @articulo.lote_id ? 
+              #  "?lotes_lote=#{@articulo.lote_id.to_i}" : ''
+              redirect_to(sal7711_gen.buscar_path,
                 notice: 'Artículo actualizado.' )
             end
           }
