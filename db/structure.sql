@@ -570,7 +570,6 @@ CREATE TABLE public.sip_actorsocial (
     direccion character varying(500),
     pais_id integer,
     web character varying(500),
-    observaciones character varying(5000),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -1233,6 +1232,7 @@ CREATE TABLE public.usuario (
     unconfirmed_email character varying,
     fecharenovacion date,
     autenticado_por_ip boolean,
+    diasvigencia integer,
     CONSTRAINT usuario_check CHECK (((fechadeshabilitacion IS NULL) OR (fechadeshabilitacion >= fechacreacion))),
     CONSTRAINT usuario_rol_check CHECK ((rol >= 1))
 );
@@ -2242,6 +2242,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180720171842'),
 ('20180724135332'),
 ('20180724202353'),
-('20180810221619');
+('20180810221619'),
+('20180921120954'),
+('20181011104537');
 
 
