@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: b0d58db5c5eb098d6ffd722c17c6219264067624
+  revision: e7e9372668b90c22a9f32c80a4cb86a487c67c80
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: b580b19677793bd6b62ea5ec5755d9756058d162
+  revision: 9756f1e6725f645c0d5b549428997b0ce760372d
   specs:
     sip (2.0.b5)
       bootstrap-datepicker-rails
@@ -84,7 +84,7 @@ GEM
     ansi (1.5.0)
     arel (9.0.0)
     bcrypt (3.1.12)
-    bigdecimal (1.4.2)
+    bigdecimal (1.4.3)
     bindex (0.5.0)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
@@ -131,7 +131,7 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
-    devise-i18n (1.7.0)
+    devise-i18n (1.7.1)
       devise (>= 4.5)
     docile (1.3.1)
     erubi (1.8.0)
@@ -139,7 +139,7 @@ GEM
     ffi (1.10.0)
     font-awesome-rails (4.7.0.4)
       railties (>= 3.2, < 6.0)
-    globalid (0.4.1)
+    globalid (0.4.2)
       activesupport (>= 4.2.0)
     i18n (1.5.1)
       concurrent-ruby (~> 1.0)
@@ -205,7 +205,7 @@ GEM
     msgpack (1.2.6)
     multi_json (1.13.1)
     nio4r (2.3.1)
-    nokogiri (1.10.0)
+    nokogiri (1.10.1)
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
     paperclip (6.1.0)
@@ -409,4 +409,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   1.17.3
+   2.0.1
