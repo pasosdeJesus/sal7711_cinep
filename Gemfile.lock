@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 77eac4fded17e4782b5700dfe4fa320949c44112
+  revision: 66978bd5b7d0c3f922c03452fcfa9a4e0dabff49
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 9c82974ddecfd5ce9f15261c84b94d1331b00f07
+  revision: 7c4b2e5961c1f3ca7bd5a63313a67e98bca778c9
   specs:
     sip (2.0.b5)
       bootstrap-datepicker-rails
@@ -141,7 +141,7 @@ GEM
       railties (>= 3.2, < 6.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    i18n (1.5.2)
+    i18n (1.5.3)
       concurrent-ruby (~> 1.0)
     interception (0.5)
     jbuilder (2.8.0)
@@ -278,9 +278,9 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
-    responders (2.4.0)
-      actionpack (>= 4.2.0, < 5.3)
-      railties (>= 4.2.0, < 5.3)
+    responders (2.4.1)
+      actionpack (>= 4.2.0, < 6.0)
+      railties (>= 4.2.0, < 6.0)
     ruby-progressbar (1.10.0)
     rubyzip (1.2.2)
     sass (3.7.3)
