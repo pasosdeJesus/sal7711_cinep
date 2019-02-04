@@ -37,4 +37,5 @@ Se usa para armar el URL de los correos de confirmación
 (usado por ejemplo al cambiar correo de un usuario).
 
 Para hacer OCR emplea tesseract, asi:
+
 	tesseract imagen stdout   -l spa
