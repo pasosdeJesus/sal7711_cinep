@@ -31,13 +31,10 @@ Por favor vea las instrucciones de sivel2 pues son análogas:
 
 Para iniciar requiere definida la varible de entorno
 
-SAL7711_ONBASE_SERV=http://181.143.184.115:2400
+SAL7711_ONBASE_SERV=http://191.153.174.105:2400
 
 Se usa para armar el URL de los correos de confirmación 
 (usado por ejemplo al cambiar correo de un usuario).
 
-Instalación
-
-Uso
-
-tesseract imagen stdout   -l spa
+Para hacer OCR emplea tesseract, asi:
+	tesseract imagen stdout   -l spa
