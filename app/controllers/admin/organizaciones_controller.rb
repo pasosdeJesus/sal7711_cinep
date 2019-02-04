@@ -19,7 +19,8 @@ module Admin
        "usuarioip_id", 
        "autoregistro", 
        "fechacreacion_localizada", 
-       "fechadeshabilitacion_localizada"  ]
+       "habilitado"  
+      ]
 		end
 
     def atributos_show

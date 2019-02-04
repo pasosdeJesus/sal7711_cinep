@@ -14,7 +14,8 @@ class UsuariosController < Sip::ModelosController
       "descripcion",
       "rol",
       "email",
-      "created_at_localizada"
+      "created_at_localizada",
+      "habilitado"
     ]
   end
 

@@ -21,9 +21,13 @@ module Sal7711Gen
 
       def atributos_index
         [
-          "id", "codigo", "nombre", "supracategoria", 
-          "observaciones", "fechacreacion", 
-          "fechadeshabilitacion"
+          "id", 
+          "codigo", 
+          "nombre", 
+          "supracategoria", 
+          "observaciones", 
+          "fechacreacion", 
+          "habilitado"
         ]
       end
 
