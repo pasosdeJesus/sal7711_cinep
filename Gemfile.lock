@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 01d0361daa92d5efb4f2686523a1f8b5882db693
+  revision: 9cf89d42900d9d6aa9b148d7d956299335257221
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: f3dd386b482296847251280faeca7975809bd14c
+  revision: f9f6648d9de717919f81ebca9aef2de1eef370b8
   specs:
     sip (2.0.b5)
       bootstrap-datepicker-rails
@@ -131,8 +131,8 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
-    devise-i18n (1.7.2)
-      devise (>= 4.5)
+    devise-i18n (1.8.0)
+      devise (>= 4.6)
     docile (1.3.1)
     erubi (1.8.0)
     execjs (2.7.0)
