@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 44064513582da4bf7f9905f4685f049b27430c76
+  revision: 0667a7daf530c2f5b52c1c3741f22d84622cd053
   specs:
     sal7711_gen (1.0.b1)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: ecae2a3632bb2451a72ccd809e1b45ea372612fa
+  revision: b724d044f46e43b2dbb9be05599920817bf3e827
   specs:
     sip (2.0.b5)
       bootstrap-datepicker-rails
@@ -233,7 +233,7 @@ GEM
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
     public_suffix (3.0.3)
-    puma (3.12.0)
+    puma (3.12.1)
     rack (2.0.6)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -350,7 +350,7 @@ GEM
     websocket-driver (0.7.0)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.3)
-    will_paginate (3.1.6)
+    will_paginate (3.1.7)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 
