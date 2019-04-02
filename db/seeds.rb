@@ -10,7 +10,7 @@ motor.each do |m|
 end
 
 # Usuario para primer ingreso sal7711 con clave sal7711
-conexion.execute("INSERT INTO usuario 
+conexion.execute("INSERT INTO public.usuario 
   (nusuario, nombre, email, encrypted_password, password, 
     fechacreacion, created_at, updated_at, rol, confirmed_at) 
   VALUES ('sal7711', 'sal7711', 'sal7711', 

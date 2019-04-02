@@ -600,7 +600,7 @@ module Sal7711Gen
       loop do
         pasada += 1
         cidse = ActiveRecord::Base.connection.execute(
-          "SELECT DISTINCT onbase_itemnum FROM sal7711_gen_articulo WHERE
+          "SELECT DISTINCT onbase_itemnum FROM public.sal7711_gen_articulo WHERE
            onbase_itemnum >= #{minitemnum} AND
            onbase_itemnum < #{maxitemnum}
            ORDER BY 1");
@@ -850,8 +850,8 @@ module Sal7711Gen
         end
       end
       articulos = articulos.where("id IN (SELECT articulo_id FROM
-        sal7711_gen_articulo_categoriaprensa INNER JOIN 
-        sal7711_gen_categoriaprensa ON 
+        public.sal7711_gen_articulo_categoriaprensa INNER JOIN 
+        public.sal7711_gen_categoriaprensa ON 
         sal7711_gen_categoriaprensa.id = sal7711_gen_articulo_categoriaprensa.categoriaprensa_id 
         WHERE codigo #{op} ?)", cod)
       return articulos

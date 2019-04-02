@@ -119,7 +119,7 @@ module Sal7711Gen
               # Primero los no editados ordenados por nombre de archivo (posteriores primero, anteriores despues)
               # A continuación los editados pero sin categorias completas también ordenados por nombre de archivo
               cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
-               "SELECT id FROM sal7711_gen_articulo 
+               "SELECT id FROM public.sal7711_gen_articulo 
                 WHERE lote_id=?
                   AND orden > ?
                   AND substring(adjunto_descripcion from 1 for 6) = 'Imagen'
@@ -129,7 +129,7 @@ module Sal7711Gen
               sig = Sal7711Gen::Articulo.connection.select_one(cons_t)
               if !sig
                 cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
-                  "SELECT id FROM sal7711_gen_articulo 
+                  "SELECT id FROM public.sal7711_gen_articulo 
                    WHERE lote_id=?
                      AND orden < ?
                      AND substring(adjunto_descripcion from 1 for 6) = 
@@ -141,11 +141,11 @@ module Sal7711Gen
               end
               if !sig
                 cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
-                  "SELECT id FROM sal7711_gen_articulo 
+                  "SELECT id FROM public.sal7711_gen_articulo 
                    WHERE lote_id = ?
                      AND id > ?
                      AND NOT EXISTS (
-                       SELECT * FROM sal7711_gen_articulo_categoriaprensa 
+                       SELECT * FROM public.sal7711_gen_articulo_categoriaprensa 
                        WHERE articulo_id=sal7711_gen_articulo.id)
                    ORDER BY orden LIMIT 1",  
                    @articulo.lote_id.to_i, @articulo.id.to_i
@@ -154,11 +154,11 @@ module Sal7711Gen
               end
               if !sig
                 cons_t = Sal7711Gen::Articulo.send(:sanitize_sql_array, [
-                  "SELECT id FROM sal7711_gen_articulo 
+                  "SELECT id FROM public.sal7711_gen_articulo 
                      WHERE lote_id = ?
                        AND id < ?
                        AND NOT EXISTS(
-                         SELECT * FROM sal7711_gen_articulo_categoriaprensa 
+                         SELECT * FROM public.sal7711_gen_articulo_categoriaprensa 
                          WHERE articulo_id=sal7711_gen_articulo.id)
                    ORDER BY orden LIMIT 1",
                    @articulo.lote_id.to_i, @articulo.id.to_i
@@ -203,9 +203,9 @@ module Sal7711Gen
 
     # Genera SQL para eliminar artículo con id dada
     def gen_sql_elim(id)
-      return "DELETE FROM sal7711_gen_articulo_categoriaprensa " +
+      return "DELETE FROM public.sal7711_gen_articulo_categoriaprensa " +
         " WHERE articulo_id='#{id.to_i}'; " +
-        "DELETE FROM sal7711_gen_articulo WHERE id='#{id.to_i}';"
+        "DELETE FROM public.sal7711_gen_articulo WHERE id='#{id.to_i}';"
     end
 
     # Programa eliminación de registro id en BD con comentario com

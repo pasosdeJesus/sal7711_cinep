@@ -44,7 +44,7 @@ conn = PG.connect( host: conf['host'], dbname: conf['database'], user: conf['use
 
 cuenta = 0
 cons = "SELECT id, adjunto_file_name, created_at, texto 
-  FROM sal7711_gen_articulo WHERE texto=''
+  FROM public.sal7711_gen_articulo WHERE texto=''
   AND "
 if maxid > 0
   cons += "id>='#{minid.to_s}' AND id<='#{maxid.to_s}'"

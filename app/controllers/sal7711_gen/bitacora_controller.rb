@@ -57,7 +57,7 @@ module Sal7711Gen
 
       @usuarioscons = Sal7711Gen::Bitacora.connection.select_rows(
         "SELECT b.id, fecha, nusuario, ip, operacion
-          FROM sal7711_gen_bitacora AS b, usuario 
+          FROM public.sal7711_gen_bitacora AS b, public.usuario 
           WHERE usuario_id=usuario.id #{w}
           ORDER BY fecha "
       )
@@ -70,8 +70,8 @@ module Sal7711Gen
       tini = Time.parse(@fechaini +  " 00:00") #Tiempo local
       tfin = Time.parse(@fechafin +  " 23:59")
       @intervalo = 60 # En segundos
-      c = "SELECT nusuario, operacion, fecha FROM sal7711_gen_bitacora 
-          JOIN usuario ON usuario_id=usuario.id WHERE
+      c = "SELECT nusuario, operacion, fecha FROM public.sal7711_gen_bitacora 
+          JOIN public.usuario ON usuario_id=usuario.id WHERE
           fecha>='#{tini.getgm}' and fecha<='#{tfin.getgm}' ORDER BY fecha DESC"
       filas = Sal7711Gen::Bitacora.connection.select_rows(c)
       usuarios = {}

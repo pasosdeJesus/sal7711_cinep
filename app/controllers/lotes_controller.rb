@@ -85,19 +85,20 @@ class LotesController < ApplicationController
         "CREATE OR REPLACE VIEW vestadolote AS 
          SELECT CASE 
           WHEN id NOT IN (SELECT DISTINCT lote.id AS lote_id 
-            FROM lote JOIN sal7711_gen_articulo AS a ON lote.id=a.lote_id 
+            FROM public.lote 
+            JOIN public.sal7711_gen_articulo AS a ON lote.id=a.lote_id 
             WHERE NOT EXISTS(SELECT * FROM 
-              sal7711_gen_articulo_categoriaprensa AS cp 
+              public.sal7711_gen_articulo_categoriaprensa AS cp 
               WHERE  a.id=cp.articulo_id)) AND id NOT IN (
-            SELECT lote_id FROM sal7711_gen_articulo 
+            SELECT lote_id FROM public.sal7711_gen_articulo 
               WHERE pagina IS NULL) THEN 'PROCESADO' 
-          WHEN id NOT IN (SELECT lote.id FROM lote JOIN 
-            sal7711_gen_articulo as a ON a.lote_id=lote.id 
-            JOIN sal7711_gen_articulo_categoriaprensa as cp 
+          WHEN id NOT IN (SELECT lote.id FROM public.lote JOIN 
+            public.sal7711_gen_articulo as a ON a.lote_id=lote.id 
+            JOIN public.sal7711_gen_articulo_categoriaprensa as cp 
             ON cp.articulo_id=a.id) THEN 'EN ESPERA' 
           ELSE 'EN PROGRESO' 
         END AS estado, lote.id AS lote_id, nombre
-        FROM lote ORDER BY 1,2,3;")
+        FROM public.lote ORDER BY 1,2,3;")
     end
     @lotes_lote = nil
     @articulos = Sal7711Gen::Articulo.all
