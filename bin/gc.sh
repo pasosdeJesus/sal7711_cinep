@@ -56,6 +56,12 @@ if (test "$?" != "0") then {
 	echo "No pasaron pruebas";
 	exit 1;
 } fi;
+bundle exec rails test:system
+if (test "$?" != "0") then {
+	echo "No pasaron pruebas del sistema";
+	exit 1;
+} fi;
+
 
 (RAILS_ENV=test bin/rails db:structure:dump)
 b=`git branch | grep "^*" | sed -e  "s/^* //g"`
