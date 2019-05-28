@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: eb7fb8a6aed329d409c50a7fbdd7e2a2001af60e
+  revision: c62f58eba669a2ed6cbb8fc76b4cafdcbf2bb991
   specs:
     sal7711_gen (1.0.b2)
       rails
@@ -343,7 +343,7 @@ GEM
       activemodel (>= 6.0.0.a)
       bindex (>= 0.4.0)
       railties (>= 6.0.0.a)
-    webpacker (4.0.3)
+    webpacker (4.0.4)
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
       railties (>= 4.2)
