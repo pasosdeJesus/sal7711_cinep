@@ -5,10 +5,10 @@ Rails.application.routes.draw do
   devise_scope :usuario do
     #get 'sign_out' => 'devise/sessions#destroy'
     get 'sign_out' => 'sessions#destroy', as: :sign_out
-    get 'usuarios/sign_in' => 'sessions#destroy', as: :sign_in
+    get 'usuarios/sign_in' => 'sessions#new', as: :sign_in
     get 'sign_up' => 'registrations#new', as: :sign_up
   
-    root 'sessions#new' 
+    #root 'sessions#new' 
 
     # El siguiente para superar mala generación del action en el formulario
     # cuando se autentica mal (genera 
@@ -50,7 +50,7 @@ Rails.application.routes.draw do
   resources 'lotes', only: [:new, :create, :index], 
     path_names: { new: 'nuevo', edit: 'edita' }
 
-  root to: 'sal7711_gen/hogar#index'
+  root 'sal7711_gen/hogar#index'
 
   mount Sal7711Gen::Engine, at: "/", as: 'sal7711_gen'
   mount Sip::Engine, at: "/", as: 'sip'
