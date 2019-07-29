@@ -118,7 +118,7 @@ group :test do
   gem 'spring'
   gem 'launchy'
   gem 'simplecov'
-  gem 'poltergeist'
+  gem 'capybara'
   gem 'selenium-webdriver'
   
   # Para examinar errores, usar 'rescue rspec' en lugar de 'rspec'
