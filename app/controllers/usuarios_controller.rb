@@ -27,6 +27,7 @@ class UsuariosController < Sip::ModelosController
       "rol",
       "idioma",
       "email",
+      "tema",
     ]
     if can?(:manage, Sip::Grupo)
       r += ["sip_grupo"]
