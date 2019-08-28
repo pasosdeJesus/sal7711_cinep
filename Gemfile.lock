@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: c13177ab4dbd8d7c004302f9564f45c4cf666e95
+  revision: 39f7d0d64b8be2e05dcf1979c2596f94e81e81d7
   specs:
     sal7711_gen (1.0.b2)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 8c6dd2d3981c392c0c6a21e43fb60bff5dbce1a1
+  revision: c0cb145539ba83f5d11e04da6fa65ebed6cac31c
   specs:
     sip (2.0.b6)
       bootstrap-datepicker-rails
@@ -199,7 +199,7 @@ GEM
     mini_portile2 (2.4.0)
     minitest (5.11.3)
     msgpack (1.3.1)
-    nio4r (2.4.0)
+    nio4r (2.5.0)
     nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
@@ -278,7 +278,7 @@ GEM
     rubyzip (1.2.3)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
-    sassc (2.1.0)
+    sassc (2.2.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
       railties (>= 4.0.0)
