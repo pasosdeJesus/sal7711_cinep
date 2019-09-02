@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 2b7e1ecb79fb41ac3b33cbdaeb6be17e2e1971b5
+  revision: 78748a20fe0251cd4a9313c0640b073e1d1b250f
   specs:
     sal7711_gen (1.0.b2)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: efea6d020f5f673d36b3e14489bd2c2e5e3fa323
+  revision: 6e6b15fb45a92c214d644d9229ee22affca700b5
   specs:
     sip (2.0.b6)
       bootstrap-datepicker-rails
@@ -103,8 +103,8 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.1, >= 2.1.8)
-    addressable (2.6.0)
-      public_suffix (>= 2.0.2, < 4.0)
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
     bcrypt (3.1.13)
     bigdecimal (1.4.4)
     bindex (0.8.1)
@@ -125,7 +125,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
-    childprocess (1.0.1)
+    childprocess (2.0.0)
       rake (< 13.0)
     cldr-plurals-runtime-rb (1.0.1)
     climate_control (0.2.0)
@@ -227,7 +227,7 @@ GEM
     pry-stack_explorer (0.4.9.3)
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
-    public_suffix (3.1.1)
+    public_suffix (4.0.1)
     puma (4.1.0)
       nio4r (~> 2.0)
     rack (2.0.7)
@@ -286,8 +286,8 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    selenium-webdriver (3.142.3)
-      childprocess (>= 0.5, < 2.0)
+    selenium-webdriver (3.142.4)
+      childprocess (>= 0.5, < 3.0)
       rubyzip (~> 1.2, >= 1.2.2)
     simple_form (4.1.0)
       actionpack (>= 5.0)
