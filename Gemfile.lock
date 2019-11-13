@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: b065ee542e9bc6ba0d158a9956aeeefdec5c9a70
+  revision: 5aae0fee7e98631483456cabd937e3110f7acd69
+  branch: bs4
   specs:
     sal7711_gen (1.0.b2)
       rails
@@ -8,35 +9,22 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 40caf79497e130e010e855519e3190df6619207d
+  revision: 04c249fc370a254d2730ae31abe0a653ade7023a
+  branch: bs4
   specs:
-    sip (2.0.b6)
-      bootstrap-datepicker-rails
+    sip (2.0.b7)
       cancancan
       chosen-rails
-      colorize
       devise
       devise-i18n
-      jquery-rails
       jquery-ui-rails
       minitest
       paperclip
       rails
       rails-i18n
       simple_form
-      twitter-bootstrap-rails
       twitter_cldr
       will_paginate
-
-GIT
-  remote: https://github.com/vtamara/chosen-rails.git
-  revision: 48c457fc9ef1c4c573b4dcdb9dc07034b46ed6b4
-  branch: several-fixes
-  specs:
-    chosen-rails (1.8.7)
-      coffee-rails (>= 3.2)
-      railties (>= 3.0)
-      sass-rails (>= 3.2)
 
 GIT
   remote: https://github.com/vtamara/cocoon.git
@@ -48,61 +36,61 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    actioncable (6.0.0)
-      actionpack (= 6.0.0)
+    actioncable (6.0.1)
+      actionpack (= 6.0.1)
       nio4r (~> 2.0)
       websocket-driver (>= 0.6.1)
-    actionmailbox (6.0.0)
-      actionpack (= 6.0.0)
-      activejob (= 6.0.0)
-      activerecord (= 6.0.0)
-      activestorage (= 6.0.0)
-      activesupport (= 6.0.0)
+    actionmailbox (6.0.1)
+      actionpack (= 6.0.1)
+      activejob (= 6.0.1)
+      activerecord (= 6.0.1)
+      activestorage (= 6.0.1)
+      activesupport (= 6.0.1)
       mail (>= 2.7.1)
-    actionmailer (6.0.0)
-      actionpack (= 6.0.0)
-      actionview (= 6.0.0)
-      activejob (= 6.0.0)
+    actionmailer (6.0.1)
+      actionpack (= 6.0.1)
+      actionview (= 6.0.1)
+      activejob (= 6.0.1)
       mail (~> 2.5, >= 2.5.4)
       rails-dom-testing (~> 2.0)
-    actionpack (6.0.0)
-      actionview (= 6.0.0)
-      activesupport (= 6.0.0)
+    actionpack (6.0.1)
+      actionview (= 6.0.1)
+      activesupport (= 6.0.1)
       rack (~> 2.0)
       rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.2.0)
-    actiontext (6.0.0)
-      actionpack (= 6.0.0)
-      activerecord (= 6.0.0)
-      activestorage (= 6.0.0)
-      activesupport (= 6.0.0)
+    actiontext (6.0.1)
+      actionpack (= 6.0.1)
+      activerecord (= 6.0.1)
+      activestorage (= 6.0.1)
+      activesupport (= 6.0.1)
       nokogiri (>= 1.8.5)
-    actionview (6.0.0)
-      activesupport (= 6.0.0)
+    actionview (6.0.1)
+      activesupport (= 6.0.1)
       builder (~> 3.1)
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    activejob (6.0.0)
-      activesupport (= 6.0.0)
+    activejob (6.0.1)
+      activesupport (= 6.0.1)
       globalid (>= 0.3.6)
-    activemodel (6.0.0)
-      activesupport (= 6.0.0)
-    activerecord (6.0.0)
-      activemodel (= 6.0.0)
-      activesupport (= 6.0.0)
-    activestorage (6.0.0)
-      actionpack (= 6.0.0)
-      activejob (= 6.0.0)
-      activerecord (= 6.0.0)
+    activemodel (6.0.1)
+      activesupport (= 6.0.1)
+    activerecord (6.0.1)
+      activemodel (= 6.0.1)
+      activesupport (= 6.0.1)
+    activestorage (6.0.1)
+      actionpack (= 6.0.1)
+      activejob (= 6.0.1)
+      activerecord (= 6.0.1)
       marcel (~> 0.3.1)
-    activesupport (6.0.0)
+    activesupport (6.0.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-      zeitwerk (~> 2.1, >= 2.1.8)
+      zeitwerk (~> 2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     ansi (1.5.0)
@@ -111,9 +99,8 @@ GEM
     bindex (0.8.1)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
-    bootstrap-datepicker-rails (1.8.0.1)
-      railties (>= 3.0)
     builder (3.2.3)
+    byebug (11.0.1)
     camertron-eprun (1.1.1)
     cancancan (3.0.1)
     capybara (3.29.0)
@@ -125,6 +112,10 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     childprocess (3.0.0)
+    chosen-rails (1.9.0)
+      coffee-rails (>= 3.2)
+      railties (>= 3.0)
+      sassc-rails (>= 2.1.2)
     cldr-plurals-runtime-rb (1.0.1)
     climate_control (0.2.0)
     coffee-rails (5.0.0)
@@ -135,7 +126,6 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     colorize (0.8.1)
-    commonjs (0.2.7)
     concurrent-ruby (1.1.5)
     crass (1.0.5)
     devise (4.7.1)
@@ -149,31 +139,19 @@ GEM
     docile (1.3.2)
     erubi (1.9.0)
     execjs (2.7.0)
-    ffi (1.11.1)
-    font-awesome-rails (4.7.0.5)
-      railties (>= 3.2, < 6.1)
+    ffi (1.11.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     i18n (1.7.0)
       concurrent-ruby (~> 1.0)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
-    jquery-rails (4.3.5)
-      rails-dom-testing (>= 1, < 3)
-      railties (>= 4.2.0)
-      thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
     json (2.2.0)
     kgio (2.11.2)
     lazybox (1.1.5)
-    less (2.6.0)
-      commonjs (~> 0.2.7)
-    less-rails (4.0.0)
-      actionpack (>= 4)
-      less (~> 2.6.0)
-      sprockets (>= 2)
-    loofah (2.3.0)
+    loofah (2.3.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -190,15 +168,15 @@ GEM
     mimemagic (0.3.3)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    minitest (5.12.2)
-    minitest-reporters (1.4.1)
+    minitest (5.13.0)
+    minitest-reporters (1.4.2)
       ansi
       builder
       minitest (>= 5.0)
       ruby-progressbar
     msgpack (1.3.1)
     nio4r (2.5.2)
-    nokogiri (1.10.4)
+    nokogiri (1.10.5)
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
     paperclip (6.1.0)
@@ -209,35 +187,31 @@ GEM
       terrapin (~> 0.6.0)
     pdf-core (0.7.0)
     pg (1.1.4)
-    pick-a-color-rails (0.0.1)
-      jquery-rails
-      railties (>= 3.0)
-      tiny-color-rails
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
     public_suffix (4.0.1)
-    puma (4.2.1)
+    puma (4.3.0)
       nio4r (~> 2.0)
     rack (2.0.7)
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
-    rails (6.0.0)
-      actioncable (= 6.0.0)
-      actionmailbox (= 6.0.0)
-      actionmailer (= 6.0.0)
-      actionpack (= 6.0.0)
-      actiontext (= 6.0.0)
-      actionview (= 6.0.0)
-      activejob (= 6.0.0)
-      activemodel (= 6.0.0)
-      activerecord (= 6.0.0)
-      activestorage (= 6.0.0)
-      activesupport (= 6.0.0)
+    rails (6.0.1)
+      actioncable (= 6.0.1)
+      actionmailbox (= 6.0.1)
+      actionmailer (= 6.0.1)
+      actionpack (= 6.0.1)
+      actiontext (= 6.0.1)
+      actionview (= 6.0.1)
+      activejob (= 6.0.1)
+      activemodel (= 6.0.1)
+      activerecord (= 6.0.1)
+      activestorage (= 6.0.1)
+      activesupport (= 6.0.1)
       bundler (>= 1.3.0)
-      railties (= 6.0.0)
+      railties (= 6.0.1)
       sprockets-rails (>= 2.0.0)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
@@ -247,22 +221,20 @@ GEM
     rails-i18n (6.0.0)
       i18n (>= 0.7, < 2)
       railties (>= 6.0.0, < 7)
-    railties (6.0.0)
-      actionpack (= 6.0.0)
-      activesupport (= 6.0.0)
+    railties (6.0.1)
+      actionpack (= 6.0.1)
+      activesupport (= 6.0.1)
       method_source
       rake (>= 0.8.7)
       thor (>= 0.20.3, < 2.0)
     raindrops (0.19.0)
-    rake (13.0.0)
+    rake (13.0.1)
     regexp_parser (1.6.0)
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
     ruby-progressbar (1.10.1)
     rubyzip (2.0.0)
-    sass-rails (6.0.0)
-      sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.2.1)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -295,26 +267,14 @@ GEM
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.10)
-    tiny-color-rails (0.0.2)
-      railties (>= 3.0)
     tiny_tds (2.1.2)
     ttfunk (1.5.1)
-    turbolinks (5.2.1)
-      turbolinks-source (~> 5.2)
-    turbolinks-source (5.2.0)
-    twitter-bootstrap-rails (3.2.2)
-      actionpack (>= 3.1)
-      execjs (>= 2.2.2, >= 2.2)
-      less-rails (>= 2.5.0)
-      railties (>= 3.1)
     twitter_cldr (5.0.0)
       camertron-eprun
       cldr-plurals-runtime-rb (~> 1.0)
       tzinfo
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     unicorn (5.5.1)
       kgio (~> 2.6)
       raindrops (~> 0.7)
@@ -325,7 +285,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webpacker (4.0.7)
+    webpacker (4.2.0)
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
       railties (>= 4.2)
@@ -335,7 +295,7 @@ GEM
     will_paginate (3.2.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.2.0)
+    zeitwerk (2.2.1)
 
 PLATFORMS
   ruby
@@ -344,44 +304,35 @@ DEPENDENCIES
   bcrypt
   bigdecimal
   bootsnap (>= 1.1.0)
-  bootstrap-datepicker-rails
+  byebug
   cancancan
   capybara
-  chosen-rails!
   cocoon!
   coffee-rails
   colorize
   devise
   devise-i18n
-  font-awesome-rails
   jbuilder
-  jquery-rails
-  jquery-ui-rails
   lazybox
   mail_form
   minitest
   minitest-reporters
   paperclip
   pg
-  pick-a-color-rails
   prawn
   puma
   rails (~> 6.0.0.rc1)
   rails-i18n
   sal7711_gen!
-  sass-rails
+  sassc-rails
   selenium-webdriver
   simple_form
   simplecov
   sip!
   spring
-  tiny-color-rails
   tiny_tds
-  turbolinks
-  twitter-bootstrap-rails
   twitter_cldr
   tzinfo
-  uglifier
   unicorn
   web-console
   webpacker

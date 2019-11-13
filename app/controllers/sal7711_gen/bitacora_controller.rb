@@ -79,7 +79,9 @@ module Sal7711Gen
       op_mostraruno = {}
       filas.each do |f|
         # Base retorna tiempo en UTC
-        i =  (Time.parse(f[2] + " UTC").to_i - tini.to_i) / @intervalo
+        tp = Time.parse(f[2].to_s + ' UTC').to_i
+        tii = tini.to_i
+        i =  (tp - tii) / @intervalo
         i = i.to_i
         if (usuarios[i]) 
           usuarios[i].add(f[0])

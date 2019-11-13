@@ -3,65 +3,75 @@
 <% end %>
 
 <% content_for :marca do %>
-  <img class='logo-cinep' src="/assets/logo.png"> 
+  <img class='logo-cinep' src='/assets/logo.png'> 
   <!--%= Sip.titulo %-->
 <% end %>
 
 <% content_for :menu do %>
-  <%= menu_group do %>
+  <%= grupo_menus do %>
     <% if current_usuario %>
-      <%= menu_item "Buscar", sal7711_gen.buscar_path %>
-      <%= menu_item "Manual de Uso", "/Manual_de_Uso_Archivo_Digital_de_Prensa_CINEP.pdf", target: '_blank' %>
-      <%= menu_item "Acerca de", sip.acercade_path %>
+      <%= opcion_menu 'Buscar', sal7711_gen.buscar_path %>
+      <%= opcion_menu 'Manual de Uso', '/Manual_de_Uso_Archivo_Digital_de_Prensa_CINEP.pdf', target: '_blank' %>
+      <%= opcion_menu 'Acerca de', sip.acercade_path %>
       <% if can? :edit, Sal7711Gen::Articulo %>
-        <%= drop_down "Lote" do %>
-          <%= menu_item "Buscar", main_app.lotes_path %>
-          <%= menu_item "Añadir un lote", main_app.new_lote_path %>
-          <!--%= menu_item "Añadir un artículo", sal7711_gen.new_articulo_path %-->
+        <%= despliega_abajo 'Lote' do %>
+          <%= opcion_menu 'Buscar', main_app.lotes_path, 
+            desplegable: true %>
+          <%= opcion_menu 'Añadir un lote', main_app.new_lote_path,
+            desplegable: true %>
+          <!--%= opcion_menu 'Añadir un artículo', sal7711_gen.new_articulo_path %-->
         <% end %>
       <% end %>
     <% end %>
   <% end %>
-  <%= menu_group :pull => :right do %>
+  <%= grupo_menus :pull => :right do %>
     <% urlop = Rails.configuration.action_mailer.default_url_options %>
         
     <% if current_usuario && !current_usuario.autenticado_por_ip %>
-        <%= drop_down "Administrar" do %>
+        <%= despliega_abajo 'Administrar' do %>
           <% if can? :cambiarclave, ::Usuario %>
-            <%= menu_item "Clave", main_app.editar_registro_usuario_path %>
+            <%= opcion_menu 'Clave', main_app.editar_registro_usuario_path,
+              desplegable: true %>
           <% end %>
           <% if current_usuario.rol == Ability::ROLADMIN %>
-            <%= menu_item "Usuarios", main_app.usuarios_path %>
-            <%= menu_item "Tablas Básicas", sip.tablasbasicas_path %>
-            <%= menu_item "Bitácora", "/bitacora/admin" %>
-            <%= menu_item "Consultas en tiempo", "/bitacora/tiempo" %>
-            <%= menu_item "Ejecutar OCR en artículos faltantes", "/lotes/ocrfaltante" %>
+             <%= opcion_menu 'Usuarios', main_app.usuarios_path,
+               desplegable: true %>
+             <%= opcion_menu 'Tablas Básicas', sip.tablasbasicas_path,
+               desplegable: true %>
+             <%= opcion_menu 'Bitácora', '/bitacora/admin',
+               desplegable: true %>
+             <%= opcion_menu 'Consultas en tiempo', '/bitacora/tiempo',
+               desplegable: true %>
+             <%= opcion_menu 'Ejecutar OCR en artículos faltantes', 
+               '/lotes/ocrfaltante', desplegable: true %>
           <% end %>
-          <%= menu_item "Ver Control de Acceso", sip.ayuda_controldeacceso_path %>
+          <%= opcion_menu 'Ver Control de Acceso', 
+            sip.ayuda_controldeacceso_path, desplegable: true %>
         <% end %>
         <% if !current_usuario.autenticado_por_ip %>
-          <%= menu_item "Salir #{current_usuario.nusuario}", main_app.sign_out_path %>
+          <%= opcion_menu "Salir #{current_usuario.nusuario}", 
+            main_app.sign_out_path %>
         <% end %>
      <% elsif !current_usuario %>
-      <%= menu_item "Iniciar Sesión", main_app.new_usuario_session_path %>
-      <%= menu_item "Inscribirse", main_app.sign_up_path %>
+      <%= opcion_menu 'Iniciar Sesión', main_app.new_usuario_session_path %>
+      <%= opcion_menu 'Inscribirse', main_app.sign_up_path %>
     <% end %> <!-- else current_usuario -->
-  <% end %> <!-- menu_group -->
+  <% end %> <!-- grupo_menus -->
 <% end %> <!-- content_for :menu -->
 
 <% content_for :piedepagina do %>
-  <div class="pie">
+  <div class='pie'>
     <p> Contenidos con derechos reservados. Pueden ser utilizado total o 
     parcialmente, siempre y cuando se cite como fuente al 
-      <a href="http://www.cinep.org.co">CINEP/Programa por la Paz</a>.</p>
+      <a href='http://www.cinep.org.co'>CINEP/Programa por la Paz</a>.</p>
     <p>Teléfono: (57)(1) 245.6181  /  
     Fax: (57)(1) 287.9089  /  
-    Email: <a href="mailto:cinep@cinep.org.co">cinep@cinep.org.co</a>  /  
+    Email: <a href='mailto:cinep@cinep.org.co'>cinep@cinep.org.co</a>  /  
     Dirección: Cra 5 No. 33B- 02 Bogotá, Colombia.</p>
     <p>Sistema de información desarrollado por 
-      <a href="http://www.pasosdeJesus.org">Pasos de Jesús</a>
+      <a href='http://www.pasosdeJesus.org'>Pasos de Jesús</a>
     </p>
   </div>
 <% end %>
 
-<%= render template: "layouts/sal7711_gen/application" %>
+<%= render template: 'layouts/sal7711_gen/application' %>
