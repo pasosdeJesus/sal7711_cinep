@@ -4,11 +4,11 @@
       <%= render partial: 'sip/hogar/errores', locals: { f: f } %>
 
   <div class="row">
-    <div id="campos" class="col-sm-offset-0 col-sm-4">
+    <div id="campos" class="offset-sm-0 col-sm-4">
   
 
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-sm-12">
           <% if !f.object || !f.object.id || !f.object.adjunto_file_name %>
             <%= f.input :adjunto, as: :file, 
               label: 'Archivo (.jpg, .png, .tiff)',
@@ -22,12 +22,12 @@
         </div>
         
         <% if f.object.lote_id %> 
-          <div class="col-xs-11">
+          <div class="col-sm-11">
             <%= f.input :fecha_localizada, 
               :input_html => { "data-behaviour" => "datepicker"}, 
               :as => :string %>
           </div>
-          <div class="col-xs-1">
+          <div class="col-sm-1">
             <input class="candadochequeo" 
                    id="articulo_icfecha" 
                    name="articulo[icfecha]"
@@ -38,7 +38,7 @@
             <label class="labelcandado" for="articulo_icfecha"></label>
           </div>
         <% else %>
-          <div class="col-xs-12">
+          <div class="col-sm-12">
             <%= f.input :fecha_localizada, 
               :input_html => { "data-behaviour" => "datepicker"}, 
               :as => :string %>
@@ -47,14 +47,14 @@
 
 
         <% if f.object.lote_id %> 
-          <div class="col-xs-11">
+          <div class="col-sm-11">
             <%= f.association :departamento,
               collection: Sip::Departamento.habilitados.
                 where(id_pais: Sip.paisomision),
               label_method: :nombre, 
               value_method: :id %>
           </div>
-          <div class="col-xs-1">
+          <div class="col-sm-1">
             <input class="candadochequeo" 
                    id="articulo_icdepartamento" 
                    name="articulo[icdepartamento]" 
@@ -65,7 +65,7 @@
             <label class="labelcandado" for="articulo_icdepartamento"></label>
           </div>
         <% else %>
-          <div class="col-xs-12">
+          <div class="col-sm-12">
             <%= f.association :departamento,
                     collection: Sip::Departamento.habilitados.
                     where(id_pais: Sip.paisomision),
@@ -75,7 +75,7 @@
         <% end %>
 
         <% if f.object.lote_id %> 
-          <div class="col-xs-11">
+          <div class="col-sm-11">
             <% cw = "sip_departamento.id_pais = '#{Sip.paisomision}' " %>
             <% if f.object.departamento_id %>
               <% cw += "AND sip_departamento.id='#{f.object.departamento_id}'"%>
@@ -87,7 +87,7 @@
               value_method: :id
             %>
           </div>
-          <div class="col-xs-1">
+          <div class="col-sm-1">
             <input class="candadochequeo" 
                    type="checkbox" 
                    id="articulo_icmunicipio" 
@@ -98,7 +98,7 @@
             <label class="labelcandado" for="articulo_icmunicipio"></label>
           </div>
         <% else %>
-          <div class="col-xs-12">
+          <div class="col-sm-12">
             <%= f.association :municipio,
               collection: Sip::Municipio.habilitados.joins(:departamento).
               where("sip_departamento.id_pais = ?", 
@@ -112,14 +112,14 @@
         <%= render partial: 'articulos_categoria', locals: { f: f } %>
 
         <% if f.object.lote_id %> 
-          <div class="col-xs-11">
+          <div class="col-sm-11">
             <%= f.association :fuenteprensa,
               collection: Sip::Fuenteprensa.habilitados,
               label_method: :nombre, 
               value_method: :id,
               include_blank: false %>
           </div>
-          <div class="col-xs-1">
+          <div class="col-sm-1">
             <input class="candadochequeo"
                    type="checkbox"
                    id="articulo_icfuenteprensa" 
@@ -130,7 +130,7 @@
             <label class="labelcandado" for="articulo_icfuenteprensa"></label>
           </div>
         <% else %>
-          <div class="col-xs-12">
+          <div class="col-sm-12">
             <%= f.association :fuenteprensa,
               collection: Sip::Fuenteprensa.habilitados,
               label_method: :nombre, 
@@ -145,9 +145,9 @@
 
       </div> <!-- row -->
 
-    </div> <!-- class="col-sm-offset-0 col-sm-7 col-md-8" -->
+    </div> <!-- class="offset-sm-0 col-sm-7 col-md-8" -->
   
-    <div id="resultados" class="col-sm-offset-0 col-sm-8">
+    <div id="resultados" class="offset-sm-0 col-sm-8">
       <% if f.object && f.object.id && f.object.adjunto_file_name %>
         <%= image_tag url_descarga_jpg(f.object.id), width: "100%", id: 'imagen-detalle' %> 
       <% else %>
@@ -157,18 +157,18 @@
   </div> <!-- row -->
   <div class="row">
     <% if f.object.lote_id %> 
-      <div class="col-xs-11">
+      <div class="col-sm-11">
         <%= f.input :texto %> 
       </div>
-      <div class="col-xs-1">
+      <div class="col-sm-1">
       </div>
     <% else %>
-      <div class="col-xs-12">
+      <div class="col-sm-12">
         <%= f.input :texto %> 
       </div>
     <% end %>
 
-    <div class="col-xs-12 form-actions abajocentrado">
+    <div class="col-sm-12 form-actions abajocentrado">
       <% if f.object.lote_id %> 
         <%= f.button :submit, 
           name: 'progresar', 
@@ -186,7 +186,7 @@
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
         sal7711_gen.articulos_path, :class => 'btn' 
       %>
-    </div> <!--  clas="col-xs-12 form-actions abajocentrado" -->
+    </div> <!--  clas="col-sm-12 form-actions abajocentrado" -->
   </div>
 
 <% end %>

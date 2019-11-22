@@ -12,12 +12,11 @@
 //
 //= require sip/motor
 //= require sal7711_gen/motor
-//= require chosen-jquery
 //= require chosen.order.jquery
 //= require cocoon
 //= require_tree .
 
-$(document).on('turbolinks:load', function() {
+document.addEventListener('turbolinks:load', function() {
 	var root;
 	root = typeof exports !== "undefined" && exports !== null ? 
 		exports : window;

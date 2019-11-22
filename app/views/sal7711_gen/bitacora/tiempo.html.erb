@@ -4,7 +4,7 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <%= @tiempocons.count %> grupos de consultas en intervalos de 
+    <%= @tiempocount ? @tiempocons.count : '0'  %> grupos de consultas en intervalos de 
     <%= @intervalo%> segundos entre 
     <%= @fechaini %> y <%= @fechafin %>
   </div>
