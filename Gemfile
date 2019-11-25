@@ -11,7 +11,7 @@ gem 'bootsnap', '>=1.1.0', require: false
 
 gem 'cancancan'
 
-gem 'cocoon', git: 'https://github.com/vtamara/cocoon.git', branch: 'new_id_with_ajax' # Formularios anidados (algunos con ajax)
+gem 'cocoon', git: 'https://github.com/vtamara/cocoon.git'
 
 gem 'coffee-rails' # CoffeeScript para recuersos .js.coffee y vistas
 
@@ -57,11 +57,11 @@ gem 'will_paginate' # Listados en páginas
 # lógico y no alfabetico como las gemas anteriores) 
 
 gem 'sip', # Motor generico
-  git: 'https://github.com/pasosdeJesus/sip.git', branch: :bs4
+  git: 'https://github.com/pasosdeJesus/sip.git'
   #path: '../sip'
 
 gem 'sal7711_gen', # Motor de archivo de prensa
-  git: 'https://github.com/pasosdeJesus/sal7711_gen.git', branch: :bs4
+  git: 'https://github.com/pasosdeJesus/sal7711_gen.git'
   #path: '../sal7711_gen'
 
 
