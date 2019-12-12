@@ -30,7 +30,7 @@
     <% if current_usuario && !current_usuario.autenticado_por_ip %>
         <%= despliega_abajo 'Administrar' do %>
           <% if can? :cambiarclave, ::Usuario %>
-            <%= opcion_menu 'Clave', main_app.editar_registro_usuario_path,
+            <%= opcion_menu 'Clave y tema', main_app.editar_registro_usuario_path,
               desplegable: true %>
           <% end %>
           <% if current_usuario.rol == Ability::ROLADMIN %>
