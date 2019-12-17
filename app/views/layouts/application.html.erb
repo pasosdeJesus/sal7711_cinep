@@ -12,7 +12,6 @@
     <% if current_usuario %>
       <%= opcion_menu 'Buscar', sal7711_gen.buscar_path %>
       <%= opcion_menu 'Manual de Uso', '/Manual_de_Uso_Archivo_Digital_de_Prensa_CINEP.pdf', target: '_blank' %>
-      <%= opcion_menu 'Acerca de', sip.acercade_path %>
       <% if can? :edit, Sal7711Gen::Articulo %>
         <%= despliega_abajo 'Lote' do %>
           <%= opcion_menu 'Buscar', main_app.lotes_path, 
@@ -22,6 +21,10 @@
           <!--%= opcion_menu 'Añadir un artículo', sal7711_gen.new_articulo_path %-->
         <% end %>
       <% end %>
+    <% else %>
+      <%= opcion_menu 'Presentacion', 
+        main_app.presentacion_path %>
+      <%= opcion_menu 'Acerca de', sip.acercade_path %>
     <% end %>
   <% end %>
   <%= grupo_menus :pull => :right do %>
