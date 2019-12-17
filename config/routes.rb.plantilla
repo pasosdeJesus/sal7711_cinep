@@ -50,6 +50,8 @@ Rails.application.routes.draw do
   resources 'lotes', only: [:new, :create, :index], 
     path_names: { new: 'nuevo', edit: 'edita' }
 
+  get 'presentacion' => 'sip/hogar#presentacion', as: 'presentacion'
+
   root 'sal7711_gen/hogar#index'
 
   mount Sal7711Gen::Engine, at: "/", as: 'sal7711_gen'
