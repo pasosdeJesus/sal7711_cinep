@@ -1,1 +1,146 @@
-x
+
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="stylesheet" type="text/css" href="dise.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">                                              
+<link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">                                                  
+ <title></title>
+</head>
+
+<header>
+  <div class="gris">
+
+  </div>
+  <div class="hola">
+ <img id="logo" src="https://www.cinep.org.co/Home2/images/logo/logo2.png">                                                                  
+</div>
+
+  <section class="men">
+   <nav class="menu">
+   <ul id="mlist-menu">
+   <li id="menus"><a href="#logo">Inicio</a></li>
+   <li id="menus"><a href="#texto">Servicios</a></li>
+   <li id="menus"><a href=".formulary" TARGET="_blank">Cotizar</a></li>                                                                      
+   <li id="menus"><a href="">Contactanos</a></li>
+      <li id="con_blan"><a href="#con_blan"></a></li>
+</ul>
+        </section>
+</header>
+
+<body>
+<div class="slider">
+<ul>
+        <li>
+                
+ <img src="https://cdn.pixabay.com/photo/2017/08/05/22/46/notebook-2586328_960_720.jpg" width="1300" height="350" alt="" >
+    <link href="https://fonts.googleapis.com/css?family=Istok+Web|PT+Serif&display=swap" rel="stylesheet"> 
+        </li>
+
+ <img src="https://cdn.pixabay.com/photo/2014/05/21/22/28/old-newspaper-350376_960_720.jpg" width="1300" height="350" alt="">
+ </li>
+
+<li>
+  <img src="https://cdn.pixabay.com/photo/2015/05/31/11/34/girl-791231_960_720.jpg" width="1300" height="350" alt="">
+</li>
+
+<li>
+  <img src="https://www.cinep.org.co/Home2/images/content/E_1_2.jpg" width="1500" height="400" alt="">
+  </li>
+</ul>
+</div>
+ <!-- <section class="busqueda">
+<div>
+        <iframe width="600" height="315" src="https://www.youtube.com/embed/43svfgKuGX8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>-->
+   
+ </section>
+<div>
+<section class="seccciones1">
+<div class="mural3">
+    <h1 id="texto3">Archivo de prensa</h1>
+     
+   <p id="text4">El Archivo digital de prensa es una base de datos que sistematiza la información sobre Colombia, de 10 fuentes de prensa de circulación nacional y regional.
+  </div>
+<div class="mural5">
+  <iframe width="690" height="355" src="https://www.youtube.com/embed/43svfgKuGX8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    
+</div>
+</section>
+  </div>
+<!-- <div>
+<section class="seccciones">
+  <div class="mural">
+  -<h1 id="texto">Archivo de prensa</h1>
+     <img id="mural_img1" width="520" height="370" src="https://scontent-bog1-1.xx.fbcdn.net/v/t1.0-9/72941217_10218862234563078_3507164014947860480_n.jpg?_nc_cat=108&_nc_oc=AQlGVaru2lzTjG2MazuFnom4V4XSCN2wEGRcy7dZ4YeM6FtSDCBvkLOqOBgOGXATQN4&_nc_ht=scontent-bog1-1.xx&oh=03c6c400a0c635ddf030113f8139f7a1&oe=5E28C1DA">
+    
+     <p id="text1">El Archivo digital de prensa es una base de datos que sistematiza la información sobre Colombia, de 10 fuentes de prensa de circulación nacional y .
+     </div>
+<div class="mural1">
+    <h1 id="texto1">Principales tematicas</h1>
+  <img id="mural1_img1" src="https://www.cinep.org.co/Home2/images/content/E_1_2.jpg" alt="mural1_img1">
+    <p id="text2">
+        1. Iglesia y conflicto.<br>
+ 2. Política y gobierno.<br>
+        3. Narcotráfico.<br>
+        4. Sociedad y cultura.<br>
+</p>
+</div>
+
+</section>
+</div> -->
+<section class="contactanos">
+ <div class="social">
+ <ul>
+      <li><a href="https://es-la.facebook.com/CinepProgramaPorLaPaz/" target="_blank" class="icon-facebook">F</a></li>
+      <li><a href="https://www.youtube.com/user/cinepppp" target="_blank" class="icon-youtube">Y</a></li>
+      <li><a href="https://archivoprensa.cinep.org.co/" target="_blank" class="icon-pagina">P</a></li>
+</ul>
+</div>
+</section>
+
+
+<section class="formulary1">
+<div class="formulary">
+<h1>Formulario</h1>
+<%= form_for :picture, url: pictures_path do |f| %>
+ <%= f.label :Nombre %>
+<span id="form1"> <%= f.text_field :name, style: 'float: left; width: 90%; display:block' %><br><br></span>
+<%= f.label :Apellido %>
+<span id="form2"> <%= f.text_field :last_name, style: 'float: left; width:90%; display:block' %><br><br></span>
+<%= f.label :Edad %>
+<span id="form3"> <%= f.text_field :age, style: 'float: left; width:90%; display:block' %><br><br></span>
+<%= f.label :Profesion %>
+<span id="form4"> <%= f.text_field :profession, style: 'float: left; width:90%; display:block' %><br><br></span>
+<%= f.label :Email %>
+<span id="form5"> <%= f.email_field :email, style: 'float: left; width:90%; display:block' %><br><br></span>
+<%= f.label :Description %>
+<span id="form6"> <%= f.text_area :description, style: 'float: left; width:90%; display:block' %><br><br></span>
+<% end %>
+</div>
+</section>
+</body>
+<aside class="con">
+<div id="con1">
+<p>
+Nos puedes contactar por medio de las redes sociales o por medio de las paginas:
+</p>
+  <p>
+<a href="https://www.cinep.org.co/Home2/">www.cinep.org.co/Home2/</a><br>
+<a href="https://archivoprensa.cinep.org.co/">archivoprensa.cinep.org.co/</a><br>
+</p>
+<p>Imagenes e informacion tomada de:<br>
+<a href="https://www.elnuevoherald.com">www.elnuevoherald.com</a><br>
+<a href="https://www.trabajadores.cu">www.trabajadores.cu</a><br>
+<a href="https://s3.amazonaws.com">s3.amazonaws.com</a><br>
+<a href="https://wvaconfirmamendoza.com.ar">wvaconfirmamendoza.com.ar</a><br>
+<a href="https://media.giphy.com">media.giphy.com</a><br>
+<a href="https://www.elnuevoherald.com">www.elnuevoherald.com</a><br>
+</p>
+</div>
+        </aside>
+        <footer>
+     </footer>
+</html>
+
+

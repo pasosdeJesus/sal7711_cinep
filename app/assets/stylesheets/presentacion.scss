@@ -1,0 +1,340 @@
+// Place all the styles related to the Pictures controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+background-color: #f0f0f0;
+word-wrap: break-word;
+text-rendering: optimizelegibility;
+}
+.gris {
+  padding: 15px;
+  width:100%;
+  background-color: #e0e0e0;
+  margin-bottom:20px;
+}
+.hola {
+  margin-bottom:60px;
+    width:100%;
+    padding: 4px;
+    background-color: #f0f0f0;
+}
+  #logo {
+    max-width: 90%;
+    min-width: 130px;
+    height: auto;
+    margin-left:30px;
+}
+menu {
+  display: block !important;
+  width: 90%;
+  margin-left:70px;
+  min-width: 190px;
+   top: 0;
+}
+#mlist-menu {
+  float: left;
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  background-color: #e0e0e0;
+}
+#menus {
+   float: left;
+   padding: 5px;
+   background-color: #ffffff;
+  margin-left: 1px;
+   height: 30px;
+}
+#con_blan{
+  background-color: #ffffff;
+  margin-left: 845px;
+  padding: 9px;
+}
+
+a{
+  text-decoration: none;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: #777777;
+  padding: 11px;
+  margin-left:60px;
+  margin-right:60px;
+}
+#menus:hover a{
+  color: #a0d6ef;
+}
+.slider {
+        width: 90%;
+        margin: auto;
+        overflow: hidden;
+}
+
+.slider ul {
+        display: flex;
+        padding: 0;
+        width: 400%;
+        
+        animation: cambio 20s infinite alternate linear;
+}
+
+.slider li {
+        width: 100%;
+        list-style: none;
+}
+.slider img {
+        width: 100%;
+}
+
+@keyframes cambio {
+        0% {margin-left: 0;}
+        20% {margin-left: 0;}
+        
+        25% {margin-left: -100%;}
+        45% {margin-left: -100%;}
+        
+        50% {margin-left: -200%;}
+        70% {margin-left: -200%;}
+        
+        75% {margin-left: -300%;}
+        100% {margin-left: -300%;}
+}
+
+
+/*.busqueda{
+  max-width: 1200px;
+  min-width: 280px;
+  height: auto;
+  margin-left:635px;
+}
+.busqueda #img_apl{
+  margin-top: 50px;
+  margin-bottom: 10px;
+  width: 100%;
+min-width: 220px;
+  margin-left: 610px;
+  max-height:440px;
+  min-height: 20%;
+  }*/
+
+.seccciones1{
+  margin-top: 20px;
+  width: 100%;
+  background-color: #F5EAF4;
+}
+.mural3{
+  float: left;
+  padding: 2px;
+  background-color: #ffffff;
+  width: 43%;
+  margin-left:60px;
+  min-width: 90px;
+  height: auto;
+}
+#mural_img3{
+  width: 100%;
+  }
+#texto3{
+  text-align: center;
+  padding: 2px;
+  color: #333333;
+  font-size: 3.6vw;
+ font-family: 'PT Sans', sans-serif;
+}
+#text4{
+  font-size: 20px;
+  color: #333333;
+  padding: 2px;
+  margin-left:30px;
+  margin-right: 30px;
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom:90px;
+}
+
+.mural5{
+  float: right;
+  padding: 1px;
+  background-color: #ffffff;
+  width: 43%;
+  margin-right:60px;
+  min-width: 90px;
+  height: auto;
+}
+#mural1_img5{
+  width: 100%;
+}
+#text6{
+  font-size: 15px;
+  color: #333333;
+  padding: 2px;
+  margin-left: 20px;
+  text-align: justify-all;
+font-family: 'Open Sans', sans-serif;
+}
+#texto5{
+  text-align: justify;
+  padding: 2px;
+  color: #333333;
+  font-size: 3.5vw;
+ font-family: 'Arvo', serif;
+  }
+  
+/* .seccciones{
+  margin-top: 20px;
+  width: 100%;
+  background-color: #F5EAF4;
+  margin-top:390px;
+}
+.mural{
+  float: left;
+  padding: 2px;
+  background-color: #ffffff;
+  width: 43%;
+  margin-left:60px;
+  min-width: 90px;
+  height: auto;
+}
+#mural_img1{
+  width: 100%;
+}
+#texto{
+  text-align: center;
+padding: 2px;
+  color: #333333;
+  font-size: 3.2vw;
+  font-family: 'Open Sans', sans-serif;
+}
+#text1{
+  font-size: 15px;
+  color: #333333;
+  padding: 2px;
+  margin-left:30px;
+  margin-right: 30px;
+  text-align: center;
+  font-family: Frutiger;
+  font: oblique 120% sans-serif bold;
+}
+.mural:hover #text1{
+  color:#e0e0e0;
+}
+.mural1{
+  float: right;
+  padding: 1px;
+  background-color: #ffffff;
+  width: 43%;
+  margin-right:60px;
+  min-width: 90px;
+  height: auto;
+}
+#mural1_img1{
+  width: 80%;
+margin-left: 60px;
+  margin-bottom:10px;
+}
+#text2{
+  font-size: 15px;
+  color: #333333;
+  padding: 2px;
+  margin-left: 20px;
+  text-align: justify-all;
+  font-family: "latoregular", Helvetica, Arial, sans-serif;
+  
+}
+#texto1{
+  text-align: center;
+  padding: 2px;
+  color: #333333;
+  font-size: 2vw;
+ font-family: 'Istok Web', sans-serif;
+
+  }
+.mural1:hover #text2{
+  color:#239cd3;
+}
+*/
+.social {
+  position: fixed; /* Hacemos que la posición en pantalla sea fija para que siempre se muestre en pantalla*/
+  left:0; /* Establecemos la barra en la izquierda */
+  top: 200px; /* Bajamos la barra 200px de arriba a abajo */
+  z-index: 2000;  /* Utilizamos la propiedad z-index para que no se superponga algún otro elemento como sliders, galerías, etc */
+}
+ 
+  .social ul {
+    list-style: none;
+  }
+ 
+  .social ul li a {
+    display: inline-block; 
+    color:#fff;
+    background: #000;
+    padding: 10px 15px;
+    text-decoration: none;
+    -webkit-transition:all 500ms ease;
+    -o-transition:all 500ms ease;
+    transition:all 500ms ease; /* Establecemos una transición a todas las propiedades */
+  }
+ 
+  .social ul li .icon-facebook {background:#3b5998;} /* Establecemos los colores de cada red social, aprovechando su class */
+  .social ul li .icon-youtube {background: #F11D33;}
+  .social ul li .icon-pagina {background: #75ECE1;}
+ 
+  .social ul li a:hover {
+    background: #000; /* Cambiamos el fondo cuando el usuario pase el mouse */
+    padding: 10px 30px; /* Hacemos mas grande el espacio cuando el usuario pase el mouse */
+  }
+.con{
+  margin-top:10px;
+  display: inline-table;
+  width: 100%;
+height: auto;
+  padding: 2px;
+  background-color: #239cd3;
+}
+#con1 p{
+  margin-top: 25px;
+  color: #a0d6ef;;
+  text-align: center;
+  font-size: 12px;
+}
+#con1 a{
+  color: white;
+  font-size: 12px;
+}
+footer p{
+  text-align: center;
+}
+.formulary1{
+background-color: #f0f0f0;
+margin-top:100px;
+margin-left: 50px;
+}
+.formulary {
+font-family: arial;
+text-align: justify;
+margin: 20px;
+display: inline-block;
+}
+#form1 {
+}
+#label1{
+}
+.text_field1{
+width:20%;
+}
+#form2 {
+margin:209px;
+}
+#form3 {
+margin: 28px;
+}
+#form4 {
+margin: 1px;
+}
+#form5 {
+margin: 25px;
+}
+#form6 {
+margin: 2px;
+
+}
+
