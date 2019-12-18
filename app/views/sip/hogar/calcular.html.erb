@@ -1,0 +1,28 @@
+
+
+<section class="formulary1">
+<div class="formulary">
+  <h1>Cotización</h1>
+  <div>
+    <% meses = request.params['cotizar']['meses'].to_i %>
+    <% case request.params['cotizar']['categoriafactura'] %>
+    <% when 'GUBERNAMENTAL' %>
+      <% pago = 25000000*meses/12 %>
+    <% when 'ONG NACIONAL' %>
+      <% pago = 20000000*meses/12 %>
+    <% when 'ONG INTERNACIONAL' %>
+      <% pago = 22000000*meses/12 %>
+    <% when 'ESTUDIANTE' %>
+      <% pago = 3000000*meses/12 %>
+    <% end %>
+
+    Su suscripción para una entidad en la categoria
+    <%= request.params['cotizar']['categoriafactura'] %>
+    por 
+    <%= meses %> meses es de $<%= pago %>
+  </div>
+  <div>
+    <a style="align:center" href="/pago?valor=<%= pago %>" class="btn btn-primary">Proceder al pago</a>
+  </div>
+</div>
+</section>
