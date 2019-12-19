@@ -34,12 +34,18 @@ Rails.application.routes.draw do
   patch 'usuarios/:id/actualiza' => 'usuarios#update', 
           :as => 'actualiza_usuario'           
   get 'usuarios/reconfirma' => 'usuarios#reconfirma'
+
+
   post 'bitacora/admin' => 'sal7711_gen/bitacora#admin', 
     as: 'bitacora_publica'
   get 'bitacora/admin' => 'sal7711_gen/bitacora#admin', 
 	  as: 'bitacora_admin'
   get 'bitacora/tiempo' => 'sal7711_gen/bitacora#tiempo', 
           as: 'bitacora_tiempo'
+
+  post 'calcular' => 'sip/hogar#calcular', as: 'calcular'
+
+  get 'cotizar' => 'sip/hogar#cotizar', as: 'cotizar'
 
   get 'lotes/nuevo' => 'lotes#new', as: 'new_lote'
   post  'lotes/nuevo' => 'lotes#create', as: 'create_lote'
@@ -49,6 +55,8 @@ Rails.application.routes.draw do
 
   resources 'lotes', only: [:new, :create, :index], 
     path_names: { new: 'nuevo', edit: 'edita' }
+
+  get 'presentacion' => 'sip/hogar#presentacion', as: 'presentacion'
 
   root 'sal7711_gen/hogar#index'
 

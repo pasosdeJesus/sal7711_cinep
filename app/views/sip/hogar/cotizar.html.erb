@@ -1,0 +1,18 @@
+
+
+<section class="formulary1">
+<div class="formulary">
+<h1>Datos para la cotizaciòn</h1>
+
+<%= simple_form_for :cotizar, { url: main_app.calcular_path } do |f| %>
+  <%= f.input :categoriafactura,
+    collection: ['GUBERNAMENTAL', 'ONG NACIONAL', 'ONG INTERNACIONAL', 'INVESTIGADOR/ESTUDIANTE MAESTRÌA O DOCTORADO', 'ESTUDIANTE DE PREGRADO'],
+    label: 'Categoria de quien financiarà'
+
+  %>
+  <%= f.input :meses, :input_html => { :type => "number" } %> 
+
+  <%= f.button :submit, "Calcular cotizacion" %>
+<% end %>
+</div>
+</section>

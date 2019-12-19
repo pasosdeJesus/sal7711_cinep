@@ -10,5 +10,14 @@ module Sip
     def presentacion
       render 'presentacion', layout: false
     end
+
+    def calcular
+      render 'calcular', layout: 'application'
+    end
+
+    def cotizar 
+      render 'cotizar', layout: 'application'
+    end
+
   end
 end
