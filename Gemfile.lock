@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: c1aaf0e3552eba92d7b326212a363be9dba471d5
+  revision: 11a74ed098e58bce73980286e897f7127777db88
   specs:
     sal7711_gen (1.0.b2)
       rails
@@ -243,10 +243,10 @@ GEM
     simple_form (5.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
-    simplecov (0.18.1)
+    simplecov (0.18.2)
       docile (~> 1.1)
-      simplecov-html (~> 0.11.0)
-    simplecov-html (0.11.0)
+      simplecov-html (~> 0.11)
+    simplecov-html (0.12.0)
     spring (2.1.0)
     sprockets (4.0.0)
       concurrent-ruby (~> 1.0)
@@ -261,7 +261,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.10)
     tiny_tds (2.1.2)
-    ttfunk (1.6.1)
+    ttfunk (1.6.2.1)
     twitter_cldr (5.3.0)
       camertron-eprun
       cldr-plurals-runtime-rb (~> 1.0)
