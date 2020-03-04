@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: db423c939b382b6c27867dbfcd26700baf24f945
+  revision: b751e42d8d682da969880a330df676d02fe0c804
   specs:
     sal7711_gen (1.0.b2)
       rails
@@ -288,7 +288,7 @@ GEM
     will_paginate (3.3.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.2.2)
+    zeitwerk (2.3.0)
 
 PLATFORMS
   ruby
@@ -331,4 +331,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   2.0.2
+   2.1.4

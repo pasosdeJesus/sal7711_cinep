@@ -152,7 +152,7 @@ $$;
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
@@ -211,7 +211,7 @@ CREATE SEQUENCE public.sip_departamento_id_seq
 
 CREATE TABLE public.sip_departamento (
     id_deplocal integer,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     latitud double precision,
     longitud double precision,
     fechacreacion date DEFAULT ('now'::text)::date NOT NULL,
@@ -258,7 +258,7 @@ CREATE SEQUENCE public.sip_municipio_id_seq
 
 CREATE TABLE public.sip_municipio (
     id_munlocal integer,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     latitud double precision,
     longitud double precision,
     fechacreacion date DEFAULT ('now'::text)::date NOT NULL,
@@ -644,7 +644,7 @@ CREATE SEQUENCE public.sip_anexo_id_seq
 
 CREATE TABLE public.sip_anexo (
     id integer DEFAULT nextval('public.sip_anexo_id_seq'::regclass) NOT NULL,
-    descripcion character varying(1500) COLLATE public.es_co_utf_8 NOT NULL,
+    descripcion character varying(1500) NOT NULL COLLATE public.es_co_utf_8,
     archivo character varying(255),
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
@@ -673,7 +673,7 @@ CREATE SEQUENCE public.sip_clase_id_seq
 
 CREATE TABLE public.sip_clase (
     id_clalocal integer,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     id_tclase character varying(10) DEFAULT 'CP'::character varying NOT NULL,
     latitud double precision,
     longitud double precision,
@@ -706,7 +706,7 @@ CREATE SEQUENCE public.sip_etiqueta_id_seq
 
 CREATE TABLE public.sip_etiqueta (
     id integer DEFAULT nextval('public.sip_etiqueta_id_seq'::regclass) NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     observaciones character varying(5000) COLLATE public.es_co_utf_8,
     fechacreacion date DEFAULT ('now'::text)::date NOT NULL,
     fechadeshabilitacion date,
@@ -741,7 +741,7 @@ ALTER SEQUENCE public.sip_fuenteprensa_id_seq OWNED BY public.sip_fuenteprensa.i
 
 CREATE TABLE public.sip_grupo (
     id integer NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     observaciones character varying(5000),
     fechacreacion date NOT NULL,
     fechadeshabilitacion date,
@@ -785,7 +785,7 @@ CREATE TABLE public.sip_grupo_usuario (
 
 CREATE TABLE public.sip_grupoper (
     id bigint NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     anotaciones character varying(1000)
 );
 
@@ -864,7 +864,7 @@ CREATE SEQUENCE public.sip_oficina_id_seq
 
 CREATE TABLE public.sip_oficina (
     id integer DEFAULT nextval('public.sip_oficina_id_seq'::regclass) NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     fechacreacion date DEFAULT ('now'::text)::date NOT NULL,
     fechadeshabilitacion date,
     created_at timestamp without time zone,
@@ -962,8 +962,8 @@ CREATE SEQUENCE public.sip_persona_id_seq
 
 CREATE TABLE public.sip_persona (
     id integer DEFAULT nextval('public.sip_persona_id_seq'::regclass) NOT NULL,
-    nombres character varying(100) COLLATE public.es_co_utf_8 NOT NULL,
-    apellidos character varying(100) COLLATE public.es_co_utf_8 NOT NULL,
+    nombres character varying(100) NOT NULL COLLATE public.es_co_utf_8,
+    apellidos character varying(100) NOT NULL COLLATE public.es_co_utf_8,
     anionac integer,
     mesnac integer,
     dianac integer,
@@ -1050,7 +1050,7 @@ ALTER SEQUENCE public.sip_sectoractor_id_seq OWNED BY public.sip_sectoractor.id;
 
 CREATE TABLE public.sip_tclase (
     id character varying(10) NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     fechacreacion date NOT NULL,
     fechadeshabilitacion date,
     created_at timestamp without time zone,
@@ -1066,7 +1066,7 @@ CREATE TABLE public.sip_tclase (
 
 CREATE TABLE public.sip_tdocumento (
     id integer NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     sigla character varying(100),
     formatoregex character varying(500),
     fechacreacion date NOT NULL,
@@ -1157,7 +1157,7 @@ ALTER SEQUENCE public.sip_tema_id_seq OWNED BY public.sip_tema.id;
 
 CREATE TABLE public.sip_trelacion (
     id character(2) NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     observaciones character varying(5000) COLLATE public.es_co_utf_8,
     fechacreacion date NOT NULL,
     fechadeshabilitacion date,
@@ -1220,7 +1220,7 @@ CREATE SEQUENCE public.sip_tsitio_id_seq
 
 CREATE TABLE public.sip_tsitio (
     id integer DEFAULT nextval('public.sip_tsitio_id_seq'::regclass) NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     fechacreacion date DEFAULT ('now'::text)::date NOT NULL,
     fechadeshabilitacion date,
     created_at timestamp without time zone,
