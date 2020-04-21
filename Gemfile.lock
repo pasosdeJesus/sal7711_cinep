@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 8bddaeeec51cfc02c6556f9972234bafdbaf619c
+  revision: 8855038d587c31be71f954775907697d5077a92d
   specs:
     sal7711_gen (1.0.b2)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 46cbb1b6adcca1a21091378d226d1798429fe72a
+  revision: 89280a2f26c18ef2385fad5e6cf9944a0b0187bf
   specs:
     sip (2.0.b10)
       cancancan
@@ -230,7 +230,7 @@ GEM
       railties (>= 5.0)
     ruby-progressbar (1.10.1)
     rubyzip (2.3.0)
-    sassc (2.2.1)
+    sassc (2.3.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
       railties (>= 4.0.0)
@@ -280,7 +280,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webpacker (5.0.1)
+    webpacker (5.1.1)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
