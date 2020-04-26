@@ -152,7 +152,7 @@ $$;
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
@@ -211,7 +211,7 @@ CREATE SEQUENCE public.sip_departamento_id_seq
 
 CREATE TABLE public.sip_departamento (
     id_deplocal integer,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     latitud double precision,
     longitud double precision,
     fechacreacion date DEFAULT ('now'::text)::date NOT NULL,
@@ -258,7 +258,7 @@ CREATE SEQUENCE public.sip_municipio_id_seq
 
 CREATE TABLE public.sip_municipio (
     id_munlocal integer,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     latitud double precision,
     longitud double precision,
     fechacreacion date DEFAULT ('now'::text)::date NOT NULL,
@@ -592,7 +592,8 @@ CREATE TABLE public.sip_actorsocial_persona (
     actorsocial_id integer,
     perfilactorsocial_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    correo character varying(100)
 );
 
 
@@ -643,7 +644,7 @@ CREATE SEQUENCE public.sip_anexo_id_seq
 
 CREATE TABLE public.sip_anexo (
     id integer DEFAULT nextval('public.sip_anexo_id_seq'::regclass) NOT NULL,
-    descripcion character varying(1500) COLLATE public.es_co_utf_8 NOT NULL,
+    descripcion character varying(1500) NOT NULL COLLATE public.es_co_utf_8,
     archivo character varying(255),
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
@@ -652,6 +653,45 @@ CREATE TABLE public.sip_anexo (
     adjunto_file_size integer,
     adjunto_updated_at timestamp without time zone
 );
+
+
+--
+-- Name: sip_bitacora; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.sip_bitacora (
+    id bigint NOT NULL,
+    fecha timestamp without time zone NOT NULL,
+    ip character varying(100),
+    usuario_id integer,
+    url character varying(1023),
+    params character varying(5000),
+    modelo character varying(511),
+    modelo_id integer,
+    operacion character varying(63),
+    detalle json,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: sip_bitacora_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.sip_bitacora_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sip_bitacora_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.sip_bitacora_id_seq OWNED BY public.sip_bitacora.id;
 
 
 --
@@ -672,7 +712,7 @@ CREATE SEQUENCE public.sip_clase_id_seq
 
 CREATE TABLE public.sip_clase (
     id_clalocal integer,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     id_tclase character varying(10) DEFAULT 'CP'::character varying NOT NULL,
     latitud double precision,
     longitud double precision,
@@ -705,7 +745,7 @@ CREATE SEQUENCE public.sip_etiqueta_id_seq
 
 CREATE TABLE public.sip_etiqueta (
     id integer DEFAULT nextval('public.sip_etiqueta_id_seq'::regclass) NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     observaciones character varying(5000) COLLATE public.es_co_utf_8,
     fechacreacion date DEFAULT ('now'::text)::date NOT NULL,
     fechadeshabilitacion date,
@@ -740,7 +780,7 @@ ALTER SEQUENCE public.sip_fuenteprensa_id_seq OWNED BY public.sip_fuenteprensa.i
 
 CREATE TABLE public.sip_grupo (
     id integer NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     observaciones character varying(5000),
     fechacreacion date NOT NULL,
     fechadeshabilitacion date,
@@ -784,7 +824,7 @@ CREATE TABLE public.sip_grupo_usuario (
 
 CREATE TABLE public.sip_grupoper (
     id bigint NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     anotaciones character varying(1000)
 );
 
@@ -863,7 +903,7 @@ CREATE SEQUENCE public.sip_oficina_id_seq
 
 CREATE TABLE public.sip_oficina (
     id integer DEFAULT nextval('public.sip_oficina_id_seq'::regclass) NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     fechacreacion date DEFAULT ('now'::text)::date NOT NULL,
     fechadeshabilitacion date,
     created_at timestamp without time zone,
@@ -961,8 +1001,8 @@ CREATE SEQUENCE public.sip_persona_id_seq
 
 CREATE TABLE public.sip_persona (
     id integer DEFAULT nextval('public.sip_persona_id_seq'::regclass) NOT NULL,
-    nombres character varying(100) COLLATE public.es_co_utf_8 NOT NULL,
-    apellidos character varying(100) COLLATE public.es_co_utf_8 NOT NULL,
+    nombres character varying(100) NOT NULL COLLATE public.es_co_utf_8,
+    apellidos character varying(100) NOT NULL COLLATE public.es_co_utf_8,
     anionac integer,
     mesnac integer,
     dianac integer,
@@ -1049,7 +1089,7 @@ ALTER SEQUENCE public.sip_sectoractor_id_seq OWNED BY public.sip_sectoractor.id;
 
 CREATE TABLE public.sip_tclase (
     id character varying(10) NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     fechacreacion date NOT NULL,
     fechadeshabilitacion date,
     created_at timestamp without time zone,
@@ -1065,7 +1105,7 @@ CREATE TABLE public.sip_tclase (
 
 CREATE TABLE public.sip_tdocumento (
     id integer NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     sigla character varying(100),
     formatoregex character varying(500),
     fechacreacion date NOT NULL,
@@ -1125,7 +1165,9 @@ CREATE TABLE public.sip_tema (
     alerta_problema_fondo character varying(127),
     alerta_problema_fuente character varying(127),
     fondo character varying(127),
-    color_fuente character varying(127)
+    color_fuente character varying(127),
+    color_flota_subitem_fuente character varying,
+    color_flota_subitem_fondo character varying
 );
 
 
@@ -1154,7 +1196,7 @@ ALTER SEQUENCE public.sip_tema_id_seq OWNED BY public.sip_tema.id;
 
 CREATE TABLE public.sip_trelacion (
     id character(2) NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     observaciones character varying(5000) COLLATE public.es_co_utf_8,
     fechacreacion date NOT NULL,
     fechadeshabilitacion date,
@@ -1217,7 +1259,7 @@ CREATE SEQUENCE public.sip_tsitio_id_seq
 
 CREATE TABLE public.sip_tsitio (
     id integer DEFAULT nextval('public.sip_tsitio_id_seq'::regclass) NOT NULL,
-    nombre character varying(500) COLLATE public.es_co_utf_8 NOT NULL,
+    nombre character varying(500) NOT NULL COLLATE public.es_co_utf_8,
     fechacreacion date DEFAULT ('now'::text)::date NOT NULL,
     fechadeshabilitacion date,
     created_at timestamp without time zone,
@@ -1468,6 +1510,13 @@ ALTER TABLE ONLY public.sip_actorsocial_persona ALTER COLUMN id SET DEFAULT next
 
 
 --
+-- Name: sip_bitacora id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sip_bitacora ALTER COLUMN id SET DEFAULT nextval('public.sip_bitacora_id_seq'::regclass);
+
+
+--
 -- Name: sip_fuenteprensa id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1633,6 +1682,14 @@ ALTER TABLE ONLY public.sip_actorsocial_persona
 
 ALTER TABLE ONLY public.sip_actorsocial
     ADD CONSTRAINT sip_actorsocial_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sip_bitacora sip_bitacora_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sip_bitacora
+    ADD CONSTRAINT sip_bitacora_pkey PRIMARY KEY (id);
 
 
 --
@@ -2036,6 +2093,14 @@ ALTER TABLE ONLY public.lote
 
 ALTER TABLE ONLY public.iporganizacion
     ADD CONSTRAINT fk_rails_2831af4765 FOREIGN KEY (organizacion_id) REFERENCES public.organizacion(id);
+
+
+--
+-- Name: sip_bitacora fk_rails_2db961766c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sip_bitacora
+    ADD CONSTRAINT fk_rails_2db961766c FOREIGN KEY (usuario_id) REFERENCES public.usuario(id);
 
 
 --
@@ -2463,6 +2528,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190926104116'),
 ('20191205200007'),
 ('20191205202150'),
-('20191205204511');
+('20191205204511'),
+('20191219011910'),
+('20200228235200'),
+('20200319183515');
 
 
