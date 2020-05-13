@@ -42,8 +42,8 @@ module Sal7711Gen
             lote.candcategoria2_id, lote.candcategoria3_id]
           @iccategoriaprensa = true
         end
-
       end
+      render 'edit', layout: 'application'
     end
 
 
