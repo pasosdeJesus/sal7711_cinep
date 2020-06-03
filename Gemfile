@@ -33,7 +33,7 @@ gem 'prawn' # Para generar PDF
 
 gem 'puma'
 
-gem 'rails', '~> 6.0.0.rc1' # Rails (internacionalización)
+gem 'rails', '~> 6.0.3.1' # Rails (internacionalización)
 
 gem 'rails-i18n'
 
