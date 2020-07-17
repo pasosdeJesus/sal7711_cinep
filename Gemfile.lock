@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: e1cc4a33c975af7e4ea82cac3935832133e9ce04
+  revision: 2af2fcb3a1c8b2572469064a7cb029204fd10561
   specs:
     sal7711_gen (1.0.b3)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 2455fe0a67d3f164d29566912bab4b72fbf71b0b
+  revision: dc9e2fce4bc6710661a75cf4413959f4995ac4a9
   specs:
     sip (2.0.b10)
       cancancan
@@ -275,7 +275,7 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.8)
       rack (>= 2.0.6)
-    web-console (4.0.3)
+    web-console (4.0.4)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
@@ -291,7 +291,7 @@ GEM
     will_paginate (3.3.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.3.1)
+    zeitwerk (2.4.0)
 
 PLATFORMS
   ruby
