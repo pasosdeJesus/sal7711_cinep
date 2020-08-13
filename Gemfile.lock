@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: af9e0969b3dd2cf0c7c4e222b2b7e64b6859ce76
+  revision: 072a1273e56b2de64f7d2de7d2d8a61e95c1e741
   specs:
     sal7711_gen (1.0.b3)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 90411f97d1bcded6493604730d17029c3d186ada
+  revision: 26047ecf238d45a9389f356cc94c77ac80674b27
   specs:
     sip (2.0.b10)
       cancancan
@@ -94,7 +94,7 @@ GEM
     bcrypt (3.1.15)
     bigdecimal (2.0.0)
     bindex (0.8.1)
-    bootsnap (1.4.7)
+    bootsnap (1.4.8)
       msgpack (~> 1.0)
     builder (3.2.4)
     camertron-eprun (1.1.1)
