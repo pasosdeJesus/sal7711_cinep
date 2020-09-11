@@ -13,17 +13,17 @@ gem 'cancancan'
 
 gem 'cocoon', git: 'https://github.com/vtamara/cocoon.git'
 
-gem 'coffee-rails' # CoffeeScript para recuersos .js.coffee y vistas
+gem 'coffee-rails' , '>= 5.0.0' # CoffeeScript para recuersos .js.coffee y vistas
 
-gem 'devise' # Autenticación 
+gem 'devise' , '>= 4.7.2' # Autenticación 
 
-gem 'devise-i18n'
+gem 'devise-i18n', '>= 1.9.2'
 
 gem 'jbuilder' # API JSON facil. Ver: https://github.com/rails/jbuilder
 
 gem 'lazybox' # Dialogo modal
 
-gem 'mail_form'
+gem 'mail_form', '>= 1.8.0'
 
 gem 'paperclip' # Maneja adjuntos
 
@@ -33,13 +33,13 @@ gem 'prawn' # Para generar PDF
 
 gem 'puma'
 
-gem 'rails', '~> 6.0.0.rc1' # Rails (internacionalización)
+gem 'rails', '~> 6.0.3.3' # Rails (internacionalización)
 
-gem 'rails-i18n'
+gem 'rails-i18n', '>= 6.0.0'
 
-gem 'sassc-rails' # Para generar CSS
+gem 'sassc-rails' , '>= 2.1.2' # Para generar CSS
 
-gem 'simple_form' # Formularios simples 
+gem 'simple_form' , '>= 5.0.2' # Formularios simples 
 
 gem 'tiny_tds'
 
@@ -47,7 +47,7 @@ gem 'twitter_cldr' # ICU con CLDR
 
 gem 'tzinfo' # Zonas horarias
 
-gem 'webpacker'
+gem 'webpacker', '>= 5.2.1'
 
 gem 'will_paginate' # Listados en páginas
 
@@ -76,7 +76,7 @@ end
 
 group :development do
 
-  gem 'web-console' # Consola irb en páginas 
+  gem 'web-console' , '>= 4.0.4' # Consola irb en páginas 
 
 end
 
