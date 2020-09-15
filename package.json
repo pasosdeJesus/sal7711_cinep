@@ -9,6 +9,7 @@
     "expose-loader": "^0.7.5",
     "jquery": "^3.5.1",
     "jquery-ui": "^1.12.1",
+    "node-forge": "0.10.0",
     "pick-a-color": "^1.2.3",
     "popper.js": "^1.16.0",
     "serialize-javascript": "2.1.1",
