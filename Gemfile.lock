@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 6277e99abbed2815e31a627fd41f9cb351acebcf
+  revision: fd3ef3674fe3ce41f6e94b2ff970113cb75e5e74
   specs:
     sal7711_gen (1.0.b3)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: f8363ea2ed1beb9e3dedf170ada4fcfd00e883cd
+  revision: 9cb0829dc2a59726c26107c5e3dc07c0fa3be2de
   specs:
     sip (2.0.b10)
       cancancan
@@ -124,7 +124,7 @@ GEM
     colorize (0.8.1)
     concurrent-ruby (1.1.7)
     crass (1.0.6)
-    devise (4.7.2)
+    devise (4.7.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0)
@@ -224,7 +224,7 @@ GEM
       thor (>= 0.20.3, < 2.0)
     raindrops (0.19.1)
     rake (13.0.1)
-    regexp_parser (1.7.1)
+    regexp_parser (1.8.0)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
