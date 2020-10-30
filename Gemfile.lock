@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: dd145cbe88b7e74146409dc92b78db383ced2140
+  revision: e5ce71589027abf670e67797fd920d0fcd7f1b1b
   specs:
     sal7711_gen (1.0.b3)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 78cb44e701aba2f608219d30d8e7c230d02bb93a
+  revision: 3050aa4f2c5ac4ca0e3908ce3fa56a8fe5e80a34
   specs:
     sip (2.0.b10)
       cancancan
@@ -187,7 +187,7 @@ GEM
       pdf-core (~> 0.8.1)
       ttfunk (~> 1.6)
     public_suffix (4.0.6)
-    puma (5.0.3)
+    puma (5.0.4)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-proxy (0.6.5)
@@ -266,7 +266,7 @@ GEM
     tilt (2.0.10)
     tiny_tds (2.1.3)
     ttfunk (1.6.2.1)
-    twitter_cldr (6.2.0)
+    twitter_cldr (6.3.0)
       camertron-eprun
       cldr-plurals-runtime-rb (~> 1.0)
       tzinfo
@@ -293,7 +293,7 @@ GEM
     will_paginate (3.3.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.4.0)
+    zeitwerk (2.4.1)
 
 PLATFORMS
   ruby
