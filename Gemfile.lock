@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: e5ce71589027abf670e67797fd920d0fcd7f1b1b
+  revision: 9c55b1ef875f630b464c6c6c3e87665528f195ef
   specs:
     sal7711_gen (1.0.b3)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 3050aa4f2c5ac4ca0e3908ce3fa56a8fe5e80a34
+  revision: e9fea25b32b41665f8e4c6c258004ab4cefd132e
   specs:
     sip (2.0.b10)
       cancancan
@@ -94,7 +94,7 @@ GEM
     bcrypt (3.1.16)
     bigdecimal (2.0.0)
     bindex (0.8.1)
-    bootsnap (1.4.9)
+    bootsnap (1.5.0)
       msgpack (~> 1.0)
     builder (3.2.4)
     camertron-eprun (1.1.1)
@@ -160,7 +160,7 @@ GEM
     method_source (1.0.0)
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2020.0512)
+    mime-types-data (3.2020.1104)
     mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
@@ -277,7 +277,7 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.9)
       rack (>= 2.0.9)
-    web-console (4.0.4)
+    web-console (4.1.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
