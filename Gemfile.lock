@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 721da5d56a92ca6fd7f6141913028b2d1117a473
+  revision: 00404af5c42ff823412120327b3e4409ddb70d82
   specs:
     sal7711_gen (1.0.b3)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: d6623e3e1b0efa4b368071ed9562d776db560aec
+  revision: 3ad0b2864c634b7fe695952df5dfc162f025a82f
   specs:
     sip (2.0.b10)
       cancancan
@@ -187,7 +187,7 @@ GEM
       pdf-core (~> 0.8.1)
       ttfunk (~> 1.6)
     public_suffix (4.0.6)
-    puma (5.0.4)
+    puma (5.1.0)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-proxy (0.6.5)
