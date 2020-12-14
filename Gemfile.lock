@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: ecf3a51124b9c933d1c2a9b46730ab0b5b4c9231
+  revision: 6d52626d5ff7c852266f6f702cc298f1451deb9f
   specs:
     sal7711_gen (1.0.b3)
       rails
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 3ad0b2864c634b7fe695952df5dfc162f025a82f
+  revision: f2690d5cce0c3a46d8686bac2ad29219d24a240a
   specs:
     sip (2.0.b10)
       cancancan
@@ -98,7 +98,7 @@ GEM
       msgpack (~> 1.0)
     builder (3.2.4)
     camertron-eprun (1.1.1)
-    cancancan (3.1.0)
+    cancancan (3.2.0)
     capybara (3.34.0)
       addressable
       mini_mime (>= 0.1.3)
@@ -187,7 +187,7 @@ GEM
       pdf-core (~> 0.8.1)
       ttfunk (~> 1.6)
     public_suffix (4.0.6)
-    puma (5.1.0)
+    puma (5.1.1)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-proxy (0.6.5)
@@ -242,7 +242,7 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
-    semantic_range (2.3.0)
+    semantic_range (2.3.1)
     simple_form (5.0.3)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -318,7 +318,7 @@ DEPENDENCIES
   pg
   prawn
   puma
-  rails (~> 6.0.0.rc1)
+  rails (~> 6.0.3.4)
   rails-i18n
   sal7711_gen!
   sassc-rails
