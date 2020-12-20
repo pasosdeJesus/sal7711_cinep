@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-
 gem 'bcrypt'
 
 gem 'bigdecimal'
@@ -33,7 +32,7 @@ gem 'prawn' # Para generar PDF
 
 gem 'puma'
 
-gem 'rails', '~> 6.0.3.4'
+gem 'rails', '~> 6.1.0'
 
 gem 'rails-i18n'
 
@@ -57,7 +56,7 @@ gem 'will_paginate' # Listados en páginas
 # lógico y no alfabetico como las gemas anteriores) 
 
 gem 'sip', # Motor generico
-  git: 'https://github.com/pasosdeJesus/sip.git'
+  git: 'https://github.com/pasosdeJesus/sip.git', branch: 'rails6.1'
   #path: '../sip'
 
 gem 'sal7711_gen', # Motor de archivo de prensa
