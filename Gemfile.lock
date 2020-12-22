@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: b6e128bcf741cdcb9b8b8d3cc41aa8440ecc5431
+  revision: 842718f672197d7aea38ba40172d62e0518f9522
   specs:
     sal7711_gen (1.0.b3)
       rails
@@ -8,8 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: e83041f12689ab8b70a9e490543eab2ea5c40d5e
-  branch: rails6.1
+  revision: 6fa794880f43a123a3d7fb766f7ad61ce429006b
   specs:
     sip (2.0.b10)
       cancancan
@@ -140,7 +139,7 @@ GEM
     docile (1.3.3)
     erubi (1.10.0)
     execjs (2.7.0)
-    ffi (1.14.1)
+    ffi (1.14.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     i18n (1.8.5)
@@ -149,7 +148,7 @@ GEM
       activesupport (>= 5.0.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    json (2.4.1)
+    json (2.5.0)
     kgio (2.11.3)
     lazybox (1.1.5)
     loofah (2.8.0)
