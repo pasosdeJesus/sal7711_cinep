@@ -24,6 +24,8 @@ gem 'lazybox' # Dialogo modal
 
 gem 'mail_form'
 
+gem 'nokogiri', '>=1.11.0.rc4'
+
 gem 'paperclip' # Maneja adjuntos
 
 gem 'pg' # Postgresql
