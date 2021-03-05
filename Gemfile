@@ -67,11 +67,11 @@ gem 'sal7711_gen', # Motor de archivo de prensa
 
 
 group :development, :test do
-
   #gem 'byebug', platform: :mri # Depurar
 
   gem 'colorize' # Colores en consola
 
+  gem 'rails-erd'
 end
 
 
