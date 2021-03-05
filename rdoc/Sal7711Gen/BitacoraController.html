@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class Sal7711Gen::BitacoraController - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
+</script>
+
+<script src="../js/navigation.js" defer></script>
+<script src="../js/search.js" defer></script>
+<script src="../js/search_index.js" defer></script>
+<script src="../js/searcher.js" defer></script>
+<script src="../js/darkfish.js" defer></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+<div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  <p class="link"><a href="../ApplicationController.html">ApplicationController</a>
+</div>
+
+    
+<div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+    <li><span class="include">Sal7711Gen::Concerns::Controllers::BitacoraController</span>
+    <li><span class="include">Sip::FormatoFechaHelper</span>
+  </ul>
+</div>
+
+    
+    
+<!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    <li ><a href="#method-i-admin">#admin</a>
+    <li ><a href="#method-i-filtro_fechas">#filtro_fechas</a>
+    <li ><a href="#method-i-filtro_idbasica">#filtro_idbasica</a>
+    <li ><a href="#method-i-tiempo">#tiempo</a>
+    <li ><a href="#method-i-usuario">#usuario</a>
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-Sal7711Gen::BitacoraController">
+  <h1 id="class-Sal7711Gen::BitacoraController" class="class">
+    class Sal7711Gen::BitacoraController
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  <section id="5Buntitled-5D" class="documentation-section">
+
+
+
+
+
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+      <div id="method-i-admin" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">admin</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="admin-source">
+            <pre><span class="ruby-comment"># File app/controllers/sal7711_gen/bitacora_controller.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">admin</span>
+  <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">Sal7711Gen</span><span class="ruby-operator">::</span><span class="ruby-constant">Bitacora</span>
+
+  <span class="ruby-identifier">w</span> = <span class="ruby-identifier">filtro_fechas</span>(<span class="ruby-value">:consultausuario</span>, <span class="ruby-string">&#39;&#39;</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">w</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;&#39;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:consultausuario</span>]
+    <span class="ruby-identifier">w</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; AND fecha &gt;= &#39;#{Date.today.beginning_of_month.to_s}&#39;&quot;</span>
+    <span class="ruby-identifier">w</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; AND fecha &lt;= &#39;#{Date.today.end_of_month.to_s}&#39;&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@usuarioscons</span> = <span class="ruby-constant">Sal7711Gen</span><span class="ruby-operator">::</span><span class="ruby-constant">Bitacora</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">select_rows</span>(
+    <span class="ruby-node">&quot;SELECT b.id, fecha, nusuario, ip, operacion
+      FROM public.sal7711_gen_bitacora AS b, public.usuario 
+      WHERE usuario_id=usuario.id #{w}
+      ORDER BY fecha &quot;</span>
+  )
+  <span class="ruby-ivar">@totconsultas</span> = <span class="ruby-ivar">@usuarioscons</span>.<span class="ruby-identifier">count</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-filtro_fechas" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">filtro_fechas</span><span
+            class="method-args">(form, w)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="filtro_fechas-source">
+            <pre><span class="ruby-comment"># File app/controllers/sal7711_gen/bitacora_controller.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">filtro_fechas</span>(<span class="ruby-identifier">form</span>, <span class="ruby-identifier">w</span>)
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">params</span>[<span class="ruby-identifier">form</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">form</span>][<span class="ruby-value">:fechaini</span>] <span class="ruby-operator">&amp;&amp;</span> 
+      <span class="ruby-identifier">params</span>[<span class="ruby-identifier">form</span>][<span class="ruby-value">:fechaini</span>] <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;&#39;</span>)
+    <span class="ruby-identifier">pfi</span> = <span class="ruby-identifier">fecha_local_estandar</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">form</span>][<span class="ruby-value">:fechaini</span>])
+    <span class="ruby-identifier">w</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; AND fecha &gt;= &#39;#{pfi}&#39;&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">form</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">form</span>][<span class="ruby-value">:fechafin</span>] <span class="ruby-operator">&amp;&amp;</span> 
+     <span class="ruby-identifier">params</span>[<span class="ruby-identifier">form</span>][<span class="ruby-value">:fechafin</span>] <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;&#39;</span>)
+    <span class="ruby-identifier">pff</span> = <span class="ruby-identifier">fecha_local_estandar</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">form</span>][<span class="ruby-value">:fechafin</span>])
+    <span class="ruby-identifier">w</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; AND fecha &lt;= &#39;#{pff}&#39;&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">w</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-filtro_idbasica" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">filtro_idbasica</span><span
+            class="method-args">(form, campo)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="filtro_idbasica-source">
+            <pre><span class="ruby-comment"># File app/controllers/sal7711_gen/bitacora_controller.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">filtro_idbasica</span>(<span class="ruby-identifier">form</span>, <span class="ruby-identifier">campo</span>)
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">params</span>[<span class="ruby-identifier">form</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">form</span>][<span class="ruby-identifier">campo</span>] <span class="ruby-operator">&amp;&amp;</span> 
+      <span class="ruby-identifier">params</span>[<span class="ruby-identifier">form</span>][<span class="ruby-identifier">campo</span>] <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;&#39;</span>)
+    <span class="ruby-identifier">o</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">form</span>][<span class="ruby-identifier">campo</span>].<span class="ruby-identifier">to_i</span>
+    <span class="ruby-identifier">w</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; AND #{campo} = &#39;#{o}&#39;&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-tiempo" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">tiempo</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="tiempo-source">
+            <pre><span class="ruby-comment"># File app/controllers/sal7711_gen/bitacora_controller.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tiempo</span>
+  <span class="ruby-ivar">@fechaini</span> = (<span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>).<span class="ruby-identifier">to_s</span>
+  <span class="ruby-ivar">@fechafin</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">tini</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-ivar">@fechaini</span> <span class="ruby-operator">+</span>  <span class="ruby-string">&quot; 00:00&quot;</span>) <span class="ruby-comment">#Tiempo local</span>
+  <span class="ruby-identifier">tfin</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-ivar">@fechafin</span> <span class="ruby-operator">+</span>  <span class="ruby-string">&quot; 23:59&quot;</span>)
+  <span class="ruby-ivar">@intervalo</span> = <span class="ruby-value">60</span> <span class="ruby-comment"># En segundos</span>
+  <span class="ruby-identifier">c</span> = <span class="ruby-node">&quot;SELECT nusuario, operacion, fecha FROM public.sal7711_gen_bitacora 
+      JOIN public.usuario ON usuario_id=usuario.id WHERE
+      fecha&gt;=&#39;#{tini.getgm}&#39; and fecha&lt;=&#39;#{tfin.getgm}&#39; ORDER BY fecha DESC&quot;</span>
+  <span class="ruby-identifier">filas</span> = <span class="ruby-constant">Sal7711Gen</span><span class="ruby-operator">::</span><span class="ruby-constant">Bitacora</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">select_rows</span>(<span class="ruby-identifier">c</span>)
+  <span class="ruby-identifier">usuarios</span> = {}
+  <span class="ruby-identifier">op_index</span> = {}
+  <span class="ruby-identifier">op_mostraruno</span> = {}
+  <span class="ruby-identifier">filas</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+    <span class="ruby-comment"># Base retorna tiempo en UTC</span>
+    <span class="ruby-identifier">tp</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">f</span>[<span class="ruby-value">2</span>].<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; UTC&#39;</span>).<span class="ruby-identifier">to_i</span>
+    <span class="ruby-identifier">tii</span> = <span class="ruby-identifier">tini</span>.<span class="ruby-identifier">to_i</span>
+    <span class="ruby-identifier">i</span> =  (<span class="ruby-identifier">tp</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">tii</span>) <span class="ruby-operator">/</span> <span class="ruby-ivar">@intervalo</span>
+    <span class="ruby-identifier">i</span> = <span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_i</span>
+    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">usuarios</span>[<span class="ruby-identifier">i</span>]) 
+      <span class="ruby-identifier">usuarios</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">add</span>(<span class="ruby-identifier">f</span>[<span class="ruby-value">0</span>])
+    <span class="ruby-keyword">else</span> 
+      <span class="ruby-identifier">usuarios</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span> [<span class="ruby-identifier">f</span>[<span class="ruby-value">0</span>]]
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">op_index</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-value">0</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">op_index</span>[<span class="ruby-identifier">i</span>]
+    <span class="ruby-identifier">op_index</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> <span class="ruby-keyword">if</span>  <span class="ruby-identifier">f</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;index&#39;</span>
+    <span class="ruby-identifier">op_mostraruno</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-value">0</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">op_mostraruno</span>[<span class="ruby-identifier">i</span>]
+    <span class="ruby-identifier">op_mostraruno</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> <span class="ruby-keyword">if</span>  <span class="ruby-identifier">f</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;mostraruno&#39;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@tiempocons</span> = []
+  <span class="ruby-identifier">usuarios</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span>, <span class="ruby-identifier">cn</span><span class="ruby-operator">|</span> 
+   <span class="ruby-ivar">@tiempocons</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-identifier">tini</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">i</span><span class="ruby-operator">*</span><span class="ruby-ivar">@intervalo</span>).<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">cn</span>.<span class="ruby-identifier">count</span>, <span class="ruby-identifier">op_index</span>[<span class="ruby-identifier">i</span>], <span class="ruby-identifier">op_mostraruno</span>[<span class="ruby-identifier">i</span>]]
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-usuario" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">usuario</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          <p>Prepara una página de resultados</p>
+
+          <div class="method-source-code" id="usuario-source">
+            <pre><span class="ruby-comment"># File app/controllers/sal7711_gen/bitacora_controller.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">usuario</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_usuario</span>
+    <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:buscar</span>, <span class="ruby-value">:index</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@consultas</span> = <span class="ruby-constant">Bitacora</span>.<span class="ruby-identifier">all</span>.<span class="ruby-identifier">where</span>(
+    <span class="ruby-value">usuario_id:</span> <span class="ruby-identifier">current_usuario</span>.<span class="ruby-identifier">id</span>,
+    <span class="ruby-value">operacion:</span> <span class="ruby-string">&#39;index&#39;</span>).<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;fecha desc&#39;</span>).<span class="ruby-identifier">limit</span>(<span class="ruby-identifier">@@porpag</span>)
+
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-value">partial:</span> <span class="ruby-string">&#39;consultausuario&#39;</span> }
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">json</span> { <span class="ruby-identifier">head</span> <span class="ruby-value">:no_content</span> }
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">js</span>   { <span class="ruby-identifier">render</span> <span class="ruby-value">partial:</span> <span class="ruby-string">&#39;consultausuario&#39;</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

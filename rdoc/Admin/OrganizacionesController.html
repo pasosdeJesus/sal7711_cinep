@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class Admin::OrganizacionesController - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
+</script>
+
+<script src="../js/navigation.js" defer></script>
+<script src="../js/search.js" defer></script>
+<script src="../js/search_index.js" defer></script>
+<script src="../js/searcher.js" defer></script>
+<script src="../js/darkfish.js" defer></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+<div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  <p class="link">Sip::Admin::BasicasController
+</div>
+
+    
+    
+    
+<!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    <li ><a href="#method-i-atributos_form">#atributos_form</a>
+    <li ><a href="#method-i-atributos_index">#atributos_index</a>
+    <li ><a href="#method-i-atributos_show">#atributos_show</a>
+    <li ><a href="#method-i-clase">#clase</a>
+    <li ><a href="#method-i-new">#new</a>
+    <li ><a href="#method-i-organizacion_params">#organizacion_params</a>
+    <li ><a href="#method-i-set_organizacion">#set_organizacion</a>
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-Admin::OrganizacionesController">
+  <h1 id="class-Admin::OrganizacionesController" class="class">
+    class Admin::OrganizacionesController
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  <section id="5Buntitled-5D" class="documentation-section">
+
+
+
+
+
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+      <div id="method-i-atributos_form" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">atributos_form</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="atributos_form-source">
+            <pre><span class="ruby-comment"># File app/controllers/admin/organizaciones_controller.rb, line 47</span>
+          <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">atributos_form</span>
+<span class="ruby-identifier">atributos_show</span> <span class="ruby-operator">-</span> [<span class="ruby-string">&#39;id&#39;</span>]
+          <span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-atributos_index" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">atributos_index</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="atributos_index-source">
+            <pre><span class="ruby-comment"># File app/controllers/admin/organizaciones_controller.rb, line 16</span>
+          <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">atributos_index</span>
+[<span class="ruby-string">&quot;id&quot;</span>, 
+ <span class="ruby-string">&quot;nombre&quot;</span>, 
+ <span class="ruby-string">&quot;usuarioip_id&quot;</span>, 
+ <span class="ruby-string">&quot;autoregistro&quot;</span>, 
+ <span class="ruby-string">&quot;fechacreacion_localizada&quot;</span>, 
+ <span class="ruby-string">&quot;habilitado&quot;</span>  
+]
+          <span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-atributos_show" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">atributos_show</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="atributos_show-source">
+            <pre><span class="ruby-comment"># File app/controllers/admin/organizaciones_controller.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">atributos_show</span>
+  [<span class="ruby-string">&quot;id&quot;</span>, 
+   <span class="ruby-string">&quot;nombre&quot;</span>, 
+   <span class="ruby-string">&quot;observaciones&quot;</span>, 
+   <span class="ruby-string">&quot;usuarioip_id&quot;</span>, 
+   <span class="ruby-string">&quot;fecharenovacion&quot;</span>,
+   <span class="ruby-string">&quot;diasvigencia&quot;</span>, 
+   <span class="ruby-string">&quot;autoregistro&quot;</span>, 
+   <span class="ruby-string">&quot;dominiocorreo&quot;</span>, 
+   <span class="ruby-string">&quot;pexcluyecorreo&quot;</span>, 
+   <span class="ruby-string">&quot;iporganizacion&quot;</span>, 
+   <span class="ruby-string">&quot;url_logoinst&quot;</span>,
+   <span class="ruby-string">&quot;opciones_url_nombre_cif&quot;</span>,
+   <span class="ruby-string">&quot;opciones_url_puerto_cif&quot;</span>,
+   <span class="ruby-string">&quot;opciones_url_nombre_nocif&quot;</span>,
+   <span class="ruby-string">&quot;opciones_url_puerto_nocif&quot;</span>,
+   <span class="ruby-string">&quot;fechacreacion_localizada&quot;</span>, 
+   <span class="ruby-string">&quot;fechadeshabilitacion_localizada&quot;</span>  ]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-clase" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">clase</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="clase-source">
+            <pre><span class="ruby-comment"># File app/controllers/admin/organizaciones_controller.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clase</span> 
+        <span class="ruby-string">&quot;Organizacion&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-new" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File app/controllers/admin/organizaciones_controller.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">new</span>
+  <span class="ruby-ivar">@registro</span> = <span class="ruby-identifier">clase</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@registro</span>.<span class="ruby-identifier">nombre</span> = <span class="ruby-string">&#39;O&#39;</span>
+  <span class="ruby-ivar">@registro</span>.<span class="ruby-identifier">created_at</span> = <span class="ruby-ivar">@registro</span>.<span class="ruby-identifier">updated_at</span> =  
+    <span class="ruby-ivar">@registro</span>.<span class="ruby-identifier">fechacreacion</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>
+  
+  <span class="ruby-ivar">@registro</span>.<span class="ruby-identifier">save!</span>(<span class="ruby-value">validate:</span> <span class="ruby-keyword">false</span>)
+  <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">main_app</span>.<span class="ruby-identifier">edit_admin_organizacion_path</span>(<span class="ruby-ivar">@registro</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-organizacion_params" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">organizacion_params</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="organizacion_params-source">
+            <pre><span class="ruby-comment"># File app/controllers/admin/organizaciones_controller.rb, line 63</span>
+          <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">organizacion_params</span>
+<span class="ruby-identifier">at</span> = <span class="ruby-identifier">atributos_form</span> <span class="ruby-operator">-</span> [<span class="ruby-string">&quot;id&quot;</span>] <span class="ruby-operator">-</span> [<span class="ruby-string">&#39;iporganizacion&#39;</span>]
+<span class="ruby-identifier">at</span> <span class="ruby-operator">+=</span> [ <span class="ruby-value">:iporganizacion_attributes</span> <span class="ruby-operator">=&gt;</span> [ <span class="ruby-value">:id</span>, <span class="ruby-value">:ipcadena</span>, <span class="ruby-value">:_destroy</span>] ]
+                  <span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span>(<span class="ruby-value">:organizacion</span>).<span class="ruby-identifier">permit</span>( <span class="ruby-operator">*</span>(<span class="ruby-identifier">at</span>))
+          <span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-set_organizacion" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">set_organizacion</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="set_organizacion-source">
+            <pre><span class="ruby-comment"># File app/controllers/admin/organizaciones_controller.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">set_organizacion</span>
+        <span class="ruby-ivar">@basica</span> = <span class="ruby-constant">Organizacion</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class Ability - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+  var index_rel_prefix = "./";
+</script>
+
+<script src="./js/navigation.js" defer></script>
+<script src="./js/search.js" defer></script>
+<script src="./js/search_index.js" defer></script>
+<script src="./js/searcher.js" defer></script>
+<script src="./js/darkfish.js" defer></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+<div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  <p class="link">Sal7711Gen::Ability
+</div>
+
+    
+    
+    
+<!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    <li ><a href="#method-c-new">::new</a>
+    <li ><a href="#method-c-ultimo_error_aut">::ultimo_error_aut</a>
+    <li ><a href="#method-c-ultimo_error_aut-3D">::ultimo_error_aut=</a>
+    <li ><a href="#method-i-basicas_id_noauto">#basicas_id_noauto</a>
+    <li ><a href="#method-i-nobasicas_indice_seq_con_id">#nobasicas_indice_seq_con_id</a>
+    <li ><a href="#method-i-tablasbasicas">#tablasbasicas</a>
+    <li ><a href="#method-i-tablasbasicas_prio">#tablasbasicas_prio</a>
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-Ability">
+  <h1 id="class-Ability" class="class">
+    class Ability
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  <section id="5Buntitled-5D" class="documentation-section">
+
+
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+        <dt id="BASICAS_PROPIAS">BASICAS_PROPIAS
+        <dd>
+        <dt id="NOBASICAS_INDSEQID">NOBASICAS_INDSEQID
+        <dd>
+        <dt id="ROLADMIN">ROLADMIN
+        <dd>
+        <dt id="ROLADMINORG">ROLADMINORG
+        <dd>
+        <dt id="ROLES">ROLES
+        <dd>
+        <dt id="ROLES_CA">ROLES_CA
+        <dd>
+        <dt id="ROLINDEXADOR">ROLINDEXADOR
+        <dd>
+        <dt id="ROLINV">ROLINV
+        <dd>
+        <dt id="ROLINVANON">ROLINVANON
+        <dd>
+      </dl>
+    </section>
+
+
+
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+      <div id="method-c-new" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(usuario = nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          <p>Autorizacion con CAnCanCan</p>
+
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File app/models/ability.rb, line 106</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">usuario</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-comment"># El primer argumento para can es la acción a la que se da permiso,</span>
+  <span class="ruby-comment"># el segundo es el recurso sobre el que puede realizar la acción,</span>
+  <span class="ruby-comment"># el tercero opcional es un diccionario de condiciones para filtrar</span>
+  <span class="ruby-comment"># más (e.g :publicado =&gt; true).</span>
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment"># El primer argumento puede ser :manage para indicar toda acción,</span>
+  <span class="ruby-comment"># o grupos de acciones como :read (incluye :show e :index),</span>
+  <span class="ruby-comment"># :create, :update y :destroy.</span>
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment"># Si como segundo argumento usa :all se aplica a todo recurso,</span>
+  <span class="ruby-comment"># o puede ser una clase.</span>
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment"># Detalles en el wiki de cancan:</span>
+  <span class="ruby-comment">#   https://github.com/ryanb/cancan/wiki/Defining-Abilities</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">usuario</span>
+      <span class="ruby-keyword">return</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">usuario</span>.<span class="ruby-identifier">fechadeshabilitacion</span>
+  <span class="ruby-identifier">can</span> <span class="ruby-value">:contar</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Ubicacion</span>
+  <span class="ruby-identifier">can</span> <span class="ruby-value">:buscar</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Ubicacion</span>
+  <span class="ruby-identifier">can</span> <span class="ruby-value">:lista</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Ubicacion</span>
+  <span class="ruby-identifier">can</span> <span class="ruby-value">:index</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Pais</span>
+  <span class="ruby-identifier">can</span> <span class="ruby-value">:read</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Departamento</span>
+  <span class="ruby-identifier">can</span> <span class="ruby-value">:index</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Departamento</span>
+  <span class="ruby-identifier">can</span> <span class="ruby-value">:read</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Municipio</span>
+  <span class="ruby-identifier">can</span> <span class="ruby-value">:index</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Municipio</span>
+  <span class="ruby-identifier">can</span> <span class="ruby-value">:index</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Clase</span>
+  <span class="ruby-identifier">can</span> <span class="ruby-value">:descarga_anexo</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Anexo</span>
+  <span class="ruby-identifier">can</span> <span class="ruby-value">:nuevo</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Ubicacion</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">usuario</span>.<span class="ruby-identifier">rol</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">diasv</span> = <span class="ruby-identifier">usuario</span>.<span class="ruby-identifier">diasvigencia</span>
+    <span class="ruby-identifier">fechar</span> = <span class="ruby-identifier">usuario</span>.<span class="ruby-identifier">fecharenovacion</span>
+    <span class="ruby-identifier">pdom</span> = <span class="ruby-identifier">usuario</span>.<span class="ruby-identifier">email</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;@&quot;</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">pdom</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span> 
+      <span class="ruby-identifier">dom</span> = <span class="ruby-identifier">pdom</span>[<span class="ruby-value">1</span>]
+      <span class="ruby-identifier">org</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Organizacion</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">dominiocorreo:</span> <span class="ruby-identifier">dom</span>).<span class="ruby-identifier">take</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">org</span> <span class="ruby-comment"># plan corporativo correo</span>
+        <span class="ruby-identifier">diasv</span> = <span class="ruby-identifier">org</span>.<span class="ruby-identifier">diasvigencia</span>
+        <span class="ruby-identifier">fechar</span> = <span class="ruby-identifier">org</span>.<span class="ruby-identifier">fecharenovacion</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">can</span> <span class="ruby-value">:read</span>, <span class="ruby-constant">Sal7711Gen</span><span class="ruby-operator">::</span><span class="ruby-constant">Articulo</span>
+    <span class="ruby-identifier">can</span> <span class="ruby-value">:read</span>, <span class="ruby-constant">Sal7711Gen</span><span class="ruby-operator">::</span><span class="ruby-constant">Categoriaprensa</span>
+    <span class="ruby-identifier">can</span> <span class="ruby-value">:read</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Ubicacion</span>
+    <span class="ruby-identifier">can</span> <span class="ruby-value">:new</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Ubicacion</span>
+    <span class="ruby-identifier">can</span> [<span class="ruby-value">:update</span>, <span class="ruby-value">:create</span>, <span class="ruby-value">:destroy</span>], <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Ubicacion</span>
+    <span class="ruby-identifier">revisarvig</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">usuario</span>.<span class="ruby-identifier">rol</span> 
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Ability</span><span class="ruby-operator">::</span><span class="ruby-constant">ROLINVANON</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Ability</span><span class="ruby-operator">::</span><span class="ruby-constant">ROLINV</span>
+      <span class="ruby-identifier">can</span> <span class="ruby-value">:cambiarclave</span>, <span class="ruby-operator">::</span><span class="ruby-constant">Usuario</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Ability</span><span class="ruby-operator">::</span><span class="ruby-constant">ROLADMINORG</span>
+      <span class="ruby-identifier">can</span> <span class="ruby-value">:cambiarclave</span>, <span class="ruby-operator">::</span><span class="ruby-constant">Usuario</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Ability</span><span class="ruby-operator">::</span><span class="ruby-constant">ROLINDEXADOR</span>
+      <span class="ruby-identifier">revisarvig</span> = <span class="ruby-keyword">false</span>
+      <span class="ruby-identifier">can</span> <span class="ruby-value">:cambiarclave</span>, <span class="ruby-operator">::</span><span class="ruby-constant">Usuario</span>
+      <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Ubicacion</span>
+      <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">Sal7711Gen</span><span class="ruby-operator">::</span><span class="ruby-constant">Articulo</span>
+      <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">Lote</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Ability</span><span class="ruby-operator">::</span><span class="ruby-constant">ROLADMIN</span>
+      <span class="ruby-identifier">revisarvig</span> = <span class="ruby-keyword">false</span>
+      <span class="ruby-identifier">can</span> <span class="ruby-value">:cambiarclave</span>, <span class="ruby-operator">::</span><span class="ruby-constant">Usuario</span>
+      <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">Sal7711Gen</span><span class="ruby-operator">::</span><span class="ruby-constant">Bitacora</span>
+      <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">Sal7711Gen</span><span class="ruby-operator">::</span><span class="ruby-constant">Categoriaprensa</span>
+      <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">Sal7711Gen</span><span class="ruby-operator">::</span><span class="ruby-constant">Articulo</span>
+      <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Ubicacion</span>
+      <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">Usuario</span>
+      <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-constant">Lote</span>
+      <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-value">:tablasbasicas</span>
+      <span class="ruby-identifier">tablasbasicas</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">c</span> = <span class="ruby-constant">Ability</span>.<span class="ruby-identifier">tb_clase</span>(<span class="ruby-identifier">t</span>)
+        <span class="ruby-identifier">can</span> <span class="ruby-value">:manage</span>, <span class="ruby-identifier">c</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">revisarvig</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">diasv</span>  <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">fechar</span>
+        <span class="ruby-identifier">@@ultimo_error_aut</span> = 
+          <span class="ruby-string">&quot;Usuario sin fecha de renovación o tiempo de vigencia&quot;</span>
+        <span class="ruby-keyword">return</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">fechaf</span> = <span class="ruby-identifier">fechar</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">diasv</span>
+      <span class="ruby-identifier">hoy</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">hoy</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">fechar</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">hoy</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">fechaf</span>
+        <span class="ruby-identifier">@@ultimo_error_aut</span> = <span class="ruby-string">&quot;Sin vigencia&quot;</span>
+        <span class="ruby-keyword">return</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span> <span class="ruby-comment"># revisarvig</span>
+
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-c-ultimo_error_aut" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">ultimo_error_aut</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="ultimo_error_aut-source">
+            <pre><span class="ruby-comment"># File app/models/ability.rb, line 97</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">ultimo_error_aut</span>
+  <span class="ruby-identifier">@@ultimo_error_aut</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-c-ultimo_error_aut-3D" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">ultimo_error_aut=</span><span
+            class="method-args">(v)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="ultimo_error_aut-3D-source">
+            <pre><span class="ruby-comment"># File app/models/ability.rb, line 101</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">ultimo_error_aut=</span>(<span class="ruby-identifier">v</span>)
+  <span class="ruby-identifier">@@ultimo_error_aut</span> = <span class="ruby-identifier">v</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+    </section>
+
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+      <div id="method-i-basicas_id_noauto" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">basicas_id_noauto</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="basicas_id_noauto-source">
+            <pre><span class="ruby-comment"># File app/models/ability.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">basicas_id_noauto</span> 
+  <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Ability</span><span class="ruby-operator">::</span><span class="ruby-constant">BASICAS_ID_NOAUTO</span> <span class="ruby-operator">+</span>
+    <span class="ruby-constant">Sal7711Gen</span><span class="ruby-operator">::</span><span class="ruby-constant">Ability</span><span class="ruby-operator">::</span><span class="ruby-constant">BASICAS_ID_NOAUTO</span> 
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-nobasicas_indice_seq_con_id" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">nobasicas_indice_seq_con_id</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="nobasicas_indice_seq_con_id-source">
+            <pre><span class="ruby-comment"># File app/models/ability.rb, line 84</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">nobasicas_indice_seq_con_id</span>
+  <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Ability</span><span class="ruby-operator">::</span><span class="ruby-constant">NOBASICAS_INDSEQID</span> <span class="ruby-operator">+</span>
+    <span class="ruby-constant">Sal7711Gen</span><span class="ruby-operator">::</span><span class="ruby-constant">Ability</span><span class="ruby-operator">::</span><span class="ruby-constant">NOBASICAS_INDSEQID</span> <span class="ruby-operator">+</span>
+    <span class="ruby-constant">NOBASICAS_INDSEQID</span> 
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-tablasbasicas" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">tablasbasicas</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="tablasbasicas-source">
+            <pre><span class="ruby-comment"># File app/models/ability.rb, line 62</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tablasbasicas</span> 
+  <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Ability</span><span class="ruby-operator">::</span><span class="ruby-constant">BASICAS_PROPIAS</span> <span class="ruby-operator">+</span> 
+    <span class="ruby-constant">Sal7711Gen</span><span class="ruby-operator">::</span><span class="ruby-constant">Ability</span><span class="ruby-operator">::</span><span class="ruby-constant">BASICAS_PROPIAS</span> <span class="ruby-operator">+</span> 
+    <span class="ruby-constant">BASICAS_PROPIAS</span>  <span class="ruby-operator">-</span> [
+      [<span class="ruby-string">&#39;Sip&#39;</span>, <span class="ruby-string">&#39;clase&#39;</span>],
+      [<span class="ruby-string">&#39;Sip&#39;</span>, <span class="ruby-string">&#39;etiqueta&#39;</span>],
+      [<span class="ruby-string">&#39;Sip&#39;</span>, <span class="ruby-string">&#39;grupo&#39;</span>],
+      [<span class="ruby-string">&#39;Sip&#39;</span>, <span class="ruby-string">&#39;oficina&#39;</span>],
+      [<span class="ruby-string">&#39;Sip&#39;</span>, <span class="ruby-string">&#39;perfilactorsocial&#39;</span>],
+      [<span class="ruby-string">&#39;Sip&#39;</span>, <span class="ruby-string">&#39;sectoractor&#39;</span>],
+      [<span class="ruby-string">&#39;Sip&#39;</span>, <span class="ruby-string">&#39;tclase&#39;</span>],
+      [<span class="ruby-string">&#39;Sip&#39;</span>, <span class="ruby-string">&#39;tdocumento&#39;</span>],
+      [<span class="ruby-string">&#39;Sip&#39;</span>, <span class="ruby-string">&#39;trelacion&#39;</span>],
+      [<span class="ruby-string">&#39;Sip&#39;</span>, <span class="ruby-string">&#39;tsitio&#39;</span>]
+    ] 
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-tablasbasicas_prio" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">tablasbasicas_prio</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="tablasbasicas_prio-source">
+            <pre><span class="ruby-comment"># File app/models/ability.rb, line 90</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tablasbasicas_prio</span> 
+  <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Ability</span><span class="ruby-operator">::</span><span class="ruby-constant">BASICAS_PRIO</span> <span class="ruby-operator">+</span>
+    <span class="ruby-constant">Sal7711Gen</span><span class="ruby-operator">::</span><span class="ruby-constant">Ability</span><span class="ruby-operator">::</span><span class="ruby-constant">BASICAS_PRIO</span> 
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class UsuariosController - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+  var index_rel_prefix = "./";
+</script>
+
+<script src="./js/navigation.js" defer></script>
+<script src="./js/search.js" defer></script>
+<script src="./js/search_index.js" defer></script>
+<script src="./js/searcher.js" defer></script>
+<script src="./js/darkfish.js" defer></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+<div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  <p class="link">Sip::ModelosController
+</div>
+
+    
+<div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+    <li><span class="include">Sal7711Gen::Concerns::Controllers::UsuariosController</span>
+  </ul>
+</div>
+
+    
+    
+<!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    <li ><a href="#method-i-atributos_form">#atributos_form</a>
+    <li ><a href="#method-i-atributos_index">#atributos_index</a>
+    <li class="calls-super" ><a href="#method-i-create">#create</a>
+    <li ><a href="#method-i-devise_registrations_edit">#devise_registrations_edit</a>
+    <li class="calls-super" ><a href="#method-i-edit">#edit</a>
+    <li class="calls-super" ><a href="#method-i-new">#new</a>
+    <li ><a href="#method-i-reconfirma">#reconfirma</a>
+    <li ><a href="#method-i-usuario_params">#usuario_params</a>
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-UsuariosController">
+  <h1 id="class-UsuariosController" class="class">
+    class UsuariosController
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  <section id="5Buntitled-5D" class="documentation-section">
+
+
+
+
+
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+      <div id="method-i-atributos_form" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">atributos_form</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="atributos_form-source">
+            <pre><span class="ruby-comment"># File app/controllers/usuarios_controller.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">atributos_form</span>
+  <span class="ruby-identifier">r</span> = [ 
+    <span class="ruby-string">&quot;nusuario&quot;</span>,
+    <span class="ruby-string">&quot;nombre&quot;</span>,
+    <span class="ruby-string">&quot;descripcion&quot;</span>,
+    <span class="ruby-string">&quot;rol&quot;</span>,
+    <span class="ruby-string">&quot;idioma&quot;</span>,
+    <span class="ruby-string">&quot;email&quot;</span>,
+    <span class="ruby-string">&quot;tema&quot;</span>,
+  ]
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">can?</span>(<span class="ruby-value">:manage</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Grupo</span>)
+    <span class="ruby-identifier">r</span> <span class="ruby-operator">+=</span> [<span class="ruby-string">&quot;sip_grupo&quot;</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">r</span> <span class="ruby-operator">+=</span> [
+    <span class="ruby-string">&quot;encrypted_password&quot;</span>,
+    <span class="ruby-string">&quot;fecharenovacion_localizada&quot;</span>,
+    <span class="ruby-string">&quot;diasvigencia&quot;</span>,
+    <span class="ruby-string">&quot;fechacreacion_localizada&quot;</span>,
+    <span class="ruby-string">&quot;fechadeshabilitacion_localizada&quot;</span>,
+    <span class="ruby-string">&quot;failed_attempts&quot;</span>,
+    <span class="ruby-string">&quot;unlock_token&quot;</span>,
+    <span class="ruby-string">&quot;locked_at_localizada&quot;</span>,
+    <span class="ruby-string">&quot;unconfirmed_email&quot;</span>,
+    <span class="ruby-string">&quot;confirmation_token&quot;</span>,
+    <span class="ruby-string">&quot;confirmed_at_localizada&quot;</span>
+  ]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-atributos_index" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">atributos_index</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="atributos_index-source">
+            <pre><span class="ruby-comment"># File app/controllers/usuarios_controller.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">atributos_index</span>
+  [ <span class="ruby-string">&quot;id&quot;</span>,
+    <span class="ruby-string">&quot;nusuario&quot;</span>,
+    <span class="ruby-string">&quot;nombre&quot;</span>,
+    <span class="ruby-string">&quot;descripcion&quot;</span>,
+    <span class="ruby-string">&quot;rol&quot;</span>,
+    <span class="ruby-string">&quot;email&quot;</span>,
+    <span class="ruby-string">&quot;created_at_localizada&quot;</span>,
+    <span class="ruby-string">&quot;habilitado&quot;</span>
+  ]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-create" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">create</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+
+          <div class="method-source-code" id="create-source">
+            <pre><span class="ruby-comment"># File app/controllers/usuarios_controller.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create</span>
+  <span class="ruby-identifier">sip_pre_create</span>
+  <span class="ruby-keyword">super</span>
+  <span class="ruby-ivar">@registro</span>.<span class="ruby-identifier">confirmed_at</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>
+  <span class="ruby-ivar">@registro</span>.<span class="ruby-identifier">save</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-devise_registrations_edit" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">devise_registrations_edit</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="devise_registrations_edit-source">
+            <pre><span class="ruby-comment"># File app/controllers/usuarios_controller.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">devise_registrations_edit</span>
+  <span class="ruby-identifier">authorize!</span> <span class="ruby-value">:read</span>, <span class="ruby-constant">Sal7711Gen</span><span class="ruby-operator">::</span><span class="ruby-constant">Categoriaprensa</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-string">&#39;devise/registrations/edit&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-edit" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">edit</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+
+          <div class="method-source-code" id="edit-source">
+            <pre><span class="ruby-comment"># File app/controllers/usuarios_controller.rb, line 62</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">edit</span>
+  <span class="ruby-ivar">@miurl</span> = <span class="ruby-identifier">actualiza_usuario_url</span> 
+  <span class="ruby-keyword">super</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-new" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File app/controllers/usuarios_controller.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">new</span>
+  <span class="ruby-ivar">@miurl</span> = <span class="ruby-identifier">crea_usuario_url</span> 
+  <span class="ruby-keyword">super</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-reconfirma" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">reconfirma</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="reconfirma-source">
+            <pre><span class="ruby-comment"># File app/controllers/usuarios_controller.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">reconfirma</span>
+  <span class="ruby-comment">#Usuaurio.where(1).send_confirmation_instructions</span>
+
+  <span class="ruby-comment">#hoy = Date.today</span>
+  <span class="ruby-comment">#::Organizacion.all.filter</span>
+  <span class="ruby-identifier">diasv</span> = <span class="ruby-identifier">usuario</span>.<span class="ruby-identifier">diasvigencia</span>
+  <span class="ruby-identifier">fechar</span> = <span class="ruby-identifier">usuario</span>.<span class="ruby-identifier">fecharenovacion</span>
+  <span class="ruby-identifier">pdom</span> = <span class="ruby-identifier">usuario</span>.<span class="ruby-identifier">email</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;@&quot;</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">pdom</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span> 
+    <span class="ruby-identifier">dom</span> = <span class="ruby-identifier">pdom</span>[<span class="ruby-value">1</span>]
+    <span class="ruby-identifier">org</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Organizacion</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">dominiocorreo:</span> <span class="ruby-identifier">dom</span>).<span class="ruby-identifier">take</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">org</span> <span class="ruby-comment"># plan corporativo correo</span>
+      <span class="ruby-identifier">diasv</span> = <span class="ruby-identifier">org</span>.<span class="ruby-identifier">diasvigencia</span>
+      <span class="ruby-identifier">fechar</span> = <span class="ruby-identifier">org</span>.<span class="ruby-identifier">fecharenovacion</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+
+  <span class="ruby-identifier">fechaf</span> = <span class="ruby-identifier">fechar</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">diasv</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">hoy</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">fechar</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">hoy</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">fechaf</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">CanCan</span><span class="ruby-operator">::</span><span class="ruby-constant">AccessDenied</span>.<span class="ruby-identifier">new</span>(
+      <span class="ruby-string">&quot;Sin vigencia&quot;</span>, 
+      <span class="ruby-value">:read</span>, <span class="ruby-constant">Sip</span><span class="ruby-operator">::</span><span class="ruby-constant">Ubicacion</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-usuario_params" class="method-detail ">
+        <div class="method-heading">
+          <span class="method-name">usuario_params</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+
+        <div class="method-description">
+          <p>Lista blanca de paramétros</p>
+
+          <div class="method-source-code" id="usuario_params-source">
+            <pre><span class="ruby-comment"># File app/controllers/usuarios_controller.rb, line 99</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">usuario_params</span>
+  <span class="ruby-identifier">params</span>.<span class="ruby-identifier">require</span>(<span class="ruby-value">:usuario</span>).<span class="ruby-identifier">permit</span>(
+    <span class="ruby-value">:id</span>, <span class="ruby-value">:nusuario</span>, <span class="ruby-value">:password</span>, 
+    <span class="ruby-value">:nombre</span>, <span class="ruby-value">:descripcion</span>, <span class="ruby-value">:oficina_id</span>,
+    <span class="ruby-value">:rol</span>, <span class="ruby-value">:idioma</span>, <span class="ruby-value">:email</span>, <span class="ruby-value">:encrypted_password</span>, 
+    <span class="ruby-value">:fecharenovacion_localizada</span>, <span class="ruby-value">:diasvigencia</span>,
+    <span class="ruby-value">:fechacreacion_localizada</span>, <span class="ruby-value">:fechadeshabilitacion_localizada</span>, 
+    <span class="ruby-value">:reset_password_token</span>, 
+    <span class="ruby-value">:reset_password_sent_at</span>, <span class="ruby-value">:remember_created_at</span>, <span class="ruby-value">:sign_in_count</span>, 
+    <span class="ruby-value">:current_sign_in_at</span>, <span class="ruby-value">:last_sign_in_at</span>, <span class="ruby-value">:current_sign_in_ip</span>, 
+    <span class="ruby-value">:failed_attempts</span>, <span class="ruby-value">:unlock_token</span>, <span class="ruby-value">:locked_at_localizada</span>,
+    <span class="ruby-value">:last_sign_in_ip</span>, 
+    <span class="ruby-value">:confirmation_token</span>, <span class="ruby-value">:confirmed_at_localizada</span>, 
+    <span class="ruby-value">:confirmation_sent_at</span>, 
+    <span class="ruby-value">:unconfirmed_email</span>,
+    <span class="ruby-value">:etiqueta_ids</span> <span class="ruby-operator">=&gt;</span> []
+  )
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
