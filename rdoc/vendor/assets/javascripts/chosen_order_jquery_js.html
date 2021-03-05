@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>chosen.order.jquery.js - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../../";
+  var index_rel_prefix = "../../../";
+</script>
+
+<script src="../../../js/navigation.js" defer></script>
+<script src="../../../js/search.js" defer></script>
+<script src="../../../js/search_index.js" defer></script>
+<script src="../../../js/searcher.js" defer></script>
+<script src="../../../js/darkfish.js" defer></script>
+
+<link href="../../../css/fonts.css" rel="stylesheet">
+<link href="../../../css/rdoc.css" rel="stylesheet">
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../../../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../../../table_of_contents.html#pages">Pages</a>
+    <a href="../../../table_of_contents.html#classes">Classes</a>
+    <a href="../../../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="project-metadata">
+    
+<div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+    <li><a href="../../../CONTRIBUTING_md.html">CONTRIBUTING</a>
+    <li><a href="../../../CREDITOS_md.html">CREDITOS</a>
+    <li><a href="../../../Gemfile.html">Gemfile</a>
+    <li><a href="../../../Gemfile_lock.html">Gemfile.lock</a>
+    <li><a href="../../../Makefile.html">Makefile</a>
+    <li><a href="../../../README_md.html">README</a>
+    <li><a href="../../../Rakefile.html">Rakefile</a>
+    <li><a href="../../../app/assets/config/manifest_js.html">manifest.js</a>
+    <li><a href="../../../app/assets/images/browserconfig_xml.html">browserconfig.xml</a>
+    <li><a href="../../../app/assets/javascripts/application_js.html">application.js</a>
+    <li><a href="../../../app/assets/stylesheets/application_css.html">application.css</a>
+    <li><a href="../../../app/assets/stylesheets/scaffold_css.html">scaffold.css</a>
+    <li><a href="../../../app/javascript/packs/application_js.html">application.js</a>
+    <li><a href="../../../app/views/sip/hogar/_local_html_erb_plantilla.html">_local.html.erb.plantilla</a>
+    <li><a href="../../../babel_config_js.html">babel.config.js</a>
+    <li><a href="../../../bin/gc_sh.html">gc.sh</a>
+    <li><a href="../../../bin/ocr.html">ocr</a>
+    <li><a href="../../../bin/u_sh.html">u.sh</a>
+    <li><a href="../../../bin/uensayo_sh.html">uensayo.sh</a>
+    <li><a href="../../../config_ru.html">config.ru</a>
+    <li><a href="../../../config/initializers/sip_rb_plantilla.html">sip.rb.plantilla</a>
+    <li><a href="../../../config/routes_rb_plantilla.html">routes.rb.plantilla</a>
+    <li><a href="../../../config/unicorn_conf_minimal_rb_plantilla.html">unicorn.conf.minimal.rb.plantilla</a>
+    <li><a href="../../../config/webpack/development_js.html">development.js</a>
+    <li><a href="../../../config/webpack/environment_js.html">environment.js</a>
+    <li><a href="../../../config/webpack/production_js.html">production.js</a>
+    <li><a href="../../../config/webpack/test_js.html">test.js</a>
+    <li><a href="../../../db/datos-basicas_sql.html">datos-basicas.sql</a>
+    <li><a href="../../../db/structure_sql.html">structure.sql</a>
+    <li><a href="../../../doc/admin_md.html">admin</a>
+    <li><a href="../../../package_json.html">package.json</a>
+    <li><a href="../../../postcss_config_js.html">postcss.config.js</a>
+    <li><a href="../../../public/404_html.html">404.html</a>
+    <li><a href="../../../public/422_html.html">422.html</a>
+    <li><a href="../../../public/500_html.html">500.html</a>
+    <li><a href="../../../public/robots_txt.html">robots</a>
+    <li><a href="../../../test/sideex/pruebas-suit_html.html">pruebas-suit.html</a>
+    <li><a href="../../../vendor/assets/javascripts/chosen_order_jquery_js.html">chosen.order.jquery.js</a>
+    <li><a href="../../../yarn_lock.html">yarn.lock</a>
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page vendor/assets/javascripts/chosen.order.jquery.js">
+
+<p>// Chosen Order v1.2.1 // This plugin allows you to handle the order of the selection for Chosen multiple &lt;select&gt; dropdowns // Full source at <a href="https://github.com/tristanjahier/chosen-order">github.com/tristanjahier/chosen-order</a> // Copyright © 2013 - Tristan Jahier, <a href="http://tristan-jahier.fr">tristan-jahier.fr</a></p>
+
+<p>// DISCLAIMER // Chosen Order is not associated with Harvest in any way. // Chosen is an original software by Patrick Filler for Harvest, <a href="http://getharvest.com">getharvest.com</a> // Full source at <a href="https://github.com/harvesthq/chosen">github.com/harvesthq/chosen</a> // Copyright © 2011 Harvest <a href="http://getharvest.com">getharvest.com</a></p>
+
+<p>// This file is generated by `grunt build`, do not edit it by hand. (function() {</p>
+
+<pre>var $, AbstractChosenOrder, _ref,
+  __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i &lt; l; i++) { if (i in this &amp;&amp; this[i] === item) return i; } return -1; },
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+AbstractChosenOrder = (function() {
+  var ERRORS;
+
+  function AbstractChosenOrder() {}
+
+  ERRORS = {
+    invalid_select_element: &quot;ChosenOrder::{{function}}: first argument must be a valid HTML Multiple Select element that has been Chosenified!&quot;,
+    invalid_selection_array: &quot;ChosenOrder::{{function}}: second argument must be an Array!&quot;,
+    unreachable_chosen_container: &quot;ChosenOrder::{{function}}: could not find the Chosen UI container! To solve the problem, try adding an \&quot;id\&quot; attribute to your &lt;select&gt; element.&quot;,
+    ordering_unselected_option: &quot;ChosenOrder::{{function}}: ignoring option &#39;{{option}}&#39; which is not selected. Set optional parameter \&quot;force\&quot; to &#39;true&#39; to get the ordered selection forced first.&quot;
+  };
+
+  AbstractChosenOrder.insertAt = function(node, index, parentNode) {
+    return parentNode.insertBefore(node, parentNode.children[index].nextSibling);
+  };
+
+  AbstractChosenOrder.getFlattenedOptionsAndGroups = function(select) {
+    var flattened_options, opt, options, sub_opt, sub_options, _i, _j, _len, _len1;
+    options = Array.prototype.filter.call(select.childNodes, function(o) {
+      var _ref;
+      return (_ref = o.nodeName.toUpperCase()) === &#39;OPTION&#39; || _ref === &#39;OPTGROUP&#39;;
+    });
+    flattened_options = [];
+    for (_i = 0, _len = options.length; _i &lt; _len; _i++) {
+      opt = options[_i];
+      flattened_options.push(opt);
+      if (opt.nodeName.toUpperCase() === &#39;OPTGROUP&#39;) {
+        sub_options = Array.prototype.filter.call(opt.childNodes, function(o) {
+          return o.nodeName.toUpperCase() === &#39;OPTION&#39;;
+        });
+        for (_j = 0, _len1 = sub_options.length; _j &lt; _len1; _j++) {
+          sub_opt = sub_options[_j];
+          flattened_options.push(sub_opt);
+        }
+      }
+    }
+    return flattened_options;
+  };
+
+  AbstractChosenOrder.isValidMultipleSelectElement = function(element) {
+    return element !== null &amp;&amp; typeof element !== &quot;undefined&quot; &amp;&amp; element.nodeName === &quot;SELECT&quot; &amp;&amp; element.multiple;
+  };
+
+  AbstractChosenOrder.getChosenUIContainer = function(select) {
+    if (select.id !== &quot;&quot;) {
+      return document.getElementById(select.id.replace(/-/g, &quot;_&quot;) + &quot;_chosen&quot;);
+    } else {
+      return this.searchChosenUIContainer(select);
+    }
+  };
+
+  AbstractChosenOrder.isChosenified = function(select) {
+    return this.getChosenUIContainer(select) != null;
+  };
+
+  AbstractChosenOrder.forceSelection = function(select, selection) {
+    var i, opt, options, _ref;
+    options = this.getFlattenedOptionsAndGroups(select);
+    i = 0;
+    while (i &lt; options.length) {
+      opt = options[i];
+      if (_ref = opt.getAttribute(&quot;value&quot;), __indexOf.call(selection, _ref) &gt;= 0) {
+        opt.selected = true;
+        opt.setAttribute(&quot;selected&quot;, &quot;&quot;);
+      } else {
+        opt.selected = false;
+        opt.removeAttribute(&quot;selected&quot;);
+      }
+      i++;
+    }
+    return this.triggerEvent(select, &quot;chosen:updated&quot;);
+  };
+
+  AbstractChosenOrder.getSelectionOrder = function(select) {
+    var chosen_options, chosen_ui, close_btn, opt, option, options, order, rel, _i, _len;
+    if (this.getDOMElement != null) {
+      select = this.getDOMElement(select);
+    }
+    order = [];
+    if (!this.isValidMultipleSelectElement(select)) {
+      console.error(ERRORS.invalid_select_element.replace(&#39;{{function}}&#39;, &#39;getSelectionOrder&#39;));
+      return order;
+    }
+    chosen_ui = this.getChosenUIContainer(select);
+    if (chosen_ui == null) {
+      console.error(ERRORS.unreachable_chosen_container.replace(&#39;{{function}}&#39;, &#39;getSelectionOrder&#39;));
+      return order;
+    }
+    chosen_options = chosen_ui.querySelectorAll(&#39;.search-choice&#39;);
+    options = this.getFlattenedOptionsAndGroups(select);
+    for (_i = 0, _len = chosen_options.length; _i &lt; _len; _i++) {
+      opt = chosen_options[_i];
+      close_btn = opt.querySelectorAll(&#39;.search-choice-close&#39;)[0];
+      if (close_btn != null) {
+        rel = close_btn.getAttribute(this.relAttributeName);
+      }
+      option = options[rel];
+      order.push(option.value);
+    }
+    return order;
+  };
+
+  AbstractChosenOrder.setSelectionOrder = function(select, order, force) {
+    var chosen_choices, chosen_options, chosen_ui, i, j, opt, opt_val, option, options, rel, relAttributeName, _i, _j, _len, _len1, _results;
+    if (this.getDOMElement != null) {
+      select = this.getDOMElement(select);
+    }
+    if (!this.isValidMultipleSelectElement(select)) {
+      console.error(ERRORS.invalid_select_element.replace(&#39;{{function}}&#39;, &#39;setSelectionOrder&#39;));
+      return;
+    }
+    chosen_ui = this.getChosenUIContainer(select);
+    if (chosen_ui == null) {
+      console.error(ERRORS.unreachable_chosen_container.replace(&#39;{{function}}&#39;, &#39;setSelectionOrder&#39;));
+      return;
+    }
+    if (order instanceof Array) {
+      order = order.map(Function.prototype.call, String.prototype.trim);
+      options = this.getFlattenedOptionsAndGroups(select);
+      if ((force != null) &amp;&amp; force === true) {
+        this.forceSelection(select, order);
+      }
+      _results = [];
+      for (i = _i = 0, _len = order.length; _i &lt; _len; i = ++_i) {
+        opt_val = order[i];
+        rel = null;
+        for (j = _j = 0, _len1 = options.length; _j &lt; _len1; j = ++_j) {
+          opt = options[j];
+          if (opt.value === opt_val) {
+            rel = j;
+          }
+        }
+        chosen_options = chosen_ui.querySelectorAll(&#39;.search-choice&#39;);
+        relAttributeName = this.relAttributeName;
+        option = Array.prototype.filter.call(chosen_options, function(o) {
+          return o.querySelector(&quot;a.search-choice-close[&quot; + relAttributeName + &quot;=\&quot;&quot; + rel + &quot;\&quot;]&quot;) != null;
+        })[0];
+        if (option == null) {
+          console.warn(ERRORS.ordering_unselected_option.replace(&#39;{{function}}&#39;, &#39;setSelectionOrder&#39;).replace(&#39;{{option}}&#39;, opt_val));
+          continue;
+        }
+        chosen_choices = chosen_ui.querySelector(&quot;ul.chosen-choices&quot;);
+        _results.push(this.insertAt(option, i, chosen_ui.querySelector(&#39;ul.chosen-choices&#39;)));
+      }
+      return _results;
+    } else {
+      return console.error(ERRORS.invalid_selection_array.replace(&#39;{{function}}&#39;, &#39;setSelectionOrder&#39;));
+    }
+  };
+
+  return AbstractChosenOrder;
+
+})();
+
+$ = jQuery;
+
+$.fn.extend({
+  getSelectionOrder: function() {
+    return ChosenOrder.getSelectionOrder(this);
+  },
+  setSelectionOrder: function(order, force) {
+    return ChosenOrder.setSelectionOrder(this, order, force);
+  }
+});
+
+this.ChosenOrder = (function(_super) {
+  __extends(ChosenOrder, _super);
+
+  function ChosenOrder() {
+    _ref = ChosenOrder.__super__.constructor.apply(this, arguments);
+    return _ref;
+  }
+
+  ChosenOrder.relAttributeName = &#39;data-option-array-index&#39;;
+
+  ChosenOrder.isjQueryObject = function(obj) {
+    return (typeof jQuery !== &quot;undefined&quot; &amp;&amp; jQuery !== null) &amp;&amp; obj instanceof jQuery;
+  };
+
+  ChosenOrder.getDOMElement = function(element) {
+    if (this.isjQueryObject(element)) {
+      return element.get(0);
+    } else {
+      return element;
+    }
+  };
+
+  ChosenOrder.searchChosenUIContainer = function(element) {
+    if ($(element).data(&quot;chosen&quot;) != null) {
+      return $(element).data(&quot;chosen&quot;).container[0];
+    } else {
+      return $(element).next(&quot;.chosen-container.chosen-container-multi&quot;).get(0);
+    }
+  };
+
+  ChosenOrder.triggerEvent = function(target, event_name) {
+    return $(target).trigger(event_name);
+  };
+
+  return ChosenOrder;
+
+})(AbstractChosenOrder);</pre>
+
+<p>}).call(this);</p>
+
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.3.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
