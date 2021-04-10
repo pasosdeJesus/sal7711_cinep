@@ -71,7 +71,7 @@ group :development, :test do
 
   gem 'colorize' # Colores en consola
 
-  gem 'rails-erd'
+  gem 'rails-erd', '>= 1.6.1'
 end
 
 
