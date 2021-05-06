@@ -13,3 +13,6 @@ erd:
 	bundle exec erd
 	mv erd.pdf doc/
 	convert doc/erd.pdf doc/erd.png
+
+gen-rdoc:
+	rdoc -x node_modules --op rdoc

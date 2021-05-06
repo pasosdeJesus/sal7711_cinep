@@ -83,7 +83,6 @@ end
 
 
 group :test do
-
   gem 'capybara'
 
   gem 'minitest'
@@ -95,12 +94,10 @@ group :test do
   gem 'simplecov', '<0.18'
 
   gem 'spring'
-  
 end
 
 
 group :production do
-  
   gem 'unicorn' # Para despliegue
 
 end

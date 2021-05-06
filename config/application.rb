@@ -1,14 +1,14 @@
 require_relative 'boot'
-
 require 'rails/all'
 
-# Require the gems listed in Gemfile, including any gems
-# you've limited to :test, :development, or :production.
+# Requiere gemas listas en el Gemfile, incluyendo las
+# limitadas a :test, :development, o :production.
 Bundler.require(*Rails.groups)
 
 module Sal7711
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
+    #config.load_defaults 6.0
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
@@ -20,10 +20,18 @@ module Sal7711
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :es
 
-    config.x.url_colchon = 'colchon-articulos'
-
     config.active_record.schema_format = :sql
 
+    config.hosts <<  ENV.fetch('CONFIG_HOSTS', 'defensor.info').downcase
+
+    config.relative_url_root = ENV.fetch('RUTA_RELATIVA', "/")
+
+    # sip
     config.x.formato_fecha = 'dd-mm-yyyy'
+
+    #sal7711
+    config.x.url_colchon = ENV.fetch(
+      'SAL7711_COLCHON_ARTICULOS', 'colchon-articulos')
+
   end
 end
