@@ -18,6 +18,8 @@ gem 'devise' # Autenticación
 
 gem 'devise-i18n'
 
+gem 'execjs'
+
 gem 'jbuilder' # API JSON facil. Ver: https://github.com/rails/jbuilder
 
 gem 'lazybox' # Dialogo modal

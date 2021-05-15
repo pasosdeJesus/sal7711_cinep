@@ -9,6 +9,6 @@ Sip.setup do |config|
   if ENV["HEROKU_POSTGRESQL_MAUVE_URL"]
     config.ruta_anexos = "#{Rails.root}/tmp/"
   end
-  config.titulo = "Sal7711_CINEP #{Sal7711Gen::VERSION}"
+  config.titulo = "Archivo de Prensa #{Sal7711Gen::VERSION}"
   config.longitud_nusuario = 255
 end
