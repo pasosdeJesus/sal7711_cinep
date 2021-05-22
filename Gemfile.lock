@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 99068cc5d92ee613a85e392d6b79b2b63290baff
+  revision: bc2e29620d3a844c2011e41b8aa9278193c46555
   branch: main
   specs:
     sal7711_gen (1.0.b3)
@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 0093e0b276fee91e64a2813936ec09386a1c8d58
+  revision: c89eb86f30c8ea4b541bedace02cd5bbd684e808
   branch: main
   specs:
     sip (2.0.b11)
@@ -146,7 +146,7 @@ GEM
       railties (>= 3.2)
     erubi (1.10.0)
     execjs (2.8.1)
-    ffi (1.15.0)
+    ffi (1.15.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     i18n (1.8.10)
@@ -184,7 +184,7 @@ GEM
       ruby-progressbar
     msgpack (1.4.2)
     nio4r (2.5.7)
-    nokogiri (1.11.4)
+    nokogiri (1.11.5)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     orm_adapter (0.5.0)
@@ -200,7 +200,7 @@ GEM
       pdf-core (~> 0.9.0)
       ttfunk (~> 1.7)
     public_suffix (4.0.6)
-    puma (5.3.1)
+    puma (5.3.2)
       nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
@@ -284,7 +284,7 @@ GEM
       climate_control (>= 0.0.3, < 1.0)
     thor (1.1.0)
     tilt (2.0.10)
-    tiny_tds (2.1.4)
+    tiny_tds (2.1.5)
     ttfunk (1.7.0)
     twitter_cldr (6.6.0)
       camertron-eprun
@@ -302,7 +302,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webpacker (5.3.0)
+    webpacker (5.4.0)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
