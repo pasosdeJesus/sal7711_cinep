@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 2af52b479ada799ee16a2b476f5e5344f60fb682
+  revision: 5a00a4ed23d6c94c5d05c96f98dc004dfe6b8f03
   branch: main
   specs:
     sal7711_gen (1.0.b3)
@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 134b5da4626d27a58e437d37a45646b034c1d893
+  revision: f611bc10c5a30b305b6e3f478baa3e0fb49f2ec9
   branch: main
   specs:
     sip (2.0.b11)
@@ -129,7 +129,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     colorize (0.8.1)
-    concurrent-ruby (1.1.8)
+    concurrent-ruby (1.1.9)
     crass (1.0.6)
     devise (4.8.0)
       bcrypt (~> 3.0)
@@ -158,7 +158,7 @@ GEM
     json (2.5.1)
     kgio (2.11.4)
     lazybox (1.1.5)
-    loofah (2.9.1)
+    loofah (2.10.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
