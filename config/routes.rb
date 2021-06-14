@@ -64,7 +64,7 @@ Rails.application.routes.draw do
 #            path_names: { new: 'nueva', edit: 'edita' }
 #        end
 #      end
-    end
+#    end
 
   end
 
