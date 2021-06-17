@@ -1,4 +1,15 @@
 GIT
+  remote: https://github.com/kreeti/kt-paperclip.git
+  revision: 379d3a8ca990ce91baef7498bd74c8680c181c3c
+  specs:
+    kt-paperclip (7.0.0)
+      activemodel (>= 4.2.0)
+      activesupport (>= 4.2.0)
+      marcel (~> 1.0.1)
+      mime-types
+      terrapin (~> 0.6.0)
+
+GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
   revision: 24a5ea399d33c6ba33fb37196666b43e230535c0
   branch: orgsocial
@@ -332,12 +343,12 @@ DEPENDENCIES
   dotenv-rails
   execjs
   jbuilder
+  kt-paperclip!
   lazybox
   mail_form
   minitest
   minitest-reporters
   nokogiri (>= 1.11.1)
-  paperclip
   pg
   prawn
   puma
