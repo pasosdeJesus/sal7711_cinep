@@ -39,3 +39,5 @@ bin/
 yarn-debug.log*
 .yarn-integrity
 coverage/
+config/credentials.yml.enc
+log/ocr.bitacora

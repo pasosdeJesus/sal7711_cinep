@@ -2,7 +2,7 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
-  host: /var/www/var/run/postgresql
+  host: <%= ENV.fetch('BD_MAQ', '/var/www/var/run/postgresql') %>
   username: <%= ENV.fetch('BD_USUARIO', 'sipdes') %>
   password: <%= ENV.fetch('BD_CLAVE') %>
 
@@ -14,10 +14,11 @@ test:
   <<: *default
   database: <%= ENV.fetch('BD_PRUEBA', 'sal7711cinep_pru') %>
 
+ensayo:
+  <<: *default
+  database: <%= ENV.fetch('BD_ENSAYO', 'sal7711cinep_ensayo') %>
+
 production:
   <<: *default
   database: <%= ENV.fetch('BD_PRO', 'sal7711cinep_pro') %>
 
-ensayo:
-  <<: *default
-  database: <%= ENV.fetch('BD_ENSAYO', 'sal7711cinep_ensayo') %>
