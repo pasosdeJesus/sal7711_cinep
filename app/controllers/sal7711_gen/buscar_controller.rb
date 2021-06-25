@@ -857,6 +857,18 @@ module Sal7711Gen
       return articulos
     end
 
+    def forzar_salida?
+      numrevisado = Sal7711Gen::Bitacora.where(usuario_id: current_usuario.id).
+        where(operacion: 'mostraruno').
+        where('fecha>=?', Time.now-3600).count
+      maxh = ENV.fetch('SAL7711_MAX_ARTICULOS_HORA', '1000').to_i
+      if numrevisado>=maxh
+        @razon_salida_forzada = "Ha excedido el máximo de revisión de artículos por hora que es #{maxh}."
+        current_usuario.fechadeshabilitacion = Date.today
+        return true
+      end
+      return false
+    end
 
     def mostraruno_mejoratexto(texto, params)
       return texto
