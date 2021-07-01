@@ -11,7 +11,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 046b38f210cd0b7a09638fa3b3ac3a4d2b950616
+  revision: 41c994438dd2c140bb1e9c5a23293551b307148b
   branch: webpacker6
   specs:
     sal7711_gen (1.0.b4)
@@ -20,7 +20,7 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: 94708c35617d468557cfe31015131a3558701723
+  revision: d5d373d3038be7a4080f84d54320326bab629aea
   branch: webpacker6
   specs:
     sip (2.0.b12)
@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/webpacker
-  revision: beb645ecbf707eb4f3311e61b05abb67fe0ca010
+  revision: 032c2d11a3758035305fe34e6795ab133128ee32
   specs:
     webpacker (6.0.0.beta.7)
       activesupport (>= 5.2)
@@ -307,7 +307,7 @@ GEM
     tilt (2.0.10)
     tiny_tds (2.1.5)
     ttfunk (1.7.0)
-    twitter_cldr (6.6.0)
+    twitter_cldr (6.6.1)
       camertron-eprun
       cldr-plurals-runtime-rb (~> 1.1)
       tzinfo
@@ -375,4 +375,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   2.2.20
+   2.2.21
