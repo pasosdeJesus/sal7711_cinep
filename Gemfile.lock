@@ -11,8 +11,8 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sal7711_gen.git
-  revision: 41c994438dd2c140bb1e9c5a23293551b307148b
-  branch: webpacker6
+  revision: a0eb4445dfd4dd7b4f6002d429d8a2443cf9ab94
+  branch: main
   specs:
     sal7711_gen (1.0.b4)
       rails
@@ -20,8 +20,8 @@ GIT
 
 GIT
   remote: https://github.com/pasosdeJesus/sip.git
-  revision: d5d373d3038be7a4080f84d54320326bab629aea
-  branch: webpacker6
+  revision: e35094edba13b6fdf0a24ceaa70ac1504751dea5
+  branch: main
   specs:
     sip (2.0.b12)
       cancancan
