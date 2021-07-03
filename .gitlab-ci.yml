@@ -36,7 +36,7 @@ test:
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
     - apt-get update -yy && apt-get install build-essential libpq-dev postgresql-client -y
     - apt-get install -y -qq nodejs
-    - (mkdir fts && cd fts && wget ftp://ftp.freetds.org/pub/freetds/stable/freetds-1.00.21.tar.gz && tar -xzf freetds-1.00.21.tar.gz && cd freetds-1.00.21 && ./configure --prefix=/usr/local --with-tdsver=7.3 && make &&  sudo make install)
+    - apt-get install -y -qq freetds-dev
     - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
     - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
     - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq yarn
