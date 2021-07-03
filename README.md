@@ -1,6 +1,6 @@
 # Sal7711
 
-[![Revisado por Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com) [![Estado Construcción](https://api.travis-ci.org/pasosdeJesus/sal7711_cinep.svg?branch=master)](https://travis-ci.org/pasosdeJesus/sal7711_cinep) [![Clima del Código](https://codeclimate.com/github/pasosdeJesus/sal7711_cinep/badges/gpa.svg)](https://codeclimate.com/github/pasosdeJesus/sal7711_cinep) [![Cobertura de Pruebas](https://codeclimate.com/github/pasosdeJesus/sal7711_cinep/badges/coverage.svg)](https://codeclimate.com/github/pasosdeJesus/sal7711_cinep) [![security](https://hakiri.io/github/pasosdeJesus/sal7711_cinep/master.svg)](https://hakiri.io/github/pasosdeJesus/sal7711_cinep/master)
+[![Revisado por Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com) [![Estado Construcción](https://gitlab.com/pasosdeJesus/sal7711_cinep/badges/main/pipeline.svg)](https://gitlab.com/pasosdeJesus/sal7711_cinep/-/pipelines)[![Clima del Código](https://codeclimate.com/github/pasosdeJesus/sal7711_cinep/badges/gpa.svg)](https://codeclimate.com/github/pasosdeJesus/sal7711_cinep) [![Cobertura de Pruebas](https://codeclimate.com/github/pasosdeJesus/sal7711_cinep/badges/coverage.svg)](https://codeclimate.com/github/pasosdeJesus/sal7711_cinep) [![security](https://hakiri.io/github/pasosdeJesus/sal7711_cinep/master.svg)](https://hakiri.io/github/pasosdeJesus/sal7711_cinep/master)
 
 ![Logo de sal7711_cinep](https://raw.githubusercontent.com/pasosdeJesus/sal7711_cinep/master/app/assets/images/logo.png)
 
