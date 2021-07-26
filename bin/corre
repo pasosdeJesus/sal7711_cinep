@@ -88,12 +88,12 @@ FileUtils.chdir RAIZ_AP do
     end
     ord += "-b '#{ENV['IPDES']}' "
     puts "#{ord}"
-  elsif ENV['RAILS_ENV'] == 'production'
+  elsif ENV['RAILS_ENV'] == 'production' || ENV['RAILS_ENV'] == 'ensayo'
     if !File.exists?("/etc/rc.d/#{ENV['RC']}")
       puts "\nFalta script /etc/rc.d/#{ENV['RC']}"
       exit 1
     end
-    puts "\n== Ejecutando en modo producción =="
+    puts "\n== Ejecutando en modo #{ENV['RAILS_ENV']} =="
     ord = "doas sh /etc/rc.d/#{ENV['RC']} -d start"
   end
   system!(ord)
