@@ -862,9 +862,19 @@ module Sal7711Gen
         where(operacion: 'mostraruno').
         where('fecha>=?', Time.now-3600).count
       maxh = ENV.fetch('SAL7711_MAX_ARTICULOS_HORA', '1000').to_i
-      if numrevisado>=maxh
-        @razon_salida_forzada = "Ha excedido el máximo de revisión de artículos por hora que es #{maxh}."
-        current_usuario.fechadeshabilitacion = Date.today
+      if numrevisado >= maxh
+        if !current_usuario.excedido || current_usuario.excedido == 0
+          current_usuario.excedido = 1
+          @razon_salida_forzada = "Ha excedido el máximo de revisión de "\
+            "#{maxh} artículos por hora.  Espere una hora antes de ingresar "\
+            "de nuevo.  Si vuelve a ocurrir su cuenta será deshabilitada"
+        else # ya se había excedido
+          current_usuario.excedido += 1
+          @razon_salida_forzada = "Reincidió en revisar más de #{maxh} "\
+            "artículos por hora.  Su cuenta ha sido deshabilitada."
+          current_usuario.fechadeshabilitacion = Date.today
+        end
+        current_usuario.save(validate: false)
         return true
       end
       return false

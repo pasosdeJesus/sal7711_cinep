@@ -14,6 +14,7 @@ class UsuariosController < Sip::ModelosController
       "descripcion",
       "rol",
       "email",
+      "excedido",
       "created_at_localizada",
       "habilitado"
     ]
@@ -36,6 +37,7 @@ class UsuariosController < Sip::ModelosController
       "encrypted_password",
       "fecharenovacion_localizada",
       "diasvigencia",
+      "excedido",
       "fechacreacion_localizada",
       "fechadeshabilitacion_localizada",
       "failed_attempts",
@@ -103,6 +105,7 @@ class UsuariosController < Sip::ModelosController
       :rol, :idioma, :email, :encrypted_password, 
       :fecharenovacion_localizada, :diasvigencia,
       :fechacreacion_localizada, :fechadeshabilitacion_localizada, 
+      :excedido,
       :reset_password_token, 
       :reset_password_sent_at, :remember_created_at, :sign_in_count, 
       :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, 
