@@ -207,6 +207,75 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: iporganizacion; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.iporganizacion (
+    id integer NOT NULL,
+    organizacion_id integer NOT NULL,
+    ip inet NOT NULL
+);
+
+
+--
+-- Name: iporganizacion_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.iporganizacion_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: iporganizacion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.iporganizacion_id_seq OWNED BY public.iporganizacion.id;
+
+
+--
+-- Name: lote; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.lote (
+    id integer NOT NULL,
+    usuario_id integer NOT NULL,
+    candfecha date,
+    canddepartamento_id integer,
+    candmunicipio_id integer,
+    candfuenteprensa_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    nombre character varying(511),
+    candcategoria1_id integer,
+    candcategoria2_id integer,
+    candcategoria3_id integer
+);
+
+
+--
+-- Name: lote_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.lote_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: lote_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.lote_id_seq OWNED BY public.lote.id;
+
+
+--
 -- Name: sal7711_gen_articulo; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -313,99 +382,6 @@ CREATE TABLE public.sip_municipio (
 
 
 --
--- Name: articulo_metadatos; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW public.articulo_metadatos AS
- SELECT ((((((((((sal7711_gen_articulo.fecha || ' '::text) || sal7711_gen_articulo.texto) || ' '::text) || (sip_departamento.nombre)::text) || ' '::text) || (sip_municipio.nombre)::text) || ' '::text) || (sip_fuenteprensa.nombre)::text) || sal7711_gen_articulo.texto) || (sal7711_gen_articulo.pagina)::text)
-   FROM (((public.sal7711_gen_articulo
-     JOIN public.sip_departamento ON ((sal7711_gen_articulo.departamento_id = sip_departamento.id)))
-     JOIN public.sip_municipio ON ((sal7711_gen_articulo.municipio_id = sip_municipio.id)))
-     JOIN public.sip_fuenteprensa ON ((sal7711_gen_articulo.fuenteprensa_id = sip_fuenteprensa.id)));
-
-
---
--- Name: iporganizacion; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.iporganizacion (
-    id integer NOT NULL,
-    organizacion_id integer NOT NULL,
-    ip inet NOT NULL
-);
-
-
---
--- Name: iporganizacion_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.iporganizacion_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: iporganizacion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.iporganizacion_id_seq OWNED BY public.iporganizacion.id;
-
-
---
--- Name: lote; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.lote (
-    id integer NOT NULL,
-    usuario_id integer NOT NULL,
-    candfecha date,
-    canddepartamento_id integer,
-    candmunicipio_id integer,
-    candfuenteprensa_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    nombre character varying(511),
-    estado character varying(127) DEFAULT 'EN ESPERA'::character varying,
-    candcategoria1_id integer,
-    candcategoria2_id integer,
-    candcategoria3_id integer
-);
-
-
---
--- Name: lote_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.lote_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: lote_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.lote_id_seq OWNED BY public.lote.id;
-
-
---
--- Name: m; Type: MATERIALIZED VIEW; Schema: public; Owner: -
---
-
-CREATE MATERIALIZED VIEW public.m AS
- SELECT sal7711_gen_articulo.id,
-    ((((sal7711_gen_articulo.texto || ' '::text) || sal7711_gen_articulo.fecha) || ' '::text) || (COALESCE(sal7711_gen_articulo.pagina, ''::character varying))::text)
-   FROM public.sal7711_gen_articulo
-  WITH NO DATA;
-
-
---
 -- Name: md_articulo; Type: MATERIALIZED VIEW; Schema: public; Owner: -
 --
 
@@ -427,14 +403,14 @@ CREATE TABLE public.organizacion (
     id integer NOT NULL,
     nombre character varying(1000),
     observaciones character varying(5000),
-    fechacreacion date,
+    fechacreacion date NOT NULL,
     fechadeshabilitacion date,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
+    created_at date NOT NULL,
+    updated_at date NOT NULL,
     autoregistro boolean DEFAULT false,
     dominiocorreo character varying(500),
     pexcluyecorreo character varying(500),
-    usuarioip_id integer NOT NULL,
+    usuarioip_id integer,
     url_logoinst character varying(1000),
     opciones_url_nombre_cif character varying(1000),
     opciones_url_puerto_cif integer,
@@ -802,7 +778,7 @@ CREATE TABLE public.sip_grupoper (
 -- Name: TABLE sip_grupoper; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON TABLE public.sip_grupoper IS 'Creado por sip en sal7711cinep_des';
+COMMENT ON TABLE public.sip_grupoper IS 'Creado por sip en sal7711cinep_desarrollo';
 
 
 --
@@ -1439,9 +1415,9 @@ CREATE TABLE public.usuario (
     confirmed_at timestamp without time zone,
     confirmation_sent_at timestamp without time zone,
     unconfirmed_email character varying,
+    diasvigencia integer,
     fecharenovacion date,
     autenticado_por_ip boolean,
-    diasvigencia integer,
     tema_id integer,
     CONSTRAINT usuario_check CHECK (((fechadeshabilitacion IS NULL) OR (fechadeshabilitacion >= fechacreacion))),
     CONSTRAINT usuario_rol_check CHECK ((rol >= 1))
@@ -1449,31 +1425,17 @@ CREATE TABLE public.usuario (
 
 
 --
--- Name: vcatporarticulo; Type: VIEW; Schema: public; Owner: -
+-- Name: vcatporarticulo; Type: MATERIALIZED VIEW; Schema: public; Owner: -
 --
 
-CREATE VIEW public.vcatporarticulo AS
+CREATE MATERIALIZED VIEW public.vcatporarticulo AS
  SELECT sal7711_gen_articulo.lote_id,
     sal7711_gen_articulo.id AS articulo_id,
-    count(sal7711_gen_articulo_categoriaprensa.categoriaprensa_id) AS ncat
-   FROM (public.sal7711_gen_articulo
-     LEFT JOIN public.sal7711_gen_articulo_categoriaprensa ON ((sal7711_gen_articulo_categoriaprensa.articulo_id = sal7711_gen_articulo.id)))
-  GROUP BY sal7711_gen_articulo.lote_id, sal7711_gen_articulo.id;
-
-
---
--- Name: vestadisticalote; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW public.vestadisticalote AS
- SELECT DISTINCT sal7711_gen_articulo.lote_id,
-    COALESCE(array_length(ARRAY( SELECT vcatporarticulo.articulo_id
-           FROM public.vcatporarticulo
-          WHERE ((vcatporarticulo.lote_id = sal7711_gen_articulo.lote_id) AND (vcatporarticulo.ncat = 0))), 1), 0) AS sin,
-    COALESCE(array_length(ARRAY( SELECT vcatporarticulo.articulo_id
-           FROM public.vcatporarticulo
-          WHERE ((vcatporarticulo.lote_id = sal7711_gen_articulo.lote_id) AND (vcatporarticulo.ncat > 0))), 1), 0) AS con
-   FROM public.sal7711_gen_articulo;
+    (EXISTS ( SELECT sal7711_gen_articulo_categoriaprensa.categoriaprensa_id
+           FROM public.sal7711_gen_articulo_categoriaprensa
+          WHERE (sal7711_gen_articulo_categoriaprensa.articulo_id = sal7711_gen_articulo.id))) AS ncat
+   FROM public.sal7711_gen_articulo
+  WITH NO DATA;
 
 
 --
@@ -1483,7 +1445,7 @@ CREATE VIEW public.vestadisticalote AS
 CREATE VIEW public.vestadolote AS
  SELECT
         CASE
-            WHEN (NOT (lote.id IN ( SELECT DISTINCT lote_1.id AS lote_id
+            WHEN ((NOT (lote.id IN ( SELECT DISTINCT lote_1.id AS lote_id
                FROM (public.lote lote_1
                  JOIN public.sal7711_gen_articulo a ON ((lote_1.id = a.lote_id)))
               WHERE (NOT (EXISTS ( SELECT cp.articulo_id,
@@ -1491,7 +1453,9 @@ CREATE VIEW public.vestadolote AS
                         cp.id,
                         cp.orden
                        FROM public.sal7711_gen_articulo_categoriaprensa cp
-                      WHERE (a.id = cp.articulo_id))))))) THEN 'PROCESADO'::text
+                      WHERE (a.id = cp.articulo_id))))))) AND (NOT (lote.id IN ( SELECT sal7711_gen_articulo.lote_id
+               FROM public.sal7711_gen_articulo
+              WHERE (sal7711_gen_articulo.pagina IS NULL))))) THEN 'PROCESADO'::text
             WHEN (NOT (lote.id IN ( SELECT lote_1.id
                FROM ((public.lote lote_1
                  JOIN public.sal7711_gen_articulo a ON ((a.lote_id = lote_1.id)))
@@ -1503,7 +1467,7 @@ CREATE VIEW public.vestadolote AS
    FROM public.lote
   ORDER BY
         CASE
-            WHEN (NOT (lote.id IN ( SELECT DISTINCT lote_1.id AS lote_id
+            WHEN ((NOT (lote.id IN ( SELECT DISTINCT lote_1.id AS lote_id
                FROM (public.lote lote_1
                  JOIN public.sal7711_gen_articulo a ON ((lote_1.id = a.lote_id)))
               WHERE (NOT (EXISTS ( SELECT cp.articulo_id,
@@ -1511,38 +1475,15 @@ CREATE VIEW public.vestadolote AS
                         cp.id,
                         cp.orden
                        FROM public.sal7711_gen_articulo_categoriaprensa cp
-                      WHERE (a.id = cp.articulo_id))))))) THEN 'PROCESADO'::text
+                      WHERE (a.id = cp.articulo_id))))))) AND (NOT (lote.id IN ( SELECT sal7711_gen_articulo.lote_id
+               FROM public.sal7711_gen_articulo
+              WHERE (sal7711_gen_articulo.pagina IS NULL))))) THEN 'PROCESADO'::text
             WHEN (NOT (lote.id IN ( SELECT lote_1.id
                FROM ((public.lote lote_1
                  JOIN public.sal7711_gen_articulo a ON ((a.lote_id = lote_1.id)))
                  JOIN public.sal7711_gen_articulo_categoriaprensa cp ON ((cp.articulo_id = a.id)))))) THEN 'EN ESPERA'::text
             ELSE 'EN PROGRESO'::text
         END, lote.id, lote.nombre;
-
-
---
--- Name: vestlote; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW public.vestlote AS
- SELECT t.lote_id,
-    s.proc,
-    t.tot,
-    (t.tot - s.proc) AS por
-   FROM ( SELECT sal7711_gen_articulo.lote_id,
-            count(sal7711_gen_articulo.id) AS proc
-           FROM public.sal7711_gen_articulo
-          WHERE (NOT (sal7711_gen_articulo.id IN ( SELECT sal7711_gen_articulo_1.id
-                   FROM (public.sal7711_gen_articulo_categoriaprensa
-                     JOIN public.sal7711_gen_articulo sal7711_gen_articulo_1 ON ((sal7711_gen_articulo_categoriaprensa.articulo_id = sal7711_gen_articulo_1.id))))))
-          GROUP BY sal7711_gen_articulo.lote_id
-          ORDER BY sal7711_gen_articulo.lote_id) s,
-    ( SELECT sal7711_gen_articulo.lote_id,
-            count(sal7711_gen_articulo.id) AS tot
-           FROM public.sal7711_gen_articulo
-          GROUP BY sal7711_gen_articulo.lote_id
-          ORDER BY sal7711_gen_articulo.lote_id) t
-  WHERE (s.lote_id = t.lote_id);
 
 
 --
@@ -2064,10 +2005,24 @@ CREATE UNIQUE INDEX index_usuario_on_email ON public.usuario USING btree (email)
 
 
 --
+-- Name: lote_id_ind; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX lote_id_ind ON public.sal7711_gen_articulo USING btree (lote_id);
+
+
+--
+-- Name: lote_id_ind_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX lote_id_ind_id ON public.sal7711_gen_articulo USING btree (lote_id, id);
+
+
+--
 -- Name: md_articulo_b; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX md_articulo_b ON public.md_articulo USING gin (to_tsvector('spanish'::regconfig, public.f_unaccent(mdt)));
+CREATE INDEX md_articulo_b ON public.md_articulo USING gist (to_tsvector('spanish'::regconfig, public.f_unaccent(mdt)));
 
 
 --
@@ -2159,6 +2114,13 @@ CREATE INDEX sip_nombre_ubicacionpre_b ON public.sip_ubicacionpre USING gin (to_
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING btree (version);
+
+
+--
+-- Name: vcatporarticulo_lote_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX vcatporarticulo_lote_id_idx ON public.vcatporarticulo USING btree (lote_id);
 
 
 --

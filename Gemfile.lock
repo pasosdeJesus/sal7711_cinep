@@ -121,7 +121,7 @@ GEM
     bcrypt (3.1.16)
     bigdecimal (3.0.2)
     bindex (0.8.1)
-    bootsnap (1.7.5)
+    bootsnap (1.7.6)
       msgpack (~> 1.0)
     builder (3.2.4)
     camertron-eprun (1.1.1)
@@ -375,4 +375,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   2.2.21
+   2.2.24
