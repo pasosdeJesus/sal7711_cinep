@@ -196,7 +196,7 @@ GEM
       nokogiri (~> 1)
       rake
     mini_mime (1.1.0)
-    mini_portile2 (2.5.3)
+    mini_portile2 (2.6.1)
     minitest (5.14.4)
     minitest-reporters (1.4.3)
       ansi
@@ -205,8 +205,10 @@ GEM
       ruby-progressbar
     msgpack (1.4.2)
     nio4r (2.5.7)
-    nokogiri (1.11.7)
-      mini_portile2 (~> 2.5.0)
+    nokogiri (1.12.5)
+      mini_portile2 (~> 2.6.1)
+      racc (~> 1.4)
+    nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     paperclip (6.1.0)
@@ -332,6 +334,7 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
+  x86_64-linux
   x86_64-openbsd
 
 DEPENDENCIES
